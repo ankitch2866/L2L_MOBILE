@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "L2L_EPR_MOBILE_FRONT_V2",
+    "name": "Land 2 Lavish",
     "slug": "land2lavish",
     "version": "1.0.0",
     "owner": "ruhil-future-technologies",
@@ -8,6 +8,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
+    "sdkVersion": "54.0.0",
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
@@ -27,6 +28,20 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "buildToolsVersion": "35.0.0",
+            "kotlinVersion": "2.0.21",
+            "jvmTarget": "17"
+          }
+        }
+      ]
+    ],
     "extra": {
       "eas": {
         "projectId": "8e0f3a6e-d301-44dc-89e0-dde3afa8a685"
