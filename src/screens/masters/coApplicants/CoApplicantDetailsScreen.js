@@ -18,22 +18,29 @@ const CoApplicantDetailsScreen = ({ route, navigation }) => {
 
   if (loading || !current) return <LoadingIndicator />;
 
-  const InfoRow = ({ label, value }) => (
-    <View style={styles.infoRow}>
-      <Text variant="bodyMedium" style={styles.label}>{label}:</Text>
-      <Text variant="bodyMedium" style={styles.value}>{value || 'N/A'}</Text>
-    </View>
-  );
+  const InfoRow = ({ label, value }) => {
+    // Safely convert value to string, handling null/undefined/empty values
+    const displayValue = value !== null && value !== undefined && value !== '' 
+      ? String(value) 
+      : 'N/A';
+    
+    return (
+      <View style={styles.infoRow}>
+        <Text variant="bodyMedium" style={styles.label}>{label}:</Text>
+        <Text variant="bodyMedium" style={styles.value}>{displayValue}</Text>
+      </View>
+    );
+  };
 
   return (
     <ScrollView style={[styles.container, { backgroundColor: theme.colors.background }]}>
       <Card style={styles.card}>
         <Card.Content>
           <Text variant="headlineSmall" style={styles.header}>
-            {current.name}
+            {current.name ? String(current.name) : 'N/A'}
           </Text>
           <Text variant="bodyMedium" style={styles.subheader}>
-            CA-{current.co_applicant_id}
+            CA-{current.co_applicant_id ? String(current.co_applicant_id) : 'N/A'}
           </Text>
           
           {current.is_co_applicant && (
