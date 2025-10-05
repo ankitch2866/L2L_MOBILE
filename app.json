@@ -1,8 +1,9 @@
 {
   "expo": {
     "name": "L2L_EPR_MOBILE_FRONT_V2",
-    "slug": "L2L_EPR_MOBILE_FRONT_V2",
+    "slug": "land2lavish",
     "version": "1.0.0",
+    "owner": "ruhil-future-technologies",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -20,10 +21,16 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.ruhilfuturetechnologies.land2lavish"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8e0f3a6e-d301-44dc-89e0-dde3afa8a685"
+      }
     }
   }
 }
