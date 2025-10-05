@@ -10,8 +10,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // Example: 'http://192.168.1.100:5002/api'
 // DO NOT use 'localhost' - it won't work on mobile devices!
 
-export const API_BASE_URL = 'http://192.168.1.27:5002'; // ✅ Updated with your IP!
-//export const API_BASE_URL = 'https://l2leprbackv2-production.up.railway.app'; // ✅ Updated with your IP!
+//export const API_BASE_URL = 'http://192.168.1.27:5002'; // ✅ Updated with your IP!
+export const API_BASE_URL = 'https://l2leprbackv2-production.up.railway.app'; // ✅ Updated with your IP!
 
 // Create axios instance
 const api = axios.create({
