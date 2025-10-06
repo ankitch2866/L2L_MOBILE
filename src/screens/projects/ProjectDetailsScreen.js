@@ -188,6 +188,17 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
           Edit Project
         </Button>
         <Button
+          mode="contained-tonal"
+          onPress={() => navigation.navigate('ProjectSizes', { 
+            screen: 'ProjectSizesList',
+            params: { projectId }
+          })}
+          style={styles.actionButton}
+          icon="ruler"
+        >
+          View Project Sizes
+        </Button>
+        <Button
           mode="outlined"
           onPress={handleDelete}
           style={styles.actionButton}

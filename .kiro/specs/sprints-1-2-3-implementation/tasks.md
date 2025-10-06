@@ -146,7 +146,7 @@
   - Add Stock access from Dashboard
   - _Requirements: 1.7_
 
-- [ ] 5. Project Sizes Module
+- [x] 5. Project Sizes Module
 
   - Create Redux slice with CRUD operations
   - Create list, add, and edit screens
@@ -154,14 +154,14 @@
   - Add navigation routes
   - _Requirements: 1.9, 1.10_
 
-- [ ] 5.1 Create Project Sizes Redux Slice
+- [x] 5.1 Create Project Sizes Redux Slice
 
   - Create `src/store/slices/projectSizesSlice.js`
   - Implement fetchProjectSizes, createProjectSize, updateProjectSize, deleteProjectSize thunks
   - Define initial state with list, current, loading, error, projectId
   - _Requirements: 1.9_
 
-- [ ] 5.2 Create Project Sizes Screens
+- [x] 5.2 Create Project Sizes Screens
 
   - Create `src/screens/masters/projectSizes/ProjectSizesListScreen.js`
   - Create `src/screens/masters/projectSizes/AddProjectSizeScreen.js`
@@ -169,13 +169,13 @@
   - Create `src/screens/masters/projectSizes/index.js`
   - _Requirements: 1.9, 1.10_
 
-- [ ] 5.3 Create Project Size Card Component
+- [x] 5.3 Create Project Size Card Component
 
   - Create `src/components/masters/ProjectSizeCard.js`
   - Display size, project, area details
   - _Requirements: 1.9_
 
-- [ ] 5.4 Add Project Sizes Navigation
+- [x] 5.4 Add Project Sizes Navigation
   - Add ProjectSizesStack to DashboardNavigator
   - Add access from Projects module
   - _Requirements: 1.9_

@@ -11,6 +11,7 @@ import installmentsReducer from './slices/installmentsSlice';
 import plcReducer from './slices/plcSlice';
 import banksReducer from './slices/banksSlice';
 import stocksReducer from './slices/stocksSlice';
+import projectSizesReducer from './slices/projectSizesSlice';
 
 export const store = configureStore({
   reducer: {
@@ -25,6 +26,7 @@ export const store = configureStore({
     plc: plcReducer,
     banks: banksReducer,
     stocks: stocksReducer,
+    projectSizes: projectSizesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

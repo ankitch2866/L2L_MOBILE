@@ -58,75 +58,6 @@ const DashboardHomeScreen = ({ navigation }) => {
         </Text>
       </View>
 
-      {/* Quick Access to Masters - New Modules */}
-      <View style={styles.quickAccessSection}>
-        <Text variant="titleMedium" style={styles.sectionTitle}>
-          Master Data
-        </Text>
-        <View style={styles.quickAccessGrid}>
-          <TouchableOpacity 
-            style={styles.quickActionButton}
-            onPress={() => navigation.navigate('CoApplicants', { screen: 'CoApplicantsList' })}
-            activeOpacity={0.8}
-          >
-            <View style={styles.buttonContent}>
-              <Text style={styles.quickActionText}>👥</Text>
-              <Text style={styles.quickActionText}>Co-Applicants</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.quickActionButton}
-            onPress={() => navigation.navigate('Brokers', { screen: 'BrokersList' })}
-            activeOpacity={0.8}
-          >
-            <View style={styles.buttonContent}>
-              <Text style={styles.quickActionText}>🤝</Text>
-              <Text style={styles.quickActionText}>Brokers</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.quickActionButton}
-            onPress={() => navigation.navigate('PaymentPlans', { screen: 'PaymentPlansList' })}
-            activeOpacity={0.8}
-          >
-            <View style={styles.buttonContent}>
-              <Text style={styles.quickActionText}>📋</Text>
-              <Text style={styles.quickActionText}>Plans</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.quickActionButton}
-            onPress={() => navigation.navigate('PLC', { screen: 'PLCList' })}
-            activeOpacity={0.8}
-          >
-            <View style={styles.buttonContent}>
-              <Text style={styles.quickActionText}>💰</Text>
-              <Text style={styles.quickActionText}>PLC</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.quickActionButton}
-            onPress={() => navigation.navigate('Banks', { screen: 'BanksList' })}
-            activeOpacity={0.8}
-          >
-            <View style={styles.buttonContent}>
-              <Text style={styles.quickActionText}>🏦</Text>
-              <Text style={styles.quickActionText}>Banks</Text>
-            </View>
-          </TouchableOpacity>
-          <TouchableOpacity 
-            style={styles.quickActionButton}
-            onPress={() => navigation.navigate('Stock', { screen: 'StockList' })}
-            activeOpacity={0.8}
-          >
-            <View style={styles.buttonContent}>
-              <Text style={styles.quickActionText}>📦</Text>
-              <Text style={styles.quickActionText}>Stock</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
-      </View>
-
       {/* Property Grid - Matches Web Frontend */}
       <PropertyGridView navigation={navigation} />
 
@@ -154,51 +85,6 @@ const getStyles = (theme) => StyleSheet.create({
   },
   welcome: {
     color: theme.colors.textSecondary,
-  },
-  quickAccessSection: {
-    padding: 20,
-    backgroundColor: theme.colors.card,
-    marginTop: 8,
-  },
-  sectionTitle: {
-    fontWeight: 'bold',
-    marginBottom: 12,
-    color: theme.colors.text,
-  },
-  quickAccessGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'center',
-    gap: 16,
-  },
-  quickActionButton: {
-    width: '29%',
-    aspectRatio: 1,
-    backgroundColor: '#EF4444',
-    borderRadius: 16,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 12,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  buttonContent: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-  },
-  quickActionText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '700',
-    textAlign: 'center',
-    lineHeight: 22,
   },
   bottomSpacing: {
     height: 24,
