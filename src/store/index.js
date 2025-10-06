@@ -7,6 +7,10 @@ import customersReducer from './slices/customersSlice';
 import coApplicantsReducer from './slices/coApplicantsSlice';
 import brokersReducer from './slices/brokersSlice';
 import paymentPlansReducer from './slices/paymentPlansSlice';
+import installmentsReducer from './slices/installmentsSlice';
+import plcReducer from './slices/plcSlice';
+import banksReducer from './slices/banksSlice';
+import stocksReducer from './slices/stocksSlice';
 
 export const store = configureStore({
   reducer: {
@@ -17,6 +21,10 @@ export const store = configureStore({
     coApplicants: coApplicantsReducer,
     brokers: brokersReducer,
     paymentPlans: paymentPlansReducer,
+    installments: installmentsReducer,
+    plc: plcReducer,
+    banks: banksReducer,
+    stocks: stocksReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

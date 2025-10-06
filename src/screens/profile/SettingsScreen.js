@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Card, List, Switch, Divider } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useToast } from '../../components';
+import { useToast } from '../../hooks/useToast';
 import { useTheme } from '../../context/ThemeContext';
 
 const SettingsScreen = ({ navigation }) => {

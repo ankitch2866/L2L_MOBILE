@@ -1,6 +1,6 @@
 // Dashboard Home Screen - Matches Web Frontend
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, StyleSheet, RefreshControl } from 'react-native';
+import { ScrollView, View, StyleSheet, RefreshControl, TouchableOpacity } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useSelector } from 'react-redux';
 import { getTimeBasedGreeting } from '../../utils/timeUtils';
@@ -64,22 +64,66 @@ const DashboardHomeScreen = ({ navigation }) => {
           Master Data
         </Text>
         <View style={styles.quickAccessGrid}>
-          <View style={styles.quickActionButton}>
-            <Text 
-              style={styles.quickActionText}
-              onPress={() => navigation.navigate('CoApplicants', { screen: 'CoApplicantsList' })}
-            >
-              👥 Co-Applicants
-            </Text>
-          </View>
-          <View style={styles.quickActionButton}>
-            <Text 
-              style={styles.quickActionText}
-              onPress={() => navigation.navigate('Brokers', { screen: 'BrokersList' })}
-            >
-              🤝 Brokers
-            </Text>
-          </View>
+          <TouchableOpacity 
+            style={styles.quickActionButton}
+            onPress={() => navigation.navigate('CoApplicants', { screen: 'CoApplicantsList' })}
+            activeOpacity={0.8}
+          >
+            <View style={styles.buttonContent}>
+              <Text style={styles.quickActionText}>👥</Text>
+              <Text style={styles.quickActionText}>Co-Applicants</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.quickActionButton}
+            onPress={() => navigation.navigate('Brokers', { screen: 'BrokersList' })}
+            activeOpacity={0.8}
+          >
+            <View style={styles.buttonContent}>
+              <Text style={styles.quickActionText}>🤝</Text>
+              <Text style={styles.quickActionText}>Brokers</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.quickActionButton}
+            onPress={() => navigation.navigate('PaymentPlans', { screen: 'PaymentPlansList' })}
+            activeOpacity={0.8}
+          >
+            <View style={styles.buttonContent}>
+              <Text style={styles.quickActionText}>📋</Text>
+              <Text style={styles.quickActionText}>Plans</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.quickActionButton}
+            onPress={() => navigation.navigate('PLC', { screen: 'PLCList' })}
+            activeOpacity={0.8}
+          >
+            <View style={styles.buttonContent}>
+              <Text style={styles.quickActionText}>💰</Text>
+              <Text style={styles.quickActionText}>PLC</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.quickActionButton}
+            onPress={() => navigation.navigate('Banks', { screen: 'BanksList' })}
+            activeOpacity={0.8}
+          >
+            <View style={styles.buttonContent}>
+              <Text style={styles.quickActionText}>🏦</Text>
+              <Text style={styles.quickActionText}>Banks</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.quickActionButton}
+            onPress={() => navigation.navigate('Stock', { screen: 'StockList' })}
+            activeOpacity={0.8}
+          >
+            <View style={styles.buttonContent}>
+              <Text style={styles.quickActionText}>📦</Text>
+              <Text style={styles.quickActionText}>Stock</Text>
+            </View>
+          </TouchableOpacity>
         </View>
       </View>
 
@@ -123,22 +167,38 @@ const getStyles = (theme) => StyleSheet.create({
   },
   quickAccessGrid: {
     flexDirection: 'row',
-    gap: 12,
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 16,
   },
   quickActionButton: {
-    flex: 1,
+    width: '29%',
+    aspectRatio: 1,
     backgroundColor: '#EF4444',
-    padding: 16,
-    borderRadius: 12,
+    borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 80,
+    padding: 12,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  buttonContent: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
   },
   quickActionText: {
     color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
+    fontSize: 14,
+    fontWeight: '700',
     textAlign: 'center',
+    lineHeight: 22,
   },
   bottomSpacing: {
     height: 24,

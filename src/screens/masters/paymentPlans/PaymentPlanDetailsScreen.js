@@ -167,11 +167,11 @@ const PaymentPlanDetailsScreen = ({ route, navigation }) => {
           <View style={styles.cardTitleRow}>
             <Text style={styles.cardTitle}>Installments</Text>
             <TouchableOpacity
-              style={styles.manageButton}
-              onPress={() => navigation.navigate('InstallmentDashboard', { planId })}
+              style={styles.viewInstallmentsButton}
+              onPress={() => navigation.navigate('InstallmentsList', { planId })}
             >
-              <Ionicons name="settings-outline" size={16} color="#FFFFFF" />
-              <Text style={styles.manageButtonText}>Manage</Text>
+              <Ionicons name="list-outline" size={16} color="#FFFFFF" />
+              <Text style={styles.viewInstallmentsButtonText}>View Installments</Text>
             </TouchableOpacity>
           </View>
 
@@ -181,41 +181,54 @@ const PaymentPlanDetailsScreen = ({ route, navigation }) => {
               <Text style={styles.emptyStateText}>No installments added yet</Text>
               <TouchableOpacity
                 style={styles.addInstallmentButton}
-                onPress={() => navigation.navigate('AddInstallments', { planId })}
+                onPress={() => navigation.navigate('AddInstallment', { planId })}
               >
                 <Ionicons name="add-circle" size={20} color="#EF4444" />
-                <Text style={styles.addInstallmentButtonText}>Add Installments</Text>
+                <Text style={styles.addInstallmentButtonText}>Add Installment</Text>
               </TouchableOpacity>
             </View>
           ) : (
-            <View style={styles.installmentsList}>
-              {installments.map((installment, index) => (
-                <View key={installment.id} style={styles.installmentItem}>
-                  <View style={styles.installmentNumber}>
-                    <Text style={styles.installmentNumberText}>{index + 1}</Text>
-                  </View>
-                  <View style={styles.installmentDetails}>
-                    <Text style={styles.installmentName}>{installment.installment_name}</Text>
-                    <View style={styles.installmentMeta}>
-                      <View style={styles.installmentMetaItem}>
-                        <Ionicons name="cash-outline" size={14} color="#6B7280" />
-                        <Text style={styles.installmentMetaText}>
-                          {installment.is_percentage
-                            ? `${installment.value}%`
-                            : `₹${parseFloat(installment.value).toLocaleString()}`}
-                        </Text>
-                      </View>
-                      <View style={styles.installmentMetaItem}>
-                        <Ionicons name="calendar-outline" size={14} color="#6B7280" />
-                        <Text style={styles.installmentMetaText}>
-                          Due: {installment.due_days} days
-                        </Text>
+            <>
+              <View style={styles.installmentsList}>
+                {installments.slice(0, 3).map((installment, index) => (
+                  <View key={installment.id} style={styles.installmentItem}>
+                    <View style={styles.installmentNumber}>
+                      <Text style={styles.installmentNumberText}>{index + 1}</Text>
+                    </View>
+                    <View style={styles.installmentDetails}>
+                      <Text style={styles.installmentName}>{installment.installment_name}</Text>
+                      <View style={styles.installmentMeta}>
+                        <View style={styles.installmentMetaItem}>
+                          <Ionicons name="cash-outline" size={14} color="#6B7280" />
+                          <Text style={styles.installmentMetaText}>
+                            {installment.is_percentage
+                              ? `${installment.value}%`
+                              : `₹${parseFloat(installment.value).toLocaleString()}`}
+                          </Text>
+                        </View>
+                        <View style={styles.installmentMetaItem}>
+                          <Ionicons name="calendar-outline" size={14} color="#6B7280" />
+                          <Text style={styles.installmentMetaText}>
+                            Due: {installment.due_days} days
+                          </Text>
+                        </View>
                       </View>
                     </View>
                   </View>
-                </View>
-              ))}
-            </View>
+                ))}
+              </View>
+              {installments.length > 3 && (
+                <TouchableOpacity
+                  style={styles.viewAllButton}
+                  onPress={() => navigation.navigate('InstallmentsList', { planId })}
+                >
+                  <Text style={styles.viewAllButtonText}>
+                    View all {installments.length} installments
+                  </Text>
+                  <Ionicons name="chevron-forward" size={16} color="#EF4444" />
+                </TouchableOpacity>
+              )}
+            </>
           )}
         </View>
       </ScrollView>
@@ -320,19 +333,34 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 16,
   },
-  manageButton: {
+  viewInstallmentsButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#3B82F6',
+    backgroundColor: '#EF4444',
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 6,
     gap: 4,
   },
-  manageButtonText: {
+  viewInstallmentsButtonText: {
     color: '#FFFFFF',
     fontSize: 14,
     fontWeight: '600',
+  },
+  viewAllButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    marginTop: 12,
+    borderTopWidth: 1,
+    borderTopColor: '#E5E7EB',
+    gap: 6,
+  },
+  viewAllButtonText: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: '#EF4444',
   },
   summaryRow: {
     flexDirection: 'row',

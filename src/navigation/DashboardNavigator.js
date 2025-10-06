@@ -41,6 +41,35 @@ import {
   EditBrokerScreen,
   BrokerDetailsScreen,
 } from '../screens/masters/brokers';
+import {
+  PaymentPlansListScreen,
+  AddPaymentPlanScreen,
+  PaymentPlanDetailsScreen,
+} from '../screens/masters/paymentPlans';
+import {
+  InstallmentsListScreen,
+  AddInstallmentScreen,
+  InstallmentDetailsScreen,
+  EditInstallmentScreen,
+} from '../screens/masters/installments';
+import {
+  PLCListScreen,
+  AddPLCScreen,
+  PLCDetailsScreen,
+  EditPLCScreen,
+} from '../screens/masters/plc';
+import {
+  BanksListScreen,
+  AddBankScreen,
+  BankDetailsScreen,
+  EditBankScreen,
+} from '../screens/masters/banks';
+import {
+  StockListScreen,
+  AddStockScreen,
+  StockDetailsScreen,
+  EditStockScreen,
+} from '../screens/masters/stock';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -131,6 +160,81 @@ const BrokersStack = () => {
       <Stack.Screen name="AddBroker" component={AddBrokerScreen} options={{ title: 'Add Broker' }} />
       <Stack.Screen name="EditBroker" component={EditBrokerScreen} options={{ title: 'Edit Broker' }} />
       <Stack.Screen name="BrokerDetails" component={BrokerDetailsScreen} options={{ title: 'Broker Details' }} />
+    </Stack.Navigator>
+  );
+};
+
+// Payment Plans Stack Navigator
+const PaymentPlansStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+      }}
+    >
+      <Stack.Screen name="PaymentPlansList" component={PaymentPlansListScreen} options={{ title: 'Payment Plans' }} />
+      <Stack.Screen name="AddPaymentPlan" component={AddPaymentPlanScreen} options={{ title: 'Add Payment Plan' }} />
+      <Stack.Screen name="PaymentPlanDetails" component={PaymentPlanDetailsScreen} options={{ title: 'Payment Plan Details' }} />
+      <Stack.Screen name="InstallmentsList" component={InstallmentsListScreen} options={{ title: 'Installments' }} />
+      <Stack.Screen name="AddInstallment" component={AddInstallmentScreen} options={{ title: 'Add Installment' }} />
+      <Stack.Screen name="InstallmentDetails" component={InstallmentDetailsScreen} options={{ title: 'Installment Details' }} />
+      <Stack.Screen name="EditInstallment" component={EditInstallmentScreen} options={{ title: 'Edit Installment' }} />
+    </Stack.Navigator>
+  );
+};
+
+// PLC Stack Navigator
+const PLCStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+      }}
+    >
+      <Stack.Screen name="PLCList" component={PLCListScreen} options={{ title: 'PLC' }} />
+      <Stack.Screen name="AddPLC" component={AddPLCScreen} options={{ title: 'Add PLC' }} />
+      <Stack.Screen name="PLCDetails" component={PLCDetailsScreen} options={{ title: 'PLC Details' }} />
+      <Stack.Screen name="EditPLC" component={EditPLCScreen} options={{ title: 'Edit PLC' }} />
+    </Stack.Navigator>
+  );
+};
+
+// Banks Stack Navigator
+const BanksStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+      }}
+    >
+      <Stack.Screen name="BanksList" component={BanksListScreen} options={{ title: 'Banks' }} />
+      <Stack.Screen name="AddBank" component={AddBankScreen} options={{ title: 'Add Bank' }} />
+      <Stack.Screen name="BankDetails" component={BankDetailsScreen} options={{ title: 'Bank Details' }} />
+      <Stack.Screen name="EditBank" component={EditBankScreen} options={{ title: 'Edit Bank' }} />
+    </Stack.Navigator>
+  );
+};
+
+// Stock Stack Navigator
+const StockStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+      }}
+    >
+      <Stack.Screen name="StockList" component={StockListScreen} options={{ title: 'Stock' }} />
+      <Stack.Screen name="AddStock" component={AddStockScreen} options={{ title: 'Add Stock' }} />
+      <Stack.Screen name="StockDetails" component={StockDetailsScreen} options={{ title: 'Stock Details' }} />
+      <Stack.Screen name="EditStock" component={EditStockScreen} options={{ title: 'Edit Stock' }} />
     </Stack.Navigator>
   );
 };
@@ -231,6 +335,38 @@ const DashboardNavigator = () => {
       <Stack.Screen 
         name="Brokers" 
         component={BrokersStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="PaymentPlans" 
+        component={PaymentPlansStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="PLC" 
+        component={PLCStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="Banks" 
+        component={BanksStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="Stock" 
+        component={StockStack}
         options={{ 
           presentation: 'card',
           headerShown: false

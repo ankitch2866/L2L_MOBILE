@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   RefreshControl,
   Alert,
+  TextInput,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
@@ -94,6 +95,7 @@ const PaymentPlansListScreen = ({ navigation }) => {
       <TouchableOpacity
         style={styles.card}
         onPress={() => navigation.navigate('PaymentPlanDetails', { planId: item.id })}
+        activeOpacity={0.7}
       >
         <View style={styles.cardHeader}>
           <View style={styles.cardTitleContainer}>
@@ -102,13 +104,19 @@ const PaymentPlansListScreen = ({ navigation }) => {
           </View>
           <View style={styles.cardActions}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('EditPaymentPlan', { planId: item.id })}
+              onPress={(e) => {
+                e.stopPropagation();
+                navigation.navigate('EditPaymentPlan', { planId: item.id });
+              }}
               style={styles.actionButton}
             >
               <Ionicons name="pencil" size={20} color="#3B82F6" />
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => handleDelete(item)}
+              onPress={(e) => {
+                e.stopPropagation();
+                handleDelete(item);
+              }}
               style={styles.actionButton}
             >
               <Ionicons name="trash-outline" size={20} color="#EF4444" />
@@ -138,14 +146,6 @@ const PaymentPlansListScreen = ({ navigation }) => {
               )}
             </View>
           )}
-
-          <TouchableOpacity
-            style={styles.manageButton}
-            onPress={() => navigation.navigate('InstallmentDashboard', { planId: item.id })}
-          >
-            <Ionicons name="settings-outline" size={16} color="#FFFFFF" />
-            <Text style={styles.manageButtonText}>Manage Installments</Text>
-          </TouchableOpacity>
         </View>
 
         <View style={styles.cardFooter}>
@@ -172,11 +172,12 @@ const PaymentPlansListScreen = ({ navigation }) => {
       {/* Search Bar */}
       <View style={styles.searchContainer}>
         <Ionicons name="search" size={20} color="#6B7280" style={styles.searchIcon} />
-        <input
+        <TextInput
           style={styles.searchInput}
           placeholder="Search payment plans..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChangeText={setSearchQuery}
+          placeholderTextColor="#9CA3AF"
         />
         {searchQuery.length > 0 && (
           <TouchableOpacity onPress={() => setSearchQuery('')}>
@@ -231,8 +232,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: '#111827',
-    outline: 'none',
-    border: 'none',
+    paddingVertical: 4,
   },
   listContainer: {
     padding: 16,
@@ -317,21 +317,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     marginTop: 4,
   },
-  manageButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#3B82F6',
-    paddingVertical: 10,
-    paddingHorizontal: 16,
-    borderRadius: 8,
-    gap: 6,
-  },
-  manageButtonText: {
-    color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '600',
-  },
+
   cardFooter: {
     borderTopWidth: 1,
     borderTopColor: '#E5E7EB',

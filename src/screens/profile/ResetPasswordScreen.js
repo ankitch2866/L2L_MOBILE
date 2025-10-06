@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Card, TextInput, Button, HelperText } from 'react-native-paper';
 import { useSelector } from 'react-redux';
-import { useToast } from '../../components';
+import { useToast } from '../../hooks/useToast';
 import { useTheme } from '../../context';
 import api from '../../config/api';
 
