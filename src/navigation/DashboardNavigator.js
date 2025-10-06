@@ -82,6 +82,70 @@ import {
   ReportsScreen,
   UtilitiesScreen,
 } from '../screens/categories';
+import {
+  BookingsListScreen,
+  CreateBookingScreen,
+  BookingDetailsScreen,
+  EditBookingScreen,
+  BookingStatusScreen,
+} from '../screens/transactions/bookings';
+import {
+  AllotmentsListScreen,
+  CreateAllotmentScreen,
+  AllotmentDetailsScreen,
+  EditAllotmentScreen,
+  AllotmentLetterScreen,
+} from '../screens/transactions/allotments';
+import {
+  PaymentsDashboardScreen,
+  PaymentsListScreen,
+  PaymentEntryScreen,
+  PaymentDetailsScreen,
+  EditPaymentScreen,
+  CustomerPaymentsScreen,
+  TransactionDetailsScreen,
+  CreditPaymentScreen,
+} from '../screens/transactions/payments';
+import {
+  ChequesDashboardScreen,
+  ChequeDepositScreen,
+  ChequeDetailsScreen,
+  ChequeStatusScreen,
+  ChequeFeedbackScreen,
+} from '../screens/transactions/cheques';
+import {
+  PaymentRaisesListScreen,
+  CreatePaymentRaiseScreen,
+  PaymentRaiseDetailsScreen,
+  EditPaymentRaiseScreen,
+} from '../screens/transactions/paymentRaises';
+import {
+  UnitTransfersListScreen,
+  CreateUnitTransferScreen,
+  UnitTransferDetailsScreen,
+  EditUnitTransferScreen,
+  TransferTransactionScreen,
+} from '../screens/transactions/unitTransfers';
+import {
+  BBADashboardScreen,
+  AddBBAScreen,
+  BBAStatusScreen,
+  EditBBAScreen,
+  VerifyBBAScreen,
+} from '../screens/transactions/bba';
+import {
+  DispatchesListScreen,
+  CreateDispatchScreen,
+  DispatchDetailsScreen,
+  EditDispatchScreen,
+  DispatchItemsScreen,
+} from '../screens/transactions/dispatches';
+import {
+  PaymentQueriesListScreen,
+  GeneratePaymentQueryScreen,
+  PaymentQueryDetailsScreen,
+  EditPaymentQueryScreen,
+} from '../screens/transactions/paymentQueries';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -358,6 +422,251 @@ const ProjectSizesStack = () => {
   );
 };
 
+// Bookings Stack Navigator
+const BookingsStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerBackTitleVisible: false,
+      }}
+    >
+      <Stack.Screen 
+        name="BookingsList" 
+        component={BookingsListScreen} 
+        options={({ navigation }) => ({ 
+          title: 'Bookings',
+          headerLeft: () => <BackButton navigation={navigation} />
+        })} 
+      />
+      <Stack.Screen name="CreateBooking" component={CreateBookingScreen} options={{ title: 'Create Booking' }} />
+      <Stack.Screen name="BookingDetails" component={BookingDetailsScreen} options={{ title: 'Booking Details' }} />
+      <Stack.Screen name="EditBooking" component={EditBookingScreen} options={{ title: 'Edit Booking' }} />
+      <Stack.Screen name="BookingStatus" component={BookingStatusScreen} options={{ title: 'Change Status' }} />
+    </Stack.Navigator>
+  );
+};
+
+// Allotments Stack Navigator
+const AllotmentsStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerBackTitleVisible: false,
+      }}
+    >
+      <Stack.Screen 
+        name="AllotmentsList" 
+        component={AllotmentsListScreen} 
+        options={({ navigation }) => ({ 
+          title: 'Allotments',
+          headerLeft: () => <BackButton navigation={navigation} />
+        })} 
+      />
+      <Stack.Screen name="CreateAllotment" component={CreateAllotmentScreen} options={{ title: 'Create Allotment' }} />
+      <Stack.Screen name="AllotmentDetails" component={AllotmentDetailsScreen} options={{ title: 'Allotment Details' }} />
+      <Stack.Screen name="EditAllotment" component={EditAllotmentScreen} options={{ title: 'Edit Allotment' }} />
+      <Stack.Screen name="AllotmentLetter" component={AllotmentLetterScreen} options={{ title: 'Allotment Letter' }} />
+    </Stack.Navigator>
+  );
+};
+
+// Payments Stack Navigator
+const PaymentsStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerBackTitleVisible: false,
+      }}
+    >
+      <Stack.Screen 
+        name="PaymentsDashboard" 
+        component={PaymentsDashboardScreen} 
+        options={({ navigation }) => ({ 
+          title: 'Payments',
+          headerLeft: () => <BackButton navigation={navigation} />
+        })} 
+      />
+      <Stack.Screen name="PaymentsList" component={PaymentsListScreen} options={{ title: 'All Payments' }} />
+      <Stack.Screen name="PaymentEntry" component={PaymentEntryScreen} options={{ title: 'Record Payment' }} />
+      <Stack.Screen name="PaymentDetails" component={PaymentDetailsScreen} options={{ title: 'Payment Details' }} />
+      <Stack.Screen name="EditPayment" component={EditPaymentScreen} options={{ title: 'Edit Payment' }} />
+      <Stack.Screen name="CustomerPayments" component={CustomerPaymentsScreen} options={{ title: 'Customer Payments' }} />
+      <Stack.Screen name="TransactionDetails" component={TransactionDetailsScreen} options={{ title: 'Transaction Details' }} />
+      <Stack.Screen name="CreditPayment" component={CreditPaymentScreen} options={{ title: 'Credit Payment' }} />
+    </Stack.Navigator>
+  );
+};
+
+// Cheques Stack Navigator
+const ChequesStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerBackTitleVisible: false,
+      }}
+    >
+      <Stack.Screen 
+        name="ChequesDashboard" 
+        component={ChequesDashboardScreen} 
+        options={({ navigation }) => ({ 
+          title: 'Cheques',
+          headerLeft: () => <BackButton navigation={navigation} />
+        })} 
+      />
+      <Stack.Screen name="ChequesList" component={ChequeStatusScreen} options={{ title: 'All Cheques' }} />
+      <Stack.Screen name="ChequeDeposit" component={ChequeDepositScreen} options={{ title: 'Deposit Cheque' }} />
+      <Stack.Screen name="ChequeDetails" component={ChequeDetailsScreen} options={{ title: 'Cheque Details' }} />
+      <Stack.Screen name="ChequeStatus" component={ChequeStatusScreen} options={{ title: 'Cheque Status' }} />
+      <Stack.Screen name="ChequeFeedback" component={ChequeFeedbackScreen} options={{ title: 'Bank Feedback' }} />
+    </Stack.Navigator>
+  );
+};
+
+// Payment Raises Stack Navigator
+const PaymentRaisesStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerBackTitleVisible: false,
+      }}
+    >
+      <Stack.Screen 
+        name="PaymentRaisesList" 
+        component={PaymentRaisesListScreen} 
+        options={({ navigation }) => ({ 
+          title: 'Payment Raises',
+          headerLeft: () => <BackButton navigation={navigation} />
+        })} 
+      />
+      <Stack.Screen name="CreatePaymentRaise" component={CreatePaymentRaiseScreen} options={{ title: 'Create Payment Raise' }} />
+      <Stack.Screen name="PaymentRaiseDetails" component={PaymentRaiseDetailsScreen} options={{ title: 'Payment Raise Details' }} />
+      <Stack.Screen name="EditPaymentRaise" component={EditPaymentRaiseScreen} options={{ title: 'Edit Payment Raise' }} />
+    </Stack.Navigator>
+  );
+};
+
+// Unit Transfers Stack Navigator
+const UnitTransfersStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerBackTitleVisible: false,
+      }}
+    >
+      <Stack.Screen 
+        name="UnitTransfersList" 
+        component={UnitTransfersListScreen} 
+        options={({ navigation }) => ({ 
+          title: 'Unit Transfers',
+          headerLeft: () => <BackButton navigation={navigation} />
+        })} 
+      />
+      <Stack.Screen name="CreateUnitTransfer" component={CreateUnitTransferScreen} options={{ title: 'Create Unit Transfer' }} />
+      <Stack.Screen name="UnitTransferDetails" component={UnitTransferDetailsScreen} options={{ title: 'Transfer Details' }} />
+      <Stack.Screen name="EditUnitTransfer" component={EditUnitTransferScreen} options={{ title: 'Edit Transfer' }} />
+      <Stack.Screen name="TransferTransaction" component={TransferTransactionScreen} options={{ title: 'Transfer Transaction' }} />
+    </Stack.Navigator>
+  );
+};
+
+// BBA Stack Navigator
+const BBAStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerBackTitleVisible: false,
+      }}
+    >
+      <Stack.Screen 
+        name="BBADashboard" 
+        component={BBADashboardScreen} 
+        options={({ navigation }) => ({ 
+          title: 'BBA Records',
+          headerLeft: () => <BackButton navigation={navigation} />
+        })} 
+      />
+      <Stack.Screen name="AddBBA" component={AddBBAScreen} options={{ title: 'Add BBA' }} />
+      <Stack.Screen name="BBAStatus" component={BBAStatusScreen} options={{ title: 'BBA Status' }} />
+      <Stack.Screen name="EditBBA" component={EditBBAScreen} options={{ title: 'Edit BBA' }} />
+      <Stack.Screen name="VerifyBBA" component={VerifyBBAScreen} options={{ title: 'Verify BBA' }} />
+    </Stack.Navigator>
+  );
+};
+
+// Dispatch Stack Navigator
+const DispatchStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerBackTitleVisible: false,
+      }}
+    >
+      <Stack.Screen 
+        name="DispatchesList" 
+        component={DispatchesListScreen} 
+        options={({ navigation }) => ({ 
+          title: 'Dispatches',
+          headerLeft: () => <BackButton navigation={navigation} />
+        })} 
+      />
+      <Stack.Screen name="CreateDispatch" component={CreateDispatchScreen} options={{ title: 'Create Dispatch' }} />
+      <Stack.Screen name="DispatchDetails" component={DispatchDetailsScreen} options={{ title: 'Dispatch Details' }} />
+      <Stack.Screen name="EditDispatch" component={EditDispatchScreen} options={{ title: 'Edit Dispatch' }} />
+      <Stack.Screen name="DispatchItems" component={DispatchItemsScreen} options={{ title: 'Dispatch Items' }} />
+    </Stack.Navigator>
+  );
+};
+
+// Payment Queries Stack Navigator
+const PaymentQueriesStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerBackTitleVisible: false,
+      }}
+    >
+      <Stack.Screen 
+        name="PaymentQueriesList" 
+        component={PaymentQueriesListScreen} 
+        options={({ navigation }) => ({ 
+          title: 'Payment Queries',
+          headerLeft: () => <BackButton navigation={navigation} />
+        })} 
+      />
+      <Stack.Screen name="GeneratePaymentQuery" component={GeneratePaymentQueryScreen} options={{ title: 'Generate Query' }} />
+      <Stack.Screen name="PaymentQueryDetails" component={PaymentQueryDetailsScreen} options={{ title: 'Query Details' }} />
+      <Stack.Screen name="EditPaymentQuery" component={EditPaymentQueryScreen} options={{ title: 'Edit Query' }} />
+    </Stack.Navigator>
+  );
+};
+
 // Profile Stack Navigator
 const ProfileStack = () => {
   return (
@@ -552,6 +861,78 @@ const DashboardNavigator = () => {
       <Stack.Screen 
         name="CustomersStack" 
         component={CustomersStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="Bookings" 
+        component={BookingsStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="Allotments" 
+        component={AllotmentsStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="Payments" 
+        component={PaymentsStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="Cheques" 
+        component={ChequesStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="PaymentRaises" 
+        component={PaymentRaisesStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="UnitTransfers" 
+        component={UnitTransfersStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="BBA" 
+        component={BBAStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="Dispatches" 
+        component={DispatchStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="PaymentQueries" 
+        component={PaymentQueriesStack}
         options={{ 
           presentation: 'card',
           headerShown: false

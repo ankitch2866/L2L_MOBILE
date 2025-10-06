@@ -1,41 +1,60 @@
 import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Menu, Button, Text } from 'react-native-paper';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Menu, TextInput, Text } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Dropdown = ({ label, value, onValueChange, items, error, disabled }) => {
+const Dropdown = ({ label, value, onValueChange, items, error, disabled, style }) => {
   const [visible, setVisible] = useState(false);
 
   const selectedItem = items.find(item => item.value === value);
-  const displayText = selectedItem ? selectedItem.label : `Select ${label}`;
+  const displayValue = selectedItem ? selectedItem.label : '';
 
   return (
-    <View style={styles.container}>
-      <Text variant="bodySmall" style={styles.label}>{label}</Text>
+    <View style={[styles.container, style]}>
       <Menu
-        visible={visible}
+        visible={visible && !disabled}
         onDismiss={() => setVisible(false)}
         anchor={
-          <Button
-            mode="outlined"
+          <TouchableOpacity
             onPress={() => !disabled && setVisible(true)}
             disabled={disabled}
-            style={[styles.button, error && styles.errorButton]}
-            contentStyle={styles.buttonContent}
+            activeOpacity={0.7}
           >
-            {displayText}
-          </Button>
+            <TextInput
+              label={label}
+              value={displayValue}
+              mode="outlined"
+              editable={false}
+              error={error}
+              disabled={disabled}
+              right={
+                <TextInput.Icon
+                  icon={() => <Icon name="chevron-down" size={24} color={disabled ? '#999' : '#666'} />}
+                />
+              }
+              style={[styles.input, disabled && styles.disabled]}
+              pointerEvents="none"
+            />
+          </TouchableOpacity>
         }
+        contentStyle={styles.menuContent}
       >
-        {items.map((item) => (
-          <Menu.Item
-            key={item.value}
-            onPress={() => {
-              onValueChange(item.value);
-              setVisible(false);
-            }}
-            title={item.label}
-          />
-        ))}
+        {items.length > 0 ? (
+          items.map((item, index) => (
+            <Menu.Item
+              key={`menu-item-${item.value}-${index}`}
+              onPress={() => {
+                onValueChange(item.value);
+                setVisible(false);
+              }}
+              title={item.label}
+              titleStyle={value === item.value ? styles.selectedText : null}
+              style={value === item.value ? styles.selectedItem : null}
+            />
+          ))
+        ) : (
+          <Menu.Item key="no-options" title="No options available" disabled />
+        )}
       </Menu>
     </View>
   );
@@ -44,19 +63,24 @@ const Dropdown = ({ label, value, onValueChange, items, error, disabled }) => {
 const styles = StyleSheet.create({
   container: {
     marginBottom: 8,
+    zIndex: 1,
   },
-  label: {
-    marginBottom: 4,
-    color: '#6B7280',
+  input: {
+    backgroundColor: '#fff',
   },
-  button: {
-    justifyContent: 'flex-start',
+  disabled: {
+    backgroundColor: '#f5f5f5',
   },
-  buttonContent: {
-    justifyContent: 'flex-start',
+  menuContent: {
+    maxHeight: 300,
+    backgroundColor: '#fff',
   },
-  errorButton: {
-    borderColor: '#EF4444',
+  selectedItem: {
+    backgroundColor: '#E3F2FD',
+  },
+  selectedText: {
+    fontWeight: '600',
+    color: '#1976D2',
   },
 });
 

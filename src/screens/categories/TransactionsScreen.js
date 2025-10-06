@@ -8,17 +8,17 @@ const TransactionsScreen = ({ navigation }) => {
   const { theme } = useTheme();
 
   const transactionModules = [
-    { name: 'Booking', icon: 'book-open-variant', route: null, screen: null, implemented: false },
-    { name: 'Payment', icon: 'credit-card', route: null, screen: null, implemented: false },
-    { name: 'Unit Allotment', icon: 'home-group', route: null, screen: null, implemented: false },
-    { name: 'Cheque Deposit', icon: 'checkbook', route: null, screen: null, implemented: false },
-    { name: 'Credit Payment', icon: 'cash-plus', route: null, screen: null, implemented: false },
-    { name: 'Unit Transfer', icon: 'swap-horizontal', route: null, screen: null, implemented: false },
+    { name: 'Booking', icon: 'book-open-variant', route: 'Bookings', screen: 'BookingsList', implemented: true },
+    { name: 'Unit Allotment', icon: 'home-group', route: 'Allotments', screen: 'AllotmentsList', implemented: true },
+    { name: 'Payment', icon: 'credit-card', route: 'Payments', screen: 'PaymentsDashboard', implemented: true },
+    { name: 'Cheque Management', icon: 'checkbook', route: 'Cheques', screen: 'ChequesDashboard', implemented: true },
+    { name: 'Payment Query', icon: 'help-circle', route: 'PaymentQueries', screen: 'PaymentQueriesList', implemented: true },
+    { name: 'Raise Payment', icon: 'chart-line', route: 'PaymentRaises', screen: 'PaymentRaisesList', implemented: true },
+    { name: 'Unit Transfer', icon: 'swap-horizontal', route: 'UnitTransfers', screen: 'UnitTransfersList', implemented: true },
+    { name: 'BBA', icon: 'file-document', route: 'BBA', screen: 'BBADashboard', implemented: true },
+    { name: 'Dispatch', icon: 'truck-delivery', route: 'Dispatches', screen: 'DispatchesList', implemented: true },
     { name: 'Calling Feedback', icon: 'phone-in-talk', route: null, screen: null, implemented: false },
-    { name: 'BBA', icon: 'file-document', route: null, screen: null, implemented: false },
-    { name: 'Dispatch', icon: 'truck-delivery', route: null, screen: null, implemented: false },
-    { name: 'Payment Query', icon: 'help-circle', route: null, screen: null, implemented: false },
-    { name: 'Raise Payment', icon: 'chart-line', route: null, screen: null, implemented: false },
+    { name: 'Credit Payment', icon: 'cash-plus', route: null, screen: null, implemented: false },
   ];
 
   const handleModulePress = (module) => {

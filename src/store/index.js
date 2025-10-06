@@ -12,6 +12,15 @@ import plcReducer from './slices/plcSlice';
 import banksReducer from './slices/banksSlice';
 import stocksReducer from './slices/stocksSlice';
 import projectSizesReducer from './slices/projectSizesSlice';
+import bookingsReducer from './slices/bookingsSlice';
+import allotmentsReducer from './slices/allotmentsSlice';
+import paymentsReducer from './slices/paymentsSlice';
+import chequesReducer from './slices/chequesSlice';
+import paymentQueriesReducer from './slices/paymentQueriesSlice';
+import paymentRaisesReducer from './slices/paymentRaisesSlice';
+import unitTransfersReducer from './slices/unitTransfersSlice';
+import bbaReducer from './slices/bbaSlice';
+import dispatchesReducer from './slices/dispatchesSlice';
 
 export const store = configureStore({
   reducer: {
@@ -27,6 +36,15 @@ export const store = configureStore({
     banks: banksReducer,
     stocks: stocksReducer,
     projectSizes: projectSizesReducer,
+    bookings: bookingsReducer,
+    allotments: allotmentsReducer,
+    payments: paymentsReducer,
+    cheques: chequesReducer,
+    paymentQueries: paymentQueriesReducer,
+    paymentRaises: paymentRaisesReducer,
+    unitTransfers: unitTransfersReducer,
+    bba: bbaReducer,
+    dispatches: dispatchesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

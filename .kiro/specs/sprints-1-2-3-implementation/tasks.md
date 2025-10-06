@@ -12,7 +12,7 @@
 
 - [x] 1.1 Create Installments Redux Slice
 
-  - Create `src/store/slices/installmentsSlice.js`
+  - Create `src/store/slices/instal lmentsSlice.js`
   - Implement fetchInstallmentsByPlan, createInstallment, updateInstallment, deleteInstallment thunks
   - Define initial state with list, current, loading, error, planId
   - _Requirements: 1.1_
@@ -182,7 +182,7 @@
 
 ## SPRINT 2: CORE TRANSACTION MODULES
 
-- [ ] 6. Booking Module
+- [x] 6. Booking Module
 
   - Create Redux slice with CRUD operations
   - Create list, create, details, edit, and status screens
@@ -190,14 +190,14 @@
   - Add navigation routes
   - _Requirements: 2.1-2.7_
 
-- [ ] 6.1 Create Bookings Redux Slice
+- [x] 6.1 Create Bookings Redux Slice
 
   - Create `src/store/slices/bookingsSlice.js`
   - Implement fetchBookings, createBooking, fetchBookingById, updateBooking, deleteBooking, updateBookingStatus thunks
   - Define initial state with list, current, loading, error, filters, statistics
   - _Requirements: 2.1_
 
-- [ ] 6.2 Create Bookings Screens
+- [x] 6.2 Create Bookings Screens
 
   - Create `src/screens/transactions/bookings/BookingsListScreen.js`
   - Create `src/screens/transactions/bookings/CreateBookingScreen.js`
@@ -207,26 +207,26 @@
   - Create `src/screens/transactions/bookings/index.js`
   - _Requirements: 2.1-2.5_
 
-- [ ] 6.3 Create Booking Card Component
+- [x] 6.3 Create Booking Card Component
 
   - Create `src/components/transactions/BookingCard.js`
   - Display booking number, customer, property, status, amount
   - _Requirements: 2.1_
 
-- [ ] 6.4 Add Bookings Navigation
+- [x] 6.4 Add Bookings Navigation
 
   - Add BookingsStack to DashboardNavigator
   - Add Bookings access from Dashboard
   - _Requirements: 2.1_
 
-- [ ] 6.5 Implement Booking Business Logic
+- [x] 6.5 Implement Booking Business Logic
 
   - Validate customer and property availability
   - Update property status on booking creation
   - Handle booking cancellation and property release
   - _Requirements: 2.6, 2.7_
 
-- [ ] 7. Allotment Module
+- [x] 7. Allotment Module
 
   - Create Redux slice with CRUD operations
   - Create list, create, details, edit, and letter screens
@@ -234,14 +234,14 @@
   - Add navigation routes
   - _Requirements: 3.1-3.6_
 
-- [ ] 7.1 Create Allotments Redux Slice
+- [x] 7.1 Create Allotments Redux Slice
 
   - Create `src/store/slices/allotmentsSlice.js`
   - Implement fetchAllotments, createAllotment, fetchAllotmentById, updateAllotment, deleteAllotment, generateLetter thunks
   - Define initial state with list, current, loading, error, filters
   - _Requirements: 3.1_
 
-- [ ] 7.2 Create Allotments Screens
+- [x] 7.2 Create Allotments Screens
 
   - Create `src/screens/transactions/allotments/AllotmentsListScreen.js`
   - Create `src/screens/transactions/allotments/CreateAllotmentScreen.js`
@@ -251,19 +251,19 @@
   - Create `src/screens/transactions/allotments/index.js`
   - _Requirements: 3.1-3.5_
 
-- [ ] 7.3 Create Allotment Card Component
+- [x] 7.3 Create Allotment Card Component
 
   - Create `src/components/transactions/AllotmentCard.js`
   - Display allotment number, customer, property, date
   - _Requirements: 3.1_
 
-- [ ] 7.4 Add Allotments Navigation
+- [x] 7.4 Add Allotments Navigation
 
   - Add AllotmentsStack to DashboardNavigator
   - Add Allotments access from Dashboard and Bookings
   - _Requirements: 3.1_
 
-- [ ] 7.5 Implement Allotment Letter Generation
+- [x] 7.5 Implement Allotment Letter Generation
   - Create letter template component
   - Add PDF generation functionality
   - Add share/download options
@@ -271,7 +271,7 @@
 
 ## SPRINT 3: ADVANCED TRANSACTION MODULES
 
-- [ ] 8. Payment Module
+- [x] 8. Payment Module
 
   - Create Redux slice with CRUD operations
   - Create dashboard, entry, details, edit, customer payments, transaction details, and credit payment screens
@@ -279,14 +279,14 @@
   - Add navigation routes
   - _Requirements: 4.1-4.7_
 
-- [ ] 8.1 Create Payments Redux Slice
+- [x] 8.1 Create Payments Redux Slice
 
   - Create `src/store/slices/paymentsSlice.js`
   - Implement fetchPayments, createPayment, fetchPaymentById, updatePayment, deletePayment, fetchCustomerPayments, createCreditPayment, fetchStatistics thunks
   - Define initial state with list, current, loading, error, filters, statistics
   - _Requirements: 4.1_
 
-- [ ] 8.2 Create Payments Screens
+- [x] 8.2 Create Payments Screens
 
   - Create `src/screens/transactions/payments/PaymentsDashboardScreen.js`
   - Create `src/screens/transactions/payments/PaymentEntryScreen.js`
@@ -298,26 +298,26 @@
   - Create `src/screens/transactions/payments/index.js`
   - _Requirements: 4.1-4.7_
 
-- [ ] 8.3 Create Payment Card Component
+- [x] 8.3 Create Payment Card Component
 
   - Create `src/components/transactions/PaymentCard.js`
   - Display payment number, customer, amount, method, date, status
   - _Requirements: 4.1_
 
-- [ ] 8.4 Add Payments Navigation
+- [x] 8.4 Add Payments Navigation
 
   - Add PaymentsStack to DashboardNavigator
   - Add Payments access from Dashboard
   - _Requirements: 4.1_
 
-- [ ] 8.5 Implement Payment Business Logic
+- [x] 8.5 Implement Payment Business Logic
 
   - Validate payment amounts and methods
   - Update customer balance on payment
   - Handle credit payments and adjustments
   - _Requirements: 4.7_
 
-- [ ] 9. Cheque Management Module
+- [x] 9. Cheque Management Module
 
   - Create Redux slice with CRUD operations
   - Create dashboard, deposit, details, status, and feedback screens
@@ -325,14 +325,14 @@
   - Add navigation routes
   - _Requirements: 5.1-5.7_
 
-- [ ] 9.1 Create Cheques Redux Slice
+- [x] 9.1 Create Cheques Redux Slice
 
   - Create `src/store/slices/chequesSlice.js`
   - Implement fetchCheques, createCheque, fetchChequeById, updateCheque, sendToBank, updateFeedback, fetchStatistics thunks
   - Define initial state with list, current, loading, error, filters, statistics
   - _Requirements: 5.1_
 
-- [ ] 9.2 Create Cheques Screens
+- [x] 9.2 Create Cheques Screens
 
   - Create `src/screens/transactions/cheques/ChequesDashboardScreen.js`
   - Create `src/screens/transactions/cheques/ChequeDepositScreen.js`
@@ -342,39 +342,39 @@
   - Create `src/screens/transactions/cheques/index.js`
   - _Requirements: 5.1-5.6_
 
-- [ ] 9.3 Create Cheque Card Component
+- [x] 9.3 Create Cheque Card Component
 
   - Create `src/components/transactions/ChequeCard.js`
   - Display cheque number, bank, amount, date, status
   - _Requirements: 5.1_
 
-- [ ] 9.4 Add Cheques Navigation
+- [x] 9.4 Add Cheques Navigation
 
   - Add ChequesStack to DashboardNavigator
   - Add Cheques access from Dashboard and Payments
   - _Requirements: 5.1_
 
-- [ ] 9.5 Implement Cheque Business Logic
+- [x] 9.5 Implement Cheque Business Logic
 
   - Handle cheque status transitions
   - Update payment status on clearance
   - Handle bounced cheques and reversals
   - _Requirements: 5.6, 5.7_
 
-- [ ] 10. Payment Query Module
+- [x] 10. Payment Query Module
 
   - Create Redux slice with CRUD operations
   - Create list, generate, details, and edit screens
   - Add navigation routes
   - _Requirements: 6.1-6.4_
 
-- [ ] 10.1 Create Payment Queries Redux Slice
+- [x] 10.1 Create Payment Queries Redux Slice
 
   - Create `src/store/slices/paymentQueriesSlice.js`
   - Implement fetchPaymentQueries, generateQuery, fetchQueryById, updateQuery thunks
   - _Requirements: 6.1_
 
-- [ ] 10.2 Create Payment Queries Screens
+- [x] 10.2 Create Payment Queries Screens
 
   - Create `src/screens/transactions/paymentQueries/PaymentQueriesListScreen.js`
   - Create `src/screens/transactions/paymentQueries/GeneratePaymentQueryScreen.js`
@@ -383,20 +383,20 @@
   - Create `src/screens/transactions/paymentQueries/index.js`
   - _Requirements: 6.1-6.4_
 
-- [ ] 11. Payment Raise Module
+- [x] 11. Payment Raise Module
 
   - Create Redux slice with CRUD operations
   - Create list, create, details, and edit screens
   - Add navigation routes
   - _Requirements: 7.1-7.4_
 
-- [ ] 11.1 Create Payment Raises Redux Slice
+- [x] 11.1 Create Payment Raises Redux Slice
 
   - Create `src/store/slices/paymentRaisesSlice.js`
   - Implement fetchPaymentRaises, createRaise, fetchRaiseById, updateRaise thunks
   - _Requirements: 7.1_
 
-- [ ] 11.2 Create Payment Raises Screens
+- [x] 11.2 Create Payment Raises Screens
 
   - Create `src/screens/transactions/paymentRaises/PaymentRaisesListScreen.js`
   - Create `src/screens/transactions/paymentRaises/CreatePaymentRaiseScreen.js`
@@ -405,20 +405,20 @@
   - Create `src/screens/transactions/paymentRaises/index.js`
   - _Requirements: 7.1-7.4_
 
-- [ ] 12. Unit Transfer Module
+- [x] 12. Unit Transfer Module
 
   - Create Redux slice with CRUD operations
   - Create list, create, details, edit, and transaction screens
   - Add navigation routes
   - _Requirements: 8.1-8.5_
 
-- [ ] 12.1 Create Unit Transfers Redux Slice
+- [x] 12.1 Create Unit Transfers Redux Slice
 
   - Create `src/store/slices/unitTransfersSlice.js`
   - Implement fetchTransfers, createTransfer, fetchTransferById, updateTransfer thunks
   - _Requirements: 8.1_
 
-- [ ] 12.2 Create Unit Transfers Screens
+- [x] 12.2 Create Unit Transfers Screens
 
   - Create `src/screens/transactions/unitTransfers/UnitTransfersListScreen.js`
   - Create `src/screens/transactions/unitTransfers/CreateUnitTransferScreen.js`
@@ -428,7 +428,7 @@
   - Create `src/screens/transactions/unitTransfers/index.js`
   - _Requirements: 8.1-8.5_
 
-- [ ] 13. BBA Module
+- [x] 13. BBA Module
 
   - Create Redux slice with CRUD operations
   - Create dashboard, add, status, edit, and verify screens
@@ -437,13 +437,13 @@
   - Add navigation routes
   - _Requirements: 9.1-9.8_
 
-- [ ] 13.1 Create BBA Redux Slice
+- [x] 13.1 Create BBA Redux Slice
 
   - Create `src/store/slices/bbaSlice.js`
   - Implement fetchBBAs, createBBA, fetchBBAById, updateBBA, updateStatus, verifyBBA, autoVerify, autoStatusUpdate, fetchStatistics thunks
   - _Requirements: 9.1_
 
-- [ ] 13.2 Create BBA Screens
+- [x] 13.2 Create BBA Screens
 
   - Create `src/screens/transactions/bba/BBADashboardScreen.js`
   - Create `src/screens/transactions/bba/AddBBAScreen.js`
@@ -453,20 +453,20 @@
   - Create `src/screens/transactions/bba/index.js`
   - _Requirements: 9.1-9.8_
 
-- [ ] 14. Dispatch Module
+- [x] 14. Dispatch Module
 
   - Create Redux slice with CRUD operations
   - Create list, create, details, edit, and items screens
   - Add navigation routes
   - _Requirements: 10.1-10.5_
 
-- [ ] 14.1 Create Dispatches Redux Slice
+- [x] 14.1 Create Dispatches Redux Slice
 
   - Create `src/store/slices/dispatchesSlice.js`
   - Implement fetchDispatches, createDispatch, fetchDispatchById, updateDispatch, addItems thunks
   - _Requirements: 10.1_
 
-- [ ] 14.2 Create Dispatches Screens
+- [x] 14.2 Create Dispatches Screens
 
   - Create `src/screens/transactions/dispatches/DispatchesListScreen.js`
   - Create `src/screens/transactions/dispatches/CreateDispatchScreen.js`
