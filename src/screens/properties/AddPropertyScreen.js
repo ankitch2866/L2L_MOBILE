@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, TouchableOpacity, Alert } from 'react-native';
 import { TextInput, Button, HelperText, Menu, Text, Divider } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 import { useTheme } from '../../context';
 import { createProperty, fetchAllPropertiesData } from '../../store/slices/propertiesSlice';
 import { fetchProjects } from '../../store/slices/projectsSlice';
@@ -283,7 +283,7 @@ const AddPropertyScreen = ({ navigation }) => {
           {/* Section 1: Project Selection */}
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Icon name="office-building" size={20} color={theme.colors.primary} />
+              <PaperIcon source="office-building" size={20} color={theme.colors.primary} />
               <Text variant="titleMedium" style={styles.sectionTitle}>Project Selection</Text>
             </View>
 
@@ -304,7 +304,7 @@ const AddPropertyScreen = ({ navigation }) => {
                   <Text style={styles.menuButtonText}>
                     {selectedProject ? selectedProject.project_name : 'Select Project'}
                   </Text>
-                  <Icon name="chevron-down" size={20} color="#666" />
+                  <PaperIcon source="chevron-down" size={20} color="#666" />
                 </TouchableOpacity>
               }
               contentStyle={styles.menuContent}
@@ -345,7 +345,7 @@ const AddPropertyScreen = ({ navigation }) => {
                         {loadingSizes ? 'Loading sizes...' :
                           selectedSize ? `${selectedSize.size} sq ft` : 'Select Size'}
                       </Text>
-                      <Icon name="chevron-down" size={20} color="#666" />
+                      <PaperIcon source="chevron-down" size={20} color="#666" />
                     </TouchableOpacity>
                   }
                   contentStyle={styles.menuContent}
@@ -376,7 +376,7 @@ const AddPropertyScreen = ({ navigation }) => {
           {/* Section 2: Unit Details */}
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Icon name="home-city" size={20} color={theme.colors.primary} />
+              <PaperIcon source="home-city" size={20} color={theme.colors.primary} />
               <Text variant="titleMedium" style={styles.sectionTitle}>Unit Details</Text>
             </View>
 
@@ -411,7 +411,7 @@ const AddPropertyScreen = ({ navigation }) => {
                   <Text style={styles.menuButtonText}>
                     {selectedType ? selectedType.label : 'Select Unit Type'}
                   </Text>
-                  <Icon name="chevron-down" size={20} color="#666" />
+                  <PaperIcon source="chevron-down" size={20} color="#666" />
                 </TouchableOpacity>
               }
             >
@@ -447,7 +447,7 @@ const AddPropertyScreen = ({ navigation }) => {
           {/* Section 3: Additional Info */}
           <View style={styles.section}>
             <View style={styles.sectionHeader}>
-              <Icon name="information" size={20} color={theme.colors.primary} />
+              <PaperIcon source="information" size={20} color={theme.colors.primary} />
               <Text variant="titleMedium" style={styles.sectionTitle}>Additional Information</Text>
             </View>
 
@@ -468,7 +468,7 @@ const AddPropertyScreen = ({ navigation }) => {
                   <Text style={styles.menuButtonText}>
                     {selectedDesc ? selectedDesc.label : 'Select Unit Description'}
                   </Text>
-                  <Icon name="chevron-down" size={20} color="#666" />
+                  <PaperIcon source="chevron-down" size={20} color="#666" />
                 </TouchableOpacity>
               }
               contentStyle={styles.menuContent}

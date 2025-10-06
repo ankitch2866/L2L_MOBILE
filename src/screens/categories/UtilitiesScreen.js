@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { Text } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Text, List } from 'react-native-paper';
 import { useTheme } from '../../context';
 
 const UtilitiesScreen = ({ navigation }) => {
@@ -42,7 +41,7 @@ const UtilitiesScreen = ({ navigation }) => {
             activeOpacity={0.8}
           >
             <View style={styles.buttonContent}>
-              <Icon name={module.icon} size={36} color="#FFFFFF" style={styles.moduleIcon} />
+              <List.Icon icon={module.icon} color="#FFFFFF" style={styles.moduleIcon} />
               <Text style={styles.moduleText}>{module.name}</Text>
             </View>
           </TouchableOpacity>

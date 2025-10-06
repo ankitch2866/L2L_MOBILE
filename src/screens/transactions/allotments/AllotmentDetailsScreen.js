@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../../context';
 import { LoadingIndicator } from '../../../components';
 import { fetchAllotmentById, deleteAllotment, generateLetter } from '../../../store/slices/allotmentsSlice';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 const AllotmentDetailsScreen = ({ navigation, route }) => {
   const { allotmentId } = route.params;
@@ -80,7 +80,7 @@ const AllotmentDetailsScreen = ({ navigation, route }) => {
             <Text variant="headlineSmall" style={styles.title}>
               Allotment Details
             </Text>
-            <Chip icon="file-document-outline" style={styles.chip}>
+            <Chip icon="file-document" style={styles.chip}>
               {allotment.allotment_number || `#${allotment.id}`}
             </Chip>
           </View>
@@ -89,7 +89,7 @@ const AllotmentDetailsScreen = ({ navigation, route }) => {
 
           <View style={styles.section}>
             <Text variant="titleMedium" style={styles.sectionTitle}>
-              <Icon name="office-building" size={20} /> Project Information
+              <PaperIcon source="office-building" size={20} /> Project Information
             </Text>
             <DetailRow label="Project" value={allotment.project_name} />
             <DetailRow label="Unit" value={allotment.unit_name} />
@@ -100,7 +100,7 @@ const AllotmentDetailsScreen = ({ navigation, route }) => {
 
           <View style={styles.section}>
             <Text variant="titleMedium" style={styles.sectionTitle}>
-              <Icon name="account" size={20} /> Customer Information
+              <PaperIcon source="account" size={20} /> Customer Information
             </Text>
             <DetailRow label="Customer" value={allotment.customer_name} />
             <DetailRow label="Father's Name" value={allotment.father_name} />
@@ -111,7 +111,7 @@ const AllotmentDetailsScreen = ({ navigation, route }) => {
 
           <View style={styles.section}>
             <Text variant="titleMedium" style={styles.sectionTitle}>
-              <Icon name="calendar" size={20} /> Allotment Information
+              <PaperIcon source="calendar" size={20} /> Allotment Information
             </Text>
             <DetailRow label="Allotment Date" value={formatDate(allotment.allotment_date)} />
             <DetailRow label="Status" value={allotment.status || 'Active'} />
@@ -122,7 +122,7 @@ const AllotmentDetailsScreen = ({ navigation, route }) => {
 
           <View style={styles.section}>
             <Text variant="titleMedium" style={styles.sectionTitle}>
-              <Icon name="clock-outline" size={20} /> Timestamps
+              <PaperIcon source="clock" size={20} /> Timestamps
             </Text>
             <DetailRow label="Created At" value={formatDate(allotment.created_at)} />
             <DetailRow label="Updated At" value={formatDate(allotment.updated_at)} />

@@ -1,14 +1,13 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { Text } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Text, List } from 'react-native-paper';
 import { useTheme } from '../../context';
 
 const MastersScreen = ({ navigation }) => {
   const { theme } = useTheme();
 
   const masterModules = [
-    { name: 'Payment Plans', icon: 'file-document-outline', route: 'PaymentPlans', screen: 'PaymentPlansList', implemented: true },
+    { name: 'Payment Plans', icon: 'file-document', route: 'PaymentPlans', screen: 'PaymentPlansList', implemented: true },
     { name: 'Projects', icon: 'office-building', route: 'ProjectsStack', screen: 'ProjectsList', implemented: true },
     { name: 'Properties', icon: 'home-city', route: 'PropertiesStack', screen: 'PropertiesList', implemented: true },
     { name: 'PLC', icon: 'cash-multiple', route: 'PLC', screen: 'PLCList', implemented: true },
@@ -48,7 +47,7 @@ const MastersScreen = ({ navigation }) => {
             activeOpacity={0.8}
           >
             <View style={styles.buttonContent}>
-              <Icon name={module.icon} size={36} color="#FFFFFF" style={styles.moduleIcon} />
+              <List.Icon icon={module.icon} color="#FFFFFF" style={styles.moduleIcon} />
               <Text style={styles.moduleText}>{module.name}</Text>
             </View>
           </TouchableOpacity>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView, TouchableOpacity, Alert } from 'react-native';
-import { Text } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Text, List } from 'react-native-paper';
 import { useTheme } from '../../context';
 
 const ReportsScreen = ({ navigation }) => {
@@ -14,10 +13,10 @@ const ReportsScreen = ({ navigation }) => {
     { name: 'Customer Wise Collection', icon: 'account-cash', route: null, screen: null, implemented: false },
     { name: 'Customer List', icon: 'format-list-bulleted', route: null, screen: null, implemented: false },
     { name: 'Master Reports', icon: 'file-chart', route: null, screen: null, implemented: false },
-    { name: 'BBA Report', icon: 'file-document-outline', route: null, screen: null, implemented: false },
+    { name: 'BBA Report', icon: 'file-document', route: null, screen: null, implemented: false },
     { name: 'BBA Status', icon: 'check-circle', route: null, screen: null, implemented: false },
     { name: 'Calling Details', icon: 'phone-log', route: null, screen: null, implemented: false },
-    { name: 'Correspondence', icon: 'email-outline', route: null, screen: null, implemented: false },
+    { name: 'Correspondence', icon: 'email', route: null, screen: null, implemented: false },
     { name: 'Unit Transfers', icon: 'transfer', route: null, screen: null, implemented: false },
     { name: 'Stock Report', icon: 'package-variant-closed', route: null, screen: null, implemented: false },
     { name: 'Outstanding', icon: 'currency-usd', route: null, screen: null, implemented: false },
@@ -54,7 +53,7 @@ const ReportsScreen = ({ navigation }) => {
             activeOpacity={0.8}
           >
             <View style={styles.buttonContent}>
-              <Icon name={module.icon} size={36} color="#FFFFFF" style={styles.moduleIcon} />
+              <List.Icon icon={module.icon} color="#FFFFFF" style={styles.moduleIcon} />
               <Text style={styles.moduleText}>{module.name}</Text>
             </View>
           </TouchableOpacity>

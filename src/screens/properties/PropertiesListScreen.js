@@ -3,7 +3,7 @@ import { View, StyleSheet, ScrollView, RefreshControl, Alert } from 'react-nativ
 import { Searchbar, FAB, Text, Card, Chip, Button, Menu } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 import { useTheme } from '../../context';
 import { LoadingIndicator, EmptyState } from '../../components';
 import { fetchAllPropertiesData, setSearchQuery, setSelectedProject } from '../../store/slices/propertiesSlice';
@@ -179,7 +179,7 @@ const PropertiesListScreen = ({ navigation }) => {
       {/* Error Display */}
       {error && (
         <View style={styles.errorContainer}>
-          <Icon name="alert-circle" size={24} color="#EF4444" />
+          <PaperIcon source="alert-circle" size={24} color="#EF4444" />
           <Text style={styles.errorText}>{error}</Text>
           <Button mode="contained" onPress={handleRefresh} buttonColor="#EF4444">
             Retry
@@ -205,7 +205,7 @@ const PropertiesListScreen = ({ navigation }) => {
                 {/* Project Header */}
                 <View style={styles.projectHeader}>
                   <View style={styles.projectTitleRow}>
-                    <Icon name="office-building" size={24} color={theme.colors.primary} />
+                    <PaperIcon source="office-building" size={24} color={theme.colors.primary} />
                     <Text variant="titleLarge" style={[styles.projectTitle, { color: theme.colors.text }]}>
                       {project.project_name}
                     </Text>
@@ -242,28 +242,28 @@ const PropertiesListScreen = ({ navigation }) => {
                         {/* Unit Details */}
                         <View style={styles.unitDetails}>
                           <View style={styles.detailRow}>
-                            <Icon name="floor-plan" size={14} color="#6B7280" />
+                            <PaperIcon source="floor-plan" size={14} color="#6B7280" />
                             <Text variant="bodySmall" style={styles.detailLabel}>Type:</Text>
                             <Text variant="bodySmall" style={styles.detailValue} numberOfLines={1}>
                               {unit.unit_type || 'N/A'}
                             </Text>
                           </View>
                           <View style={styles.detailRow}>
-                            <Icon name="stairs" size={14} color="#6B7280" />
+                            <PaperIcon source="stairs" size={14} color="#6B7280" />
                             <Text variant="bodySmall" style={styles.detailLabel}>Floor:</Text>
                             <Text variant="bodySmall" style={styles.detailValue}>
                               {unit.floor ? `Floor ${unit.floor}` : 'N/A'}
                             </Text>
                           </View>
                           <View style={styles.detailRow}>
-                            <Icon name="ruler-square" size={14} color="#6B7280" />
+                            <PaperIcon source="ruler-square" size={14} color="#6B7280" />
                             <Text variant="bodySmall" style={styles.detailLabel}>Size:</Text>
                             <Text variant="bodySmall" style={styles.detailValue}>
                               {formatUnitSize(unit.unit_size)}
                             </Text>
                           </View>
                           <View style={styles.detailRow}>
-                            <Icon name="currency-inr" size={14} color="#6B7280" />
+                            <PaperIcon source="currency-inr" size={14} color="#6B7280" />
                             <Text variant="bodySmall" style={styles.detailLabel}>Price:</Text>
                             <Text variant="bodySmall" style={styles.detailValue}>
                               {formatCurrency(unit.bsp)}

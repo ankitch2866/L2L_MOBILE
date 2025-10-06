@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../../context';
 import { LoadingIndicator } from '../../../components';
 import { fetchBookingById, deleteBooking } from '../../../store/slices/bookingsSlice';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 const BookingDetailsScreen = ({ route, navigation }) => {
   const { bookingId } = route.params;
@@ -69,7 +69,7 @@ const BookingDetailsScreen = ({ route, navigation }) => {
         <Card.Content>
           <View style={styles.headerContent}>
             <View style={styles.headerLeft}>
-              <Icon name="check-circle" size={32} color="#10B981" />
+              <PaperIcon source="check-circle" size={32} color="#10B981" />
               <View style={styles.headerText}>
                 <Text variant="headlineSmall" style={styles.bookingId}>
                   Booking #{current.booking_id || 'N/A'}
@@ -95,7 +95,7 @@ const BookingDetailsScreen = ({ route, navigation }) => {
       <Card style={[styles.sectionCard, { backgroundColor: '#EFF6FF' }]}>
         <Card.Content>
           <View style={styles.sectionHeader}>
-            <Icon name="office-building" size={20} color="#3B82F6" />
+            <PaperIcon source="office-building" size={20} color="#3B82F6" />
             <Text variant="titleMedium" style={styles.sectionTitle}>Project Details</Text>
           </View>
           
@@ -109,7 +109,7 @@ const BookingDetailsScreen = ({ route, navigation }) => {
       <Card style={[styles.sectionCard, { backgroundColor: '#F0FDF4' }]}>
         <Card.Content>
           <View style={styles.sectionHeader}>
-            <Icon name="account" size={20} color="#10B981" />
+            <PaperIcon source="account" size={20} color="#10B981" />
             <Text variant="titleMedium" style={styles.sectionTitle}>Customer Details</Text>
           </View>
           
@@ -124,7 +124,7 @@ const BookingDetailsScreen = ({ route, navigation }) => {
       <Card style={[styles.sectionCard, { backgroundColor: '#FDF4FF' }]}>
         <Card.Content>
           <View style={styles.sectionHeader}>
-            <Icon name="file-document" size={20} color="#A855F7" />
+            <PaperIcon source="file-document" size={20} color="#A855F7" />
             <Text variant="titleMedium" style={styles.sectionTitle}>Property Description</Text>
           </View>
           
@@ -140,7 +140,7 @@ const BookingDetailsScreen = ({ route, navigation }) => {
       <Card style={[styles.sectionCard, { backgroundColor: '#FEF3C7' }]}>
         <Card.Content>
           <View style={styles.sectionHeader}>
-            <Icon name="account-tie" size={20} color="#F59E0B" />
+            <PaperIcon source="account-tie" size={20} color="#F59E0B" />
             <Text variant="titleMedium" style={styles.sectionTitle}>Broker Details</Text>
           </View>
           
@@ -153,7 +153,7 @@ const BookingDetailsScreen = ({ route, navigation }) => {
         <Card style={[styles.sectionCard, { backgroundColor: '#F9FAFB' }]}>
           <Card.Content>
             <View style={styles.sectionHeader}>
-              <Icon name="note-text" size={20} color="#6B7280" />
+              <PaperIcon source="note-text" size={20} color="#6B7280" />
               <Text variant="titleMedium" style={styles.sectionTitle}>Remarks</Text>
             </View>
             
@@ -202,7 +202,7 @@ const InfoCard = ({ icon, label, value, iconBg, iconColor, multiline }) => (
   <View style={styles.infoCard}>
     <View style={styles.infoCardContent}>
       <View style={[styles.iconBox, { backgroundColor: iconBg }]}>
-        <Icon name={icon} size={20} color={iconColor} />
+        <PaperIcon source={icon} size={20} color={iconColor} />
       </View>
       <View style={styles.infoTextContainer}>
         <Text variant="bodySmall" style={styles.infoLabel}>{label}</Text>

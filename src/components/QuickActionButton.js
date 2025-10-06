@@ -2,7 +2,7 @@
 import React from 'react';
 import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 const QuickActionButton = ({ title, icon, color = '#EF4444', onPress }) => {
   return (
@@ -14,7 +14,7 @@ const QuickActionButton = ({ title, icon, color = '#EF4444', onPress }) => {
       accessibilityLabel={title}
       accessibilityRole="button"
     >
-      <Icon name={icon} size={32} color="#FFFFFF" style={styles.icon} />
+      <PaperIcon source={icon} size={32} color="#FFFFFF" style={styles.icon} />
       <Text variant="labelMedium" style={styles.label}>
         {title}
       </Text>

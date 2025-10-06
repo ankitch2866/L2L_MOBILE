@@ -4,7 +4,7 @@ import { Text, Card, Button, Divider } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../context';
 import { LoadingIndicator } from '../../components';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 import { fetchPropertyById, deleteProperty, clearCurrentProperty } from '../../store/slices/propertiesSlice';
 
 const PropertyDetailsScreen = ({ route, navigation }) => {
@@ -41,7 +41,7 @@ const PropertyDetailsScreen = ({ route, navigation }) => {
 
   const DetailRow = ({ icon, label, value }) => (
     <View style={styles.row}>
-      <Icon name={icon} size={20} color={theme.colors.primary} />
+      <PaperIcon source={icon} size={20} color={theme.colors.primary} />
       <View style={styles.rowContent}>
         <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>{label}</Text>
         <Text variant="bodyLarge" style={{ color: theme.colors.text }}>{value || 'N/A'}</Text>

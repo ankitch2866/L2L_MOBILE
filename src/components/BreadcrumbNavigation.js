@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Chip } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 const BreadcrumbNavigation = ({ breadcrumbs = [], onBreadcrumbPress }) => {
   if (!breadcrumbs || breadcrumbs.length === 0) {

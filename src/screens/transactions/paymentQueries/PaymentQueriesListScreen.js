@@ -134,7 +134,7 @@ const PaymentQueriesListScreen = ({ navigation }) => {
         }
         ListEmptyComponent={
           <EmptyState
-            icon="file-document-outline"
+            icon="file-document"
             message="No payment queries found"
             action={{
               label: 'Generate Query',

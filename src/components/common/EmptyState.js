@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Button } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 const EmptyState = ({ 
   icon = 'inbox', 
@@ -13,7 +13,7 @@ const EmptyState = ({
   return (
     <View style={styles.container}>
       <View style={styles.iconContainer}>
-        <Icon name={icon} size={64} color="#D1D5DB" />
+        <PaperIcon source={icon} size={64} color="#D1D5DB" />
       </View>
       <Text variant="headlineSmall" style={styles.title}>
         {title}

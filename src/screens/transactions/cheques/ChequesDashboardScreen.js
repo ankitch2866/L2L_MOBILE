@@ -77,7 +77,7 @@ const ChequesDashboardScreen = ({ navigation }) => {
             <Title>Status Overview</Title>
             <View style={styles.statusGrid}>
               <View style={styles.statusItem}>
-                <Chip icon="clock-outline" style={[styles.statusChip, { backgroundColor: '#DBEAFE' }]}>
+                <Chip icon="clock" style={[styles.statusChip, { backgroundColor: '#DBEAFE' }]}>
                   Pending
                 </Chip>
                 <Text style={styles.statusCount}>{statistics.pending_count || 0}</Text>

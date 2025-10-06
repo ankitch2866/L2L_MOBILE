@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 import { formatTimeAgo } from '../utils/timeUtils';
 
 const ActivityItem = ({ activity }) => {
@@ -42,7 +42,7 @@ const ActivityItem = ({ activity }) => {
   return (
     <View style={styles.container}>
       <View style={[styles.iconContainer, { backgroundColor: iconColor + '20' }]}>
-        <Icon name={iconName} size={24} color={iconColor} />
+        <PaperIcon source={iconName} size={24} color={iconColor} />
       </View>
       
       <View style={styles.content}>

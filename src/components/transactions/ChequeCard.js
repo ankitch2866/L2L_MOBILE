@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, Card, Chip } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 const ChequeCard = ({ cheque, onPress, onEdit, theme }) => {
   const getStatusColor = (status) => {
@@ -24,7 +24,7 @@ const ChequeCard = ({ cheque, onPress, onEdit, theme }) => {
       case 'submitted':
       case 'sent to bank': return 'bank-transfer';
       case 'cancelled': return 'cancel';
-      default: return 'clock-outline';
+      default: return 'clock';
     }
   };
 
@@ -57,7 +57,7 @@ const ChequeCard = ({ cheque, onPress, onEdit, theme }) => {
       <Card.Content>
         <View style={styles.header}>
           <View style={styles.titleRow}>
-            <Icon name="checkbook" size={24} color={theme.colors.primary} />
+            <PaperIcon source="checkbook" size={24} color={theme.colors.primary} />
             <Text variant="titleMedium" style={[styles.title, { color: theme.colors.text }]} numberOfLines={1}>
               #{cheque.cheque_number || 'N/A'}
             </Text>
@@ -74,35 +74,35 @@ const ChequeCard = ({ cheque, onPress, onEdit, theme }) => {
         
         <View style={styles.details}>
           <View style={styles.detailRow}>
-            <Icon name="bank" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="bank" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }} numberOfLines={1}>
               {cheque.bank_name || 'No bank'}
             </Text>
           </View>
           
           <View style={styles.detailRow}>
-            <Icon name="account" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="account" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }} numberOfLines={1}>
               {cheque.customer_name || 'No customer'}
             </Text>
           </View>
           
           <View style={styles.detailRow}>
-            <Icon name="currency-inr" size={16} color={theme.colors.primary} />
+            <PaperIcon source="currency-inr" size={16} color={theme.colors.primary} />
             <Text variant="bodyMedium" style={{ color: theme.colors.primary, fontWeight: 'bold' }}>
               {formatCurrency(cheque.amount)}
             </Text>
           </View>
           
           <View style={styles.detailRow}>
-            <Icon name="calendar" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="calendar" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>
               Cheque: {formatDate(cheque.cheque_date)}
             </Text>
           </View>
 
           <View style={styles.detailRow}>
-            <Icon name="calendar-check" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="calendar-check" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>
               Deposit: {formatDate(cheque.deposit_date)}
             </Text>
@@ -110,7 +110,7 @@ const ChequeCard = ({ cheque, onPress, onEdit, theme }) => {
 
           {cheque.clearance_date && (
             <View style={styles.detailRow}>
-              <Icon name="calendar-check-outline" size={16} color="#10B981" />
+              <PaperIcon source="calendar-check" size={16} color="#10B981" />
               <Text variant="bodySmall" style={{ color: '#10B981' }}>
                 Cleared: {formatDate(cheque.clearance_date)}
               </Text>
@@ -119,7 +119,7 @@ const ChequeCard = ({ cheque, onPress, onEdit, theme }) => {
 
           {cheque.remarks && (
             <View style={styles.remarksRow}>
-              <Icon name="note-text" size={16} color={theme.colors.textSecondary} />
+              <PaperIcon source="note-text" size={16} color={theme.colors.textSecondary} />
               <Text variant="bodySmall" style={{ color: theme.colors.textSecondary, fontStyle: 'italic' }} numberOfLines={2}>
                 {cheque.remarks}
               </Text>
@@ -129,7 +129,7 @@ const ChequeCard = ({ cheque, onPress, onEdit, theme }) => {
 
         {onEdit && (
           <TouchableOpacity onPress={() => onEdit(cheque)} style={styles.editBtn}>
-            <Icon name="pencil" size={20} color={theme.colors.primary} />
+            <PaperIcon source="pencil" size={20} color={theme.colors.primary} />
           </TouchableOpacity>
         )}
       </Card.Content>

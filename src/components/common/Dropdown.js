@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Menu, TextInput, Text } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 const Dropdown = ({ label, value, onValueChange, items, error, disabled, style }) => {
   const [visible, setVisible] = useState(false);
@@ -29,7 +29,7 @@ const Dropdown = ({ label, value, onValueChange, items, error, disabled, style }
               disabled={disabled}
               right={
                 <TextInput.Icon
-                  icon={() => <Icon name="chevron-down" size={24} color={disabled ? '#999' : '#666'} />}
+                  icon={() => <PaperIcon source="chevron-down" size={24} color={disabled ? '#999' : '#666'} />}
                 />
               }
               style={[styles.input, disabled && styles.disabled]}

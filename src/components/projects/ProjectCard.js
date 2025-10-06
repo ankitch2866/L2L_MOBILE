@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, Card, Chip } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 const ProjectCard = ({ project, onPress, onEdit, onDelete, theme }) => {
   return (
@@ -9,7 +9,7 @@ const ProjectCard = ({ project, onPress, onEdit, onDelete, theme }) => {
       <Card.Content>
         <View style={styles.header}>
           <View style={styles.titleRow}>
-            <Icon name="office-building" size={24} color={theme.colors.primary} />
+            <PaperIcon source="office-building" size={24} color={theme.colors.primary} />
             <Text variant="titleMedium" style={[styles.title, { color: theme.colors.text }]} numberOfLines={1}>
               {project.project_name}
             </Text>
@@ -18,7 +18,7 @@ const ProjectCard = ({ project, onPress, onEdit, onDelete, theme }) => {
         </View>
         
         <View style={styles.location}>
-          <Icon name="map-marker" size={16} color={theme.colors.textSecondary} />
+          <PaperIcon source="map-marker" size={16} color={theme.colors.textSecondary} />
           <Text variant="bodySmall" style={[styles.address, { color: theme.colors.textSecondary }]} numberOfLines={2}>
             {project.address}
           </Text>
@@ -26,10 +26,10 @@ const ProjectCard = ({ project, onPress, onEdit, onDelete, theme }) => {
 
         <View style={styles.actions}>
           <TouchableOpacity onPress={() => onEdit(project)} style={styles.actionBtn}>
-            <Icon name="pencil" size={20} color={theme.colors.primary} />
+            <PaperIcon source="pencil" size={20} color={theme.colors.primary} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => onDelete(project)} style={styles.actionBtn}>
-            <Icon name="delete" size={20} color="#EF4444" />
+            <PaperIcon source="delete" size={20} color="#EF4444" />
           </TouchableOpacity>
         </View>
       </Card.Content>

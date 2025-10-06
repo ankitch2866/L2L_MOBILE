@@ -71,7 +71,7 @@ const StockCard = ({ stock, onPress, onEdit, onDelete, theme }) => {
           </Chip>
           {stock.hold_till_date && (
             <Chip 
-              icon="clock-outline"
+              icon="clock"
               style={[styles.holdChip, { backgroundColor: theme.colors.errorContainer }]}
               textStyle={{ color: theme.colors.error }}
             >

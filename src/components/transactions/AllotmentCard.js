@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Text, Card } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 const AllotmentCard = ({ allotment, onPress, onEdit, theme }) => {
   const formatDate = (dateString) => {
@@ -45,37 +45,37 @@ const AllotmentCard = ({ allotment, onPress, onEdit, theme }) => {
       <Card.Content>
         <View style={styles.header}>
           <View style={styles.titleRow}>
-            <Icon name="file-document-outline" size={24} color={theme.colors.primary} />
+            <PaperIcon source="file-document" size={24} color={theme.colors.primary} />
             <Text variant="titleMedium" style={[styles.title, { color: theme.colors.text }]} numberOfLines={1}>
               {allotment.allotment_number || `Allotment #${allotment.id}`}
             </Text>
           </View>
           <TouchableOpacity onPress={handleDelete} style={styles.deleteBtn}>
-            <Icon name="delete" size={20} color="#EF4444" />
+            <PaperIcon source="delete" size={20} color="#EF4444" />
           </TouchableOpacity>
         </View>
         
         <View style={styles.details}>
           <View style={styles.detailRow}>
-            <Icon name="account" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="account" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>
               {allotment.customer_name || 'No customer'}
             </Text>
           </View>
           <View style={styles.detailRow}>
-            <Icon name="office-building" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="office-building" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }} numberOfLines={1}>
               {allotment.project_name || 'No project'}
             </Text>
           </View>
           <View style={styles.detailRow}>
-            <Icon name="home" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="home" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>
               Unit: {allotment.unit_name || 'N/A'}
             </Text>
           </View>
           <View style={styles.detailRow}>
-            <Icon name="calendar" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="calendar" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>
               {formatDate(allotment.allotment_date)}
             </Text>
@@ -83,7 +83,7 @@ const AllotmentCard = ({ allotment, onPress, onEdit, theme }) => {
         </View>
 
         <TouchableOpacity onPress={() => onEdit(allotment)} style={styles.editBtn}>
-          <Icon name="pencil" size={20} color={theme.colors.primary} />
+          <PaperIcon source="pencil" size={20} color={theme.colors.primary} />
         </TouchableOpacity>
       </Card.Content>
     </Card>

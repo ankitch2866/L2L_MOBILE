@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Animated } from 'react-native';
 import { Text, IconButton } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 const Toast = ({ visible, message, type = 'info', duration = 3000, onDismiss }) => {
   const [fadeAnim] = useState(new Animated.Value(0));
@@ -79,7 +79,7 @@ const Toast = ({ visible, message, type = 'info', duration = 3000, onDismiss }) 
         { backgroundColor: toastStyle.backgroundColor, opacity: fadeAnim },
       ]}
     >
-      <Icon name={toastStyle.icon} size={24} color="#FFFFFF" style={styles.icon} />
+      <PaperIcon source={toastStyle.icon} size={24} color="#FFFFFF" style={styles.icon} />
       <Text style={styles.message} numberOfLines={2}>
         {message}
       </Text>

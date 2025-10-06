@@ -1,8 +1,9 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Platform } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 // Screens
 import DashboardHomeScreen from '../screens/dashboard/DashboardHomeScreen';
@@ -156,7 +157,7 @@ const BackButton = ({ navigation }) => (
     onPress={() => navigation.goBack()}
     style={{ marginLeft: 10, padding: 8 }}
   >
-    <Icon name="arrow-left" size={24} color="#FFFFFF" />
+    <PaperIcon source="arrow-left" size={24} color="#FFFFFF" />
   </TouchableOpacity>
 );
 
@@ -688,6 +689,8 @@ const ProfileStack = () => {
 
 // Main Tab Navigator
 const MainTabs = () => {
+  const insets = useSafeAreaInsets();
+  
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -695,26 +698,33 @@ const MainTabs = () => {
           let iconName;
 
           if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
+            iconName = focused ? 'home' : 'home';
           } else if (route.name === 'Masters') {
-            iconName = focused ? 'database' : 'database-outline';
+            iconName = focused ? 'database' : 'database';
           } else if (route.name === 'Transactions') {
             iconName = focused ? 'swap-horizontal' : 'swap-horizontal';
           } else if (route.name === 'Reports') {
-            iconName = focused ? 'chart-bar' : 'chart-bar-outline';
+            iconName = focused ? 'chart-bar' : 'chart-line';
           } else if (route.name === 'Utilities') {
             iconName = focused ? 'tools' : 'tools';
           } else if (route.name === 'Profile') {
-            iconName = focused ? 'account' : 'account-outline';
+            iconName = focused ? 'account' : 'account';
           }
 
-          return <Icon name={iconName} size={20} color={color} />;
+          return <PaperIcon source={iconName} size={20} color={color} />;
         },
         tabBarActiveTintColor: '#EF4444',
         tabBarInactiveTintColor: '#6B7280',
         headerShown: false,
         tabBarLabelStyle: { fontSize: 10, fontWeight: '600' },
-        tabBarStyle: { height: 70, paddingBottom: 10, paddingTop: 8 },
+        tabBarStyle: { 
+          height: 70 + (Platform.OS === 'android' ? Math.max(insets.bottom, 0) : 0), 
+          paddingBottom: Platform.OS === 'android' ? Math.max(insets.bottom, 0) + 10 : 10, 
+          paddingTop: 8,
+          backgroundColor: '#FFFFFF',
+          borderTopWidth: 1,
+          borderTopColor: '#E5E7EB',
+        },
       })}
     >
       <Tab.Screen 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { Text, Card, Chip } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 const BookingCard = ({ booking, onPress, onEdit, theme }) => {
   // Debug: Log booking data to see what fields are available
@@ -18,7 +18,7 @@ const BookingCard = ({ booking, onPress, onEdit, theme }) => {
 
   const getStatusIcon = (status) => {
     switch (status?.toLowerCase()) {
-      case 'pending': return 'clock-outline';
+      case 'pending': return 'clock';
       case 'confirmed': return 'check-circle';
       case 'cancelled': return 'close-circle';
       default: return 'help-circle';
@@ -73,43 +73,43 @@ const BookingCard = ({ booking, onPress, onEdit, theme }) => {
       <Card.Content>
         <View style={styles.header}>
           <View style={styles.titleRow}>
-            <Icon name="file-document" size={24} color={theme.colors.primary} />
+            <PaperIcon source="file-document" size={24} color={theme.colors.primary} />
             <Text variant="titleMedium" style={[styles.title, { color: theme.colors.text }]} numberOfLines={1}>
               {booking.manual_application_id || `Booking #${booking.booking_id}`}
             </Text>
           </View>
           <TouchableOpacity onPress={handleDelete} style={styles.deleteBtn}>
-            <Icon name="delete" size={20} color="#EF4444" />
+            <PaperIcon source="delete" size={20} color="#EF4444" />
           </TouchableOpacity>
         </View>
         
         <View style={styles.details}>
           <View style={styles.detailRow}>
-            <Icon name="account" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="account" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>
               {booking.customer_name || 'No customer'}
             </Text>
           </View>
           <View style={styles.detailRow}>
-            <Icon name="office-building" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="office-building" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }} numberOfLines={1}>
               {booking.project_name || 'No project'}
             </Text>
           </View>
           <View style={styles.detailRow}>
-            <Icon name="ruler" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="ruler" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>
               Size: {booking.unit_size || booking.unitSize || 'N/A'} sq ft
             </Text>
           </View>
           <View style={styles.detailRow}>
-            <Icon name="currency-inr" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="currency-inr" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.text, fontWeight: '600' }}>
               Price: {formatPrice(booking.unit_price || booking.unitPrice)}
             </Text>
           </View>
           <View style={styles.detailRow}>
-            <Icon name="calendar" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="calendar" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>
               {formatDate(booking.booking_date)}
             </Text>
@@ -117,7 +117,7 @@ const BookingCard = ({ booking, onPress, onEdit, theme }) => {
         </View>
 
         <TouchableOpacity onPress={() => onEdit(booking)} style={styles.editBtn}>
-          <Icon name="pencil" size={20} color={theme.colors.primary} />
+          <PaperIcon source="pencil" size={20} color={theme.colors.primary} />
         </TouchableOpacity>
       </Card.Content>
     </Card>

@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Button, Card } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -46,7 +46,7 @@ class ErrorBoundary extends React.Component {
             <Card style={styles.card}>
               <Card.Content>
                 <View style={styles.iconContainer}>
-                  <Icon name="alert-circle" size={64} color="#DC2626" />
+                  <PaperIcon source="alert-circle" size={64} color="#DC2626" />
                 </View>
                 
                 <Text variant="headlineSmall" style={styles.title}>

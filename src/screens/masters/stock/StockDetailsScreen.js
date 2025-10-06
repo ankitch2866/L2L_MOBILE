@@ -75,7 +75,7 @@ const StockDetailsScreen = ({ route, navigation }) => {
             </Chip>
             {current.hold_till_date && (
               <Chip 
-                icon="clock-outline"
+                icon="clock"
                 style={[styles.chip, { backgroundColor: theme.colors.errorContainer }]}
                 textStyle={{ color: theme.colors.error }}
               >

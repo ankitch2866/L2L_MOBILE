@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, Card } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 const StatCard = ({ title, value, icon, color = '#3B82F6', onPress }) => {
   const CardComponent = onPress ? TouchableOpacity : View;
@@ -16,7 +16,7 @@ const StatCard = ({ title, value, icon, color = '#3B82F6', onPress }) => {
       <Card style={styles.card}>
         <Card.Content style={styles.content}>
           <View style={[styles.iconContainer, { backgroundColor: color + '20' }]}>
-            <Icon name={icon} size={28} color={color} />
+            <PaperIcon source={icon} size={28} color={color} />
           </View>
           
           <View style={styles.textContainer}>

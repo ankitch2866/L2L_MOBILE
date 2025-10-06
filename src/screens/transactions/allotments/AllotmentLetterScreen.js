@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../../context';
 import { LoadingIndicator } from '../../../components';
 import { fetchAllotmentById } from '../../../store/slices/allotmentsSlice';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 const AllotmentLetterScreen = ({ navigation, route }) => {
   const { allotmentId } = route.params;

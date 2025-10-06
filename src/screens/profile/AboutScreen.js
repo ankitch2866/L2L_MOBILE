@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Card, List, Divider } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 import { useTheme } from '../../context';
 
 const AboutScreen = () => {
@@ -27,7 +27,7 @@ const AboutScreen = () => {
       <Card style={styles.headerCard}>
         <Card.Content style={styles.headerContent}>
           <View style={styles.logoContainer}>
-            <Icon name="office-building" size={64} color="#EF4444" />
+            <PaperIcon source="office-building" size={64} color="#EF4444" />
           </View>
           <Text variant="headlineMedium" style={styles.appName}>
             HL Group ERP

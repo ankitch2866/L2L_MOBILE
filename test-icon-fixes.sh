@@ -1,0 +1,30 @@
+#!/bin/bash
+
+echo "🧪 Testing Icon Fixes for Android"
+echo "================================="
+
+echo "📱 Starting Expo development server..."
+echo "🔍 Test the following on your Android device:"
+echo ""
+echo "✅ Navigation Bar Icons:"
+echo "   - Dashboard (home icon)"
+echo "   - Masters (database icon)" 
+echo "   - Transactions (swap-horizontal icon)"
+echo "   - Reports (chart-bar icon)"
+echo "   - Utilities (tools icon)"
+echo "   - Profile (account icon)"
+echo ""
+echo "✅ Module Icons in each screen:"
+echo "   - Masters: Payment Plans, Projects, Properties, etc."
+echo "   - Transactions: Booking, Payment, Cheque Management, etc."
+echo "   - Reports: Project Details, Daily Collection, etc."
+echo "   - Utilities: Manage Employees, Allotment Letter, etc."
+echo ""
+echo "✅ Profile Icons (should already work):"
+echo "   - Reset Password, Settings, About"
+echo ""
+echo "🚀 Starting development server..."
+echo "📱 Scan QR code with Expo Go app on your Android device"
+echo ""
+
+npx expo start

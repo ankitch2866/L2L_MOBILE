@@ -95,7 +95,7 @@ const ChequeStatusScreen = ({ navigation }) => {
         }
       >
         {list.length === 0 ? (
-          <EmptyState message="No cheques found" icon="check-circle-outline" />
+          <EmptyState message="No cheques found" icon="check-circle" />
         ) : (
           list.map((cheque) => (
             <TouchableOpacity

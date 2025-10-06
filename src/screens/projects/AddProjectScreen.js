@@ -3,7 +3,7 @@ import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert, Im
 import { TextInput, Button, HelperText, Text, Divider, Card } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import * as ImagePicker from 'expo-image-picker';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 import { useTheme } from '../../context';
 import { createProject, fetchProjects } from '../../store/slices/projectsSlice';
 
@@ -192,12 +192,12 @@ const AddProjectScreen = ({ navigation }) => {
                   <View style={styles.imagePreviewContainer}>
                     <Image source={{ uri: signImage.uri }} style={styles.imagePreview} />
                     <TouchableOpacity onPress={removeImage} style={styles.removeImageButton}>
-                      <Icon name="close-circle" size={24} color="#EF4444" />
+                      <PaperIcon source="close-circle" size={24} color="#EF4444" />
                     </TouchableOpacity>
                   </View>
                 ) : (
                   <View style={styles.uploadPlaceholder}>
-                    <Icon name="upload" size={48} color="#9CA3AF" />
+                    <PaperIcon source="upload" size={48} color="#9CA3AF" />
                     <Text variant="bodyMedium" style={styles.uploadText}>
                       Tap to upload sign image
                     </Text>

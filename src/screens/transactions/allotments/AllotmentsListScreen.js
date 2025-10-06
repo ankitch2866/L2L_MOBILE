@@ -99,7 +99,7 @@ const AllotmentsListScreen = ({ navigation }) => {
         keyExtractor={(item) => `allotment-${item.id || Math.random()}`}
         ListEmptyComponent={
           <EmptyState
-            icon="file-document-outline"
+            icon="file-document"
             title="No Allotments"
             message={searchQuery || filters.project_id ? "No matching allotments" : "Create your first allotment"}
             actionText="Create Allotment"

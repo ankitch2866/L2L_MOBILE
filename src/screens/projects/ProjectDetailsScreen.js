@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../../context';
 import { LoadingIndicator } from '../../components';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 import { fetchProjectById, deleteProject, clearCurrentProject } from '../../store/slices/projectsSlice';
 
 const ProjectDetailsScreen = ({ route, navigation }) => {
@@ -70,7 +70,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
     <Card style={[styles.infoCard, { backgroundColor: '#FFFFFF' }]}>
       <Card.Content style={styles.infoCardContent}>
         <View style={[styles.iconContainer, { backgroundColor: iconColor + '20' }]}>
-          <Icon name={icon} size={24} color={iconColor} />
+          <PaperIcon source={icon} size={24} color={iconColor} />
         </View>
         <View style={styles.infoTextContainer}>
           <Text variant="bodySmall" style={styles.infoLabel}>{label}</Text>
@@ -167,7 +167,7 @@ const ProjectDetailsScreen = ({ route, navigation }) => {
               />
             ) : (
               <View style={styles.noImageContainer}>
-                <Icon name="image-off" size={48} color="#9CA3AF" />
+                <PaperIcon source="image-off" size={48} color="#9CA3AF" />
                 <Text variant="bodyMedium" style={styles.noImageText}>
                   No signature image available
                 </Text>

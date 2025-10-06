@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, Card, Chip } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 const PaymentCard = ({ payment, onPress, onEdit, theme }) => {
   const getMethodColor = (method) => {
@@ -55,7 +55,7 @@ const PaymentCard = ({ payment, onPress, onEdit, theme }) => {
       <Card.Content>
         <View style={styles.header}>
           <View style={styles.titleRow}>
-            <Icon name="cash-multiple" size={24} color={theme.colors.primary} />
+            <PaperIcon source="cash-multiple" size={24} color={theme.colors.primary} />
             <Text variant="titleMedium" style={[styles.title, { color: theme.colors.text }]} numberOfLines={1}>
               Payment #{payment.payment_id || payment.id}
             </Text>
@@ -72,21 +72,21 @@ const PaymentCard = ({ payment, onPress, onEdit, theme }) => {
         
         <View style={styles.details}>
           <View style={styles.detailRow}>
-            <Icon name="account" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="account" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }} numberOfLines={1}>
               {payment.customer_name || 'No customer'}
             </Text>
           </View>
           
           <View style={styles.detailRow}>
-            <Icon name="currency-inr" size={16} color={theme.colors.primary} />
+            <PaperIcon source="currency-inr" size={16} color={theme.colors.primary} />
             <Text variant="bodyMedium" style={{ color: theme.colors.primary, fontWeight: 'bold' }}>
               {formatCurrency(payment.amount)}
             </Text>
           </View>
           
           <View style={styles.detailRow}>
-            <Icon name="calendar" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="calendar" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>
               {formatDate(payment.payment_date)}
             </Text>
@@ -94,7 +94,7 @@ const PaymentCard = ({ payment, onPress, onEdit, theme }) => {
 
           {payment.project_name && (
             <View style={styles.detailRow}>
-              <Icon name="office-building" size={16} color={theme.colors.textSecondary} />
+              <PaperIcon source="office-building" size={16} color={theme.colors.textSecondary} />
               <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }} numberOfLines={1}>
                 {payment.project_name}
               </Text>
@@ -103,7 +103,7 @@ const PaymentCard = ({ payment, onPress, onEdit, theme }) => {
 
           {payment.transaction_id && (
             <View style={styles.detailRow}>
-              <Icon name="identifier" size={16} color={theme.colors.textSecondary} />
+              <PaperIcon source="identifier" size={16} color={theme.colors.textSecondary} />
               <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }} numberOfLines={1}>
                 Txn: {payment.transaction_id}
               </Text>
@@ -112,7 +112,7 @@ const PaymentCard = ({ payment, onPress, onEdit, theme }) => {
 
           {payment.cheque_number && (
             <View style={styles.detailRow}>
-              <Icon name="checkbook" size={16} color={theme.colors.textSecondary} />
+              <PaperIcon source="checkbook" size={16} color={theme.colors.textSecondary} />
               <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>
                 Cheque: {payment.cheque_number}
               </Text>
@@ -121,7 +121,7 @@ const PaymentCard = ({ payment, onPress, onEdit, theme }) => {
 
           {payment.remarks && (
             <View style={styles.remarksRow}>
-              <Icon name="note-text" size={16} color={theme.colors.textSecondary} />
+              <PaperIcon source="note-text" size={16} color={theme.colors.textSecondary} />
               <Text variant="bodySmall" style={{ color: theme.colors.textSecondary, fontStyle: 'italic' }} numberOfLines={2}>
                 {payment.remarks}
               </Text>
@@ -131,7 +131,7 @@ const PaymentCard = ({ payment, onPress, onEdit, theme }) => {
 
         {onEdit && (
           <TouchableOpacity onPress={() => onEdit(payment)} style={styles.editBtn}>
-            <Icon name="pencil" size={20} color={theme.colors.primary} />
+            <PaperIcon source="pencil" size={20} color={theme.colors.primary} />
           </TouchableOpacity>
         )}
       </Card.Content>

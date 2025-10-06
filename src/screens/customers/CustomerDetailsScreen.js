@@ -4,7 +4,7 @@ import { Text, Card, Button, Divider, Chip } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../context';
 import { LoadingIndicator } from '../../components';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 import { fetchCustomerById, deleteCustomer, clearCurrentCustomer } from '../../store/slices/customersSlice';
 
 const CustomerDetailsScreen = ({ route, navigation }) => {
@@ -41,7 +41,7 @@ const CustomerDetailsScreen = ({ route, navigation }) => {
 
   const DetailRow = ({ icon, label, value, iconColor }) => (
     <View style={styles.row}>
-      <Icon name={icon} size={20} color={iconColor || theme.colors.primary} />
+      <PaperIcon source={icon} size={20} color={iconColor || theme.colors.primary} />
       <View style={styles.rowContent}>
         <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>{label}</Text>
         <Text variant="bodyMedium" style={{ color: theme.colors.text, fontWeight: '500' }}>
@@ -63,7 +63,7 @@ const CustomerDetailsScreen = ({ route, navigation }) => {
       <Card style={[styles.headerCard, { backgroundColor: '#E3F2FD' }]}>
         <Card.Content>
           <View style={styles.headerRow}>
-            <Icon name="account-circle" size={48} color="#1976D2" />
+            <PaperIcon source="account-circle" size={48} color="#1976D2" />
             <View style={styles.headerText}>
               <Text variant="headlineSmall" style={styles.customerName}>
                 {currentCustomer.name}
@@ -80,7 +80,7 @@ const CustomerDetailsScreen = ({ route, navigation }) => {
       <Card style={[styles.sectionCard, { backgroundColor: '#E3F2FD' }]}>
         <Card.Content>
           <View style={styles.sectionHeader}>
-            <Icon name="account" size={24} color="#1976D2" />
+            <PaperIcon source="account" size={24} color="#1976D2" />
             <Text variant="titleMedium" style={[styles.sectionTitle, { color: '#1976D2' }]}>
               Customer Information
             </Text>
@@ -100,7 +100,7 @@ const CustomerDetailsScreen = ({ route, navigation }) => {
       <Card style={[styles.sectionCard, { backgroundColor: '#E8F5E8' }]}>
         <Card.Content>
           <View style={styles.sectionHeader}>
-            <Icon name="account-details" size={24} color="#2E7D32" />
+            <PaperIcon source="account-details" size={24} color="#2E7D32" />
             <Text variant="titleMedium" style={[styles.sectionTitle, { color: '#2E7D32' }]}>
               Personal Information
             </Text>
@@ -120,7 +120,7 @@ const CustomerDetailsScreen = ({ route, navigation }) => {
       <Card style={[styles.sectionCard, { backgroundColor: '#FFF3E0' }]}>
         <Card.Content>
           <View style={styles.sectionHeader}>
-            <Icon name="email" size={24} color="#F57C00" />
+            <PaperIcon source="email" size={24} color="#F57C00" />
             <Text variant="titleMedium" style={[styles.sectionTitle, { color: '#F57C00' }]}>
               Contact Information
             </Text>
@@ -140,7 +140,7 @@ const CustomerDetailsScreen = ({ route, navigation }) => {
       <Card style={[styles.sectionCard, { backgroundColor: '#F3E5F5' }]}>
         <Card.Content>
           <View style={styles.sectionHeader}>
-            <Icon name="map-marker" size={24} color="#7B1FA2" />
+            <PaperIcon source="map-marker" size={24} color="#7B1FA2" />
             <Text variant="titleMedium" style={[styles.sectionTitle, { color: '#7B1FA2' }]}>
               Location Information
             </Text>
@@ -160,7 +160,7 @@ const CustomerDetailsScreen = ({ route, navigation }) => {
       <Card style={[styles.sectionCard, { backgroundColor: '#FCE4EC' }]}>
         <Card.Content>
           <View style={styles.sectionHeader}>
-            <Icon name="information" size={24} color="#C2185B" />
+            <PaperIcon source="information" size={24} color="#C2185B" />
             <Text variant="titleMedium" style={[styles.sectionTitle, { color: '#C2185B' }]}>
               Additional Details
             </Text>
@@ -170,7 +170,7 @@ const CustomerDetailsScreen = ({ route, navigation }) => {
           </Text>
           <Divider style={styles.divider} />
           <DetailRow icon="card-account-details" label="PAN Number" value={currentCustomer.pan_no} iconColor="#C2185B" />
-          <DetailRow icon="card-account-details-outline" label="Aadhar Number" value={currentCustomer.aadhar_no} iconColor="#C2185B" />
+          <DetailRow icon="card-account-details" label="Aadhar Number" value={currentCustomer.aadhar_no} iconColor="#C2185B" />
           <DetailRow icon="file-document" label="GSTIN" value={currentCustomer.gstin} iconColor="#C2185B" />
           <DetailRow icon="account-heart" label="Nominee Name" value={currentCustomer.nominee_name} iconColor="#C2185B" />
         </Card.Content>

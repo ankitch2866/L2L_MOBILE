@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, Card, Chip } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Icon as PaperIcon } from 'react-native-paper';
 
 const PropertyCard = ({ property, onPress, onEdit, theme }) => {
   return (
@@ -9,7 +9,7 @@ const PropertyCard = ({ property, onPress, onEdit, theme }) => {
       <Card.Content>
         <View style={styles.header}>
           <View style={styles.titleRow}>
-            <Icon name="home" size={24} color={theme.colors.primary} />
+            <PaperIcon source="home" size={24} color={theme.colors.primary} />
             <Text variant="titleMedium" style={[styles.title, { color: theme.colors.text }]}>
               Unit {property.unit_number}
             </Text>
@@ -19,13 +19,13 @@ const PropertyCard = ({ property, onPress, onEdit, theme }) => {
         
         <View style={styles.details}>
           <View style={styles.detailRow}>
-            <Icon name="floor-plan" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="floor-plan" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>
               {property.area_sqft} sqft
             </Text>
           </View>
           <View style={styles.detailRow}>
-            <Icon name="currency-inr" size={16} color={theme.colors.textSecondary} />
+            <PaperIcon source="currency-inr" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>
               ₹{property.price?.toLocaleString()}
             </Text>
@@ -33,7 +33,7 @@ const PropertyCard = ({ property, onPress, onEdit, theme }) => {
         </View>
 
         <TouchableOpacity onPress={() => onEdit(property)} style={styles.editBtn}>
-          <Icon name="pencil" size={20} color={theme.colors.primary} />
+          <PaperIcon source="pencil" size={20} color={theme.colors.primary} />
         </TouchableOpacity>
       </Card.Content>
     </Card>

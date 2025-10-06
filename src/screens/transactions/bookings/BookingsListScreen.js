@@ -86,7 +86,7 @@ const BookingsListScreen = ({ navigation }) => {
           <Chip icon="file-document" style={styles.statChip}>
             Total: {statistics.total}
           </Chip>
-          <Chip icon="clock-outline" style={[styles.statChip, { backgroundColor: '#FEF3C7' }]}>
+          <Chip icon="clock" style={[styles.statChip, { backgroundColor: '#FEF3C7' }]}>
             Pending: {statistics.pending}
           </Chip>
           <Chip icon="check-circle" style={[styles.statChip, { backgroundColor: '#D1FAE5' }]}>
