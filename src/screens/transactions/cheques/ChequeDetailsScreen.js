@@ -119,12 +119,12 @@ const ChequeDetailsScreen = ({ route, navigation }) => {
         <Card style={styles.card}>
           <Card.Content>
             <View style={styles.header}>
-              <Title>Cheque #{cheque.cheque_number}</Title>
+              <Title>Cheque #{cheque.cheque_no}</Title>
               <Chip
-                style={[styles.statusChip, { backgroundColor: getStatusColor(cheque.status) }]}
+                style={[styles.statusChip, { backgroundColor: getStatusColor(cheque.cheque_status) }]}
                 textStyle={styles.statusText}
               >
-                {cheque.status || 'Pending'}
+                {cheque.cheque_status || 'Pending'}
               </Chip>
             </View>
             
@@ -144,7 +144,7 @@ const ChequeDetailsScreen = ({ route, navigation }) => {
             
             <View style={styles.infoRow}>
               <Text style={styles.label}>Cheque Number:</Text>
-              <Text style={styles.value}>{cheque.cheque_number || 'N/A'}</Text>
+              <Text style={styles.value}>{cheque.cheque_no || 'N/A'}</Text>
             </View>
             
             <View style={styles.infoRow}>
@@ -162,10 +162,6 @@ const ChequeDetailsScreen = ({ route, navigation }) => {
               <Text style={styles.value}>{formatDate(cheque.cheque_date)}</Text>
             </View>
             
-            <View style={styles.infoRow}>
-              <Text style={styles.label}>Deposit Date:</Text>
-              <Text style={styles.value}>{formatDate(cheque.deposit_date)}</Text>
-            </View>
             
             {cheque.clearance_date && (
               <View style={styles.infoRow}>
@@ -187,7 +183,7 @@ const ChequeDetailsScreen = ({ route, navigation }) => {
           <Card.Content>
             <Title>Actions</Title>
             <View style={styles.actionsContainer}>
-              {cheque.status?.toLowerCase() === 'pending' && (
+              {cheque.cheque_status?.toLowerCase() === 'pending' && (
                 <Button
                   mode="contained"
                   icon="bank-transfer"
@@ -198,8 +194,8 @@ const ChequeDetailsScreen = ({ route, navigation }) => {
                 </Button>
               )}
               
-              {(cheque.status?.toLowerCase() === 'submitted' || 
-                cheque.status?.toLowerCase() === 'sent to bank') && (
+              {(cheque.cheque_status?.toLowerCase() === 'submitted' || 
+                cheque.cheque_status?.toLowerCase() === 'sent to bank') && (
                 <>
                   <Button
                     mode="contained"
@@ -241,8 +237,8 @@ const styles = StyleSheet.create({
   content: { padding: 16 },
   card: { marginBottom: 16 },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
-  statusChip: { paddingHorizontal: 12 },
-  statusText: { color: '#FFF', fontWeight: '600' },
+  statusChip: { paddingHorizontal: 12, paddingVertical: 4, minHeight: 24 },
+  statusText: { color: '#FFF', fontWeight: '600', textAlign: 'center' },
   amountContainer: { alignItems: 'center', paddingVertical: 16 },
   amountLabel: { fontSize: 14, color: '#6B7280', marginBottom: 8 },
   amountValue: { fontSize: 32, fontWeight: 'bold' },

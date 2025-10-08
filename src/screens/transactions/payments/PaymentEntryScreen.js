@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { TextInput, Button, HelperText, Text } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
@@ -53,7 +54,7 @@ const PaymentEntryScreen = ({ navigation }) => {
 
   const fetchCustomers = async () => {
     try {
-      const response = await api.get('/master/customers');
+      const response = await api.get('/api/master/customers');
       if (response.data?.success) {
         setCustomers(response.data.data || []);
       }
@@ -64,18 +65,21 @@ const PaymentEntryScreen = ({ navigation }) => {
 
   const fetchProjects = async () => {
     try {
-      const response = await api.get('/master/projects');
-      if (response.data?.success) {
+      const response = await api.get('/api/master/projects');
+      if (response.data?.success && Array.isArray(response.data.data)) {
         setProjects(response.data.data || []);
+      } else {
+        setProjects([]);
       }
     } catch (error) {
       console.error('Error fetching projects:', error);
+      setProjects([]);
     }
   };
 
   const fetchUnits = async (projectId) => {
     try {
-      const response = await api.get(`/master/units/project/${projectId}`);
+      const response = await api.get(`/api/master/units/project/${projectId}`);
       if (response.data?.success) {
         setUnits(response.data.data || []);
       }
@@ -87,7 +91,7 @@ const PaymentEntryScreen = ({ navigation }) => {
 
   const fetchBanks = async () => {
     try {
-      const response = await api.get('/master/banks');
+      const response = await api.get('/api/master/banks');
       if (response.data?.success) {
         setBanks(response.data.data || []);
       }

@@ -16,8 +16,8 @@ export const fetchCheques = createAsyncThunk(
       if (filters.page) params.append('page', filters.page);
       if (filters.limit) params.append('limit', filters.limit);
       
-      const response = await api.get(`/transaction/cheque?${params.toString()}`);
-      return response.data?.data || response.data || [];
+      const response = await api.get(`/api/transaction/cheque/dashboard?${params.toString()}`);
+      return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch cheques');
     }
@@ -29,7 +29,7 @@ export const createCheque = createAsyncThunk(
   'cheques/createCheque',
   async (chequeData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/transaction/cheque', chequeData);
+      const response = await api.post('/api/transaction/cheque', chequeData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to create cheque');
@@ -42,7 +42,7 @@ export const fetchChequeById = createAsyncThunk(
   'cheques/fetchChequeById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/cheque/${id}`);
+      const response = await api.get(`/api/transaction/cheque/${id}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch cheque');
@@ -55,7 +55,7 @@ export const updateCheque = createAsyncThunk(
   'cheques/updateCheque',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/transaction/cheque/${id}`, data);
+      const response = await api.put(`/api/transaction/cheque/${id}`, data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to update cheque');
@@ -68,7 +68,7 @@ export const sendToBank = createAsyncThunk(
   'cheques/sendToBank',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/transaction/cheque/${id}/send-to-bank`);
+      const response = await api.put(`/api/transaction/cheque/${id}/send-to-bank`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to send cheque to bank');
@@ -81,7 +81,7 @@ export const updateFeedback = createAsyncThunk(
   'cheques/updateFeedback',
   async ({ id, feedback }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/transaction/cheque/${id}/bank-feedback`, feedback);
+      const response = await api.put(`/api/transaction/cheque/${id}/bank-feedback`, feedback);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to update cheque feedback');
@@ -99,7 +99,7 @@ export const fetchStatistics = createAsyncThunk(
       if (filters.date_to) params.append('date_to', filters.date_to);
       if (filters.project_id) params.append('project_id', filters.project_id);
       
-      const response = await api.get(`/transaction/cheque/dashboard?${params.toString()}`);
+      const response = await api.get(`/api/transaction/cheque/dashboard?${params.toString()}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch statistics');
@@ -134,6 +134,12 @@ const chequesSlice = createSlice({
       total_amount: 0,
       cleared_amount: 0,
       pending_amount: 0,
+    },
+    pagination: {
+      page: 1,
+      limit: 20,
+      total: 0,
+      totalPages: 0,
     },
   },
   reducers: {
@@ -215,7 +221,15 @@ const chequesSlice = createSlice({
       })
       .addCase(fetchCheques.fulfilled, (state, action) => {
         state.loading = false;
-        state.list = Array.isArray(action.payload) ? action.payload : [];
+        if (action.payload && typeof action.payload === 'object' && !Array.isArray(action.payload)) {
+          // Handle paginated response
+          state.list = action.payload.data || [];
+          state.pagination = action.payload.pagination || state.pagination;
+          state.statistics = action.payload.statistics || state.statistics;
+        } else {
+          // Handle array response (legacy)
+          state.list = Array.isArray(action.payload) ? action.payload : [];
+        }
       })
       .addCase(fetchCheques.rejected, (state, action) => {
         state.loading = false;

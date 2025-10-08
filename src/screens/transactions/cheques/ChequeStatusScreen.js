@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView, RefreshControl, TouchableOpacity } from 'react-native';
-import { Card, Text, Chip, Searchbar, FAB } from 'react-native-paper';
+import { Card, Text, Chip, Searchbar, FAB, Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../../context';
 import { LoadingIndicator, EmptyState } from '../../../components';
@@ -9,29 +9,47 @@ import { fetchCheques, setFilters } from '../../../store/slices/chequesSlice';
 const ChequeStatusScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { theme } = useTheme();
-  const { list, loading, filters } = useSelector(state => state.cheques);
+  const { list, loading, filters, pagination } = useSelector(state => state.cheques);
   const [searchQuery, setSearchQuery] = useState('');
   const [refreshing, setRefreshing] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState('all');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
-    dispatch(fetchCheques(filters));
-  }, [dispatch, filters]);
+    const paginationParams = {
+      ...filters,
+      page: currentPage,
+      limit: itemsPerPage
+    };
+    dispatch(fetchCheques(paginationParams));
+  }, [dispatch, filters, currentPage]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    await dispatch(fetchCheques(filters));
+    const paginationParams = {
+      ...filters,
+      page: currentPage,
+      limit: itemsPerPage
+    };
+    await dispatch(fetchCheques(paginationParams));
     setRefreshing(false);
   };
 
   const handleSearch = (query) => {
     setSearchQuery(query);
+    setCurrentPage(1); // Reset to first page when searching
     dispatch(setFilters({ search: query }));
   };
 
   const handleStatusFilter = (status) => {
     setSelectedStatus(status);
+    setCurrentPage(1); // Reset to first page when filtering
     dispatch(setFilters({ status: status === 'all' ? null : status }));
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
   };
 
   const formatCurrency = (amount) => {
@@ -106,14 +124,14 @@ const ChequeStatusScreen = ({ navigation }) => {
                 <Card.Content>
                   <View style={styles.cardHeader}>
                     <View style={styles.cardHeaderLeft}>
-                      <Text style={styles.chequeNumber}>#{cheque.cheque_number}</Text>
+                      <Text style={styles.chequeNumber}>#{cheque.cheque_no}</Text>
                       <Text style={styles.bankName}>{cheque.bank_name || 'N/A'}</Text>
                     </View>
                     <Chip
-                      style={[styles.statusChip, { backgroundColor: getStatusColor(cheque.status) }]}
+                      style={[styles.statusChip, { backgroundColor: getStatusColor(cheque.cheque_status) }]}
                       textStyle={styles.statusText}
                     >
-                      {cheque.status || 'Pending'}
+                      {cheque.cheque_status || 'Pending'}
                     </Chip>
                   </View>
                   
@@ -132,10 +150,6 @@ const ChequeStatusScreen = ({ navigation }) => {
                       <Text style={styles.label}>Cheque Date:</Text>
                       <Text style={styles.value}>{formatDate(cheque.cheque_date)}</Text>
                     </View>
-                    <View style={styles.infoRow}>
-                      <Text style={styles.label}>Deposit Date:</Text>
-                      <Text style={styles.value}>{formatDate(cheque.deposit_date)}</Text>
-                    </View>
                   </View>
                 </Card.Content>
               </Card>
@@ -143,6 +157,36 @@ const ChequeStatusScreen = ({ navigation }) => {
           ))
         )}
       </ScrollView>
+
+      {/* Pagination */}
+      {pagination && pagination.totalPages > 1 && (
+        <View style={styles.paginationContainer}>
+          <View style={styles.paginationInfo}>
+            <Text style={styles.paginationText}>
+              Page {pagination.page} of {pagination.totalPages} ({pagination.total} total)
+            </Text>
+          </View>
+          <View style={styles.paginationButtons}>
+            <Button
+              mode="outlined"
+              onPress={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage <= 1}
+              style={styles.paginationButton}
+            >
+              Previous
+            </Button>
+            <Text style={styles.pageNumber}>{currentPage}</Text>
+            <Button
+              mode="outlined"
+              onPress={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage >= pagination.totalPages}
+              style={styles.paginationButton}
+            >
+              Next
+            </Button>
+          </View>
+        </View>
+      )}
 
       <FAB
         icon="plus"
@@ -165,13 +209,42 @@ const styles = StyleSheet.create({
   cardHeaderLeft: { flex: 1 },
   chequeNumber: { fontSize: 18, fontWeight: 'bold', marginBottom: 4 },
   bankName: { fontSize: 14, color: '#6B7280' },
-  statusChip: { paddingHorizontal: 8 },
-  statusText: { fontSize: 11, color: '#FFF', fontWeight: '600' },
+  statusChip: { paddingHorizontal: 8, paddingVertical: 4, minHeight: 24 },
+  statusText: { fontSize: 11, color: '#FFF', fontWeight: '600', textAlign: 'center' },
   cardBody: { gap: 8 },
   infoRow: { flexDirection: 'row', justifyContent: 'space-between' },
   label: { fontSize: 14, color: '#6B7280' },
   value: { fontSize: 14, fontWeight: '600' },
   fab: { position: 'absolute', right: 16, bottom: 16 },
+  paginationContainer: {
+    padding: 16,
+    backgroundColor: '#F9FAFB',
+    borderTopWidth: 1,
+    borderTopColor: '#E5E7EB',
+  },
+  paginationInfo: {
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  paginationText: {
+    fontSize: 14,
+    color: '#6B7280',
+  },
+  paginationButtons: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    gap: 16,
+  },
+  paginationButton: {
+    minWidth: 80,
+  },
+  pageNumber: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#374151',
+    paddingHorizontal: 12,
+  },
 });
 
 export default ChequeStatusScreen;

@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { TextInput, Button, HelperText, Text, Card } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import { useTheme } from '../../../context';
-import { createCreditPayment, fetchPayments } from '../../../store/slices/paymentsSlice';
+import { fetchPayments } from '../../../store/slices/paymentsSlice';
 import { Dropdown } from '../../../components/common';
 import api from '../../../config/api';
 
@@ -38,7 +39,7 @@ const CreditPaymentScreen = ({ navigation }) => {
 
   const fetchCustomers = async () => {
     try {
-      const response = await api.get('/master/customers');
+      const response = await api.get('/api/master/customers');
       if (response.data?.success) {
         setCustomers(response.data.data || []);
       }
@@ -67,8 +68,9 @@ const CreditPaymentScreen = ({ navigation }) => {
 
     setLoading(true);
     try {
-      await dispatch(createCreditPayment(formData)).unwrap();
-      Alert.alert('Success', 'Credit payment recorded successfully', [
+      // Mock function since credit payment endpoints don't exist in backend
+      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      Alert.alert('Info', 'Credit payment functionality is not available yet. Backend endpoints need to be implemented.', [
         { text: 'OK', onPress: () => {
           dispatch(fetchPayments());
           navigation.goBack();

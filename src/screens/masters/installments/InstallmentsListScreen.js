@@ -65,10 +65,19 @@ const InstallmentsListScreen = ({ route, navigation }) => {
   };
 
   const renderInstallmentCard = ({ item, index }) => {
+    console.log('Rendering installment card:', item);
+    console.log('Installment ID (item.id):', item.id);
+    console.log('Installment ID (item.installment_id):', item.installment_id);
+    console.log('Item keys:', Object.keys(item));
+    console.log('Item values:', Object.values(item));
+    
     return (
       <TouchableOpacity
         style={styles.card}
-        onPress={() => navigation.navigate('InstallmentDetails', { installmentId: item.installment_id })}
+        onPress={() => {
+          console.log('Navigating to InstallmentDetails with ID:', item.id);
+          navigation.navigate('InstallmentDetails', { installmentId: item.id });
+        }}
       >
         <View style={styles.cardHeader}>
           <View style={styles.installmentNumber}>
@@ -79,7 +88,10 @@ const InstallmentsListScreen = ({ route, navigation }) => {
           </View>
           <View style={styles.cardActions}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('EditInstallment', { installmentId: item.installment_id })}
+              onPress={() => {
+                console.log('Navigating to EditInstallment with ID:', item.id);
+                navigation.navigate('EditInstallment', { installmentId: item.id });
+              }}
               style={styles.actionButton}
             >
               <Ionicons name="pencil" size={20} color="#3B82F6" />

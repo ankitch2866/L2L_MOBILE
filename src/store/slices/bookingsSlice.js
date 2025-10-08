@@ -11,7 +11,7 @@ export const fetchBookings = createAsyncThunk(
       if (filters.project_id) params.append('project_id', filters.project_id);
       if (filters.customer_id) params.append('customer_id', filters.customer_id);
       
-      const response = await api.get(`/transaction/bookings?${params.toString()}`);
+      const response = await api.get(`/api/transaction/bookings?${params.toString()}`);
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch bookings');
@@ -24,7 +24,7 @@ export const createBooking = createAsyncThunk(
   'bookings/createBooking',
   async (bookingData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/transaction/bookings', bookingData);
+      const response = await api.post('/api/transaction/bookings', bookingData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to create booking');
@@ -37,7 +37,7 @@ export const fetchBookingById = createAsyncThunk(
   'bookings/fetchBookingById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/bookings/${id}`);
+      const response = await api.get(`/api/transaction/bookings/${id}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch booking');
@@ -50,7 +50,7 @@ export const updateBooking = createAsyncThunk(
   'bookings/updateBooking',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/transaction/bookings/${id}`, data);
+      const response = await api.put(`/api/transaction/bookings/${id}`, data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to update booking');
@@ -63,7 +63,7 @@ export const deleteBooking = createAsyncThunk(
   'bookings/deleteBooking',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/transaction/bookings/${id}`);
+      await api.delete(`/api/transaction/bookings/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to delete booking');
@@ -76,7 +76,7 @@ export const updateBookingStatus = createAsyncThunk(
   'bookings/updateBookingStatus',
   async ({ id, status }, { rejectWithValue }) => {
     try {
-      const response = await api.patch(`/transaction/bookings/${id}/status`, { status });
+      const response = await api.patch(`/api/transaction/bookings/${id}/status`, { status });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to update booking status');

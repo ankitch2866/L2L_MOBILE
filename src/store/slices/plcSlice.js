@@ -5,7 +5,7 @@ export const fetchPLCs = createAsyncThunk(
   'plc/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/master/plcs');
+      const response = await api.get('/api/master/plcs');
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch PLCs');
@@ -17,7 +17,7 @@ export const fetchPLCById = createAsyncThunk(
   'plc/fetchById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/master/plcs/${id}`);
+      const response = await api.get(`/api/master/plcs/${id}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch PLC');
@@ -29,7 +29,7 @@ export const createPLC = createAsyncThunk(
   'plc/create',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await api.post('/master/plcs', data);
+      const response = await api.post('/api/master/plcs', data);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to create PLC');
@@ -41,7 +41,7 @@ export const updatePLC = createAsyncThunk(
   'plc/update',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/master/plcs/${id}`, data);
+      const response = await api.put(`/api/master/plcs/${id}`, data);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to update PLC');
@@ -53,7 +53,7 @@ export const deletePLC = createAsyncThunk(
   'plc/delete',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/master/plcs/${id}`);
+      await api.delete(`/api/master/plcs/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to delete PLC');

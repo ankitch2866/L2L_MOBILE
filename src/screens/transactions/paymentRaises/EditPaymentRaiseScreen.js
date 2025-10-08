@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { TextInput, Button, HelperText, Text, Card } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -69,7 +70,7 @@ const EditPaymentRaiseScreen = ({ route, navigation }) => {
 
   const fetchProjects = async () => {
     try {
-      const response = await api.get('/master/projects');
+      const response = await api.get('/api/master/projects');
       if (response.data?.success) {
         const projectsData = response.data.data || [];
         setProjects(projectsData.map(p => ({
@@ -84,12 +85,12 @@ const EditPaymentRaiseScreen = ({ route, navigation }) => {
 
   const fetchCustomers = async (projectId) => {
     try {
-      const response = await api.get(`/master/customers/project/${projectId}`);
+      const response = await api.get(`/api/master/customers/project/${projectId}`);
       if (response.data?.success) {
         const customersData = response.data.data || [];
         setCustomers(customersData.map(c => ({
           id: c.customer_id,
-          name: c.customer_name,
+          name: c.name,
         })));
       }
     } catch (error) {
@@ -100,7 +101,7 @@ const EditPaymentRaiseScreen = ({ route, navigation }) => {
 
   const fetchPaymentQueries = async (projectId) => {
     try {
-      const response = await api.get(`/transaction/raise-payment/projects/${projectId}/queries`);
+      const response = await api.get(`/api/transaction/raise-payment/projects/${projectId}/queries`);
       if (response.data?.success) {
         const queriesData = response.data.data?.queries || [];
         setPaymentQueries(queriesData.map(q => ({

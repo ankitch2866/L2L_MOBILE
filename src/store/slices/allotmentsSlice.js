@@ -11,7 +11,7 @@ export const fetchAllotments = createAsyncThunk(
       if (filters.customer_id) params.append('customer_id', filters.customer_id);
       if (filters.status) params.append('status', filters.status);
       
-      const response = await api.get(`/transaction/allotments?${params.toString()}`);
+      const response = await api.get(`/api/transaction/allotments?${params.toString()}`);
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch allotments');
@@ -24,7 +24,7 @@ export const createAllotment = createAsyncThunk(
   'allotments/createAllotment',
   async (allotmentData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/transaction/allotments', allotmentData);
+      const response = await api.post('/api/transaction/allotments', allotmentData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to create allotment');
@@ -37,7 +37,7 @@ export const fetchAllotmentById = createAsyncThunk(
   'allotments/fetchAllotmentById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/allotments/${id}`);
+      const response = await api.get(`/api/transaction/allotments/${id}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch allotment');
@@ -50,7 +50,7 @@ export const updateAllotment = createAsyncThunk(
   'allotments/updateAllotment',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/transaction/allotments/${id}`, data);
+      const response = await api.put(`/api/transaction/allotments/${id}`, data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to update allotment');
@@ -63,7 +63,7 @@ export const deleteAllotment = createAsyncThunk(
   'allotments/deleteAllotment',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/transaction/allotments/${id}`);
+      await api.delete(`/api/transaction/allotments/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to delete allotment');
@@ -76,7 +76,7 @@ export const generateLetter = createAsyncThunk(
   'allotments/generateLetter',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/allotments/${id}/letter`);
+      const response = await api.get(`/api/transaction/allotments/${id}/letter`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to generate letter');

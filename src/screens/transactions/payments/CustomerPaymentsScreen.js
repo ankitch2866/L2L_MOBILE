@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../../context';
 import { Dropdown } from '../../../components/common';
 import { LoadingIndicator, EmptyState } from '../../../components';
-import { fetchCustomerPayments } from '../../../store/slices/paymentsSlice';
+import { fetchCustomerPayments, fetchPayments } from '../../../store/slices/paymentsSlice';
 import api from '../../../config/api';
 
 const CustomerPaymentsScreen = ({ navigation }) => {
@@ -22,25 +22,70 @@ const CustomerPaymentsScreen = ({ navigation }) => {
 
   useEffect(() => {
     if (selectedCustomer) {
-      dispatch(fetchCustomerPayments(selectedCustomer));
+      console.log('CustomerPaymentsScreen: Fetching payments for customer:', selectedCustomer);
+      fetchCustomerPayments(selectedCustomer);
     }
-  }, [dispatch, selectedCustomer]);
+  }, [selectedCustomer]);
+
+  const fetchCustomerPayments = async (customerId) => {
+    try {
+      console.log('Fetching all payments to filter by customer:', customerId);
+      // First get all payments
+      const response = await api.get('/api/transaction/payment/dashboard');
+      console.log('All payments API response:', response.data);
+      const allPayments = response.data?.data || response.data || [];
+      console.log('Total payments fetched:', allPayments.length);
+      
+      // Filter payments by customer
+      const customerPayments = allPayments.filter(payment => 
+        payment.customer_id == customerId || payment.customerId == customerId
+      );
+      console.log('Filtered payments for customer:', customerPayments.length);
+      console.log('Customer payments:', customerPayments);
+      
+      // Update the Redux store with filtered payments
+      dispatch({
+        type: 'payments/fetchPayments/fulfilled',
+        payload: { payments: customerPayments, totalCount: customerPayments.length }
+      });
+    } catch (error) {
+      console.error('Error fetching customer payments:', error);
+      // Update with empty array on error
+      dispatch({
+        type: 'payments/fetchPayments/fulfilled',
+        payload: { payments: [], totalCount: 0 }
+      });
+    }
+  };
+
+  useEffect(() => {
+    console.log('CustomerPaymentsScreen: Payments list updated:', list);
+    console.log('CustomerPaymentsScreen: Number of payments:', list.length);
+  }, [list]);
 
   const fetchCustomers = async () => {
     try {
-      const response = await api.get('/master/customers');
+      console.log('Fetching customers for payment screen...');
+      const response = await api.get('/api/master/customers');
+      console.log('Customers API response:', response.data);
       if (response.data?.success) {
-        setCustomers(response.data.data || []);
+        const customersData = response.data.data || [];
+        console.log('Customers loaded:', customersData.length);
+        setCustomers(customersData);
+      } else {
+        console.log('API response not successful:', response.data);
+        setCustomers([]);
       }
     } catch (error) {
       console.error('Error fetching customers:', error);
+      setCustomers([]);
     }
   };
 
   const handleRefresh = async () => {
     if (selectedCustomer) {
       setRefreshing(true);
-      await dispatch(fetchCustomerPayments(selectedCustomer));
+      await fetchCustomerPayments(selectedCustomer);
       setRefreshing(false);
     }
   };

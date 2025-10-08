@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { TextInput, Button, HelperText, Text } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
@@ -17,7 +18,6 @@ const ChequeDepositScreen = ({ navigation }) => {
     cheque_number: '',
     amount: '',
     cheque_date: new Date().toISOString().split('T')[0],
-    deposit_date: new Date().toISOString().split('T')[0],
     remarks: '',
   });
   
@@ -33,7 +33,7 @@ const ChequeDepositScreen = ({ navigation }) => {
 
   const fetchCustomers = async () => {
     try {
-      const response = await api.get('/master/customers');
+      const response = await api.get('/api/master/customers');
       if (response.data?.success) {
         setCustomers(response.data.data || []);
       }
@@ -44,7 +44,7 @@ const ChequeDepositScreen = ({ navigation }) => {
 
   const fetchBanks = async () => {
     try {
-      const response = await api.get('/master/banks');
+      const response = await api.get('/api/master/banks');
       if (response.data?.success) {
         setBanks(response.data.data || []);
       }
@@ -61,7 +61,6 @@ const ChequeDepositScreen = ({ navigation }) => {
     if (!formData.cheque_number) newErrors.cheque_number = 'Cheque number is required';
     if (!formData.amount || parseFloat(formData.amount) <= 0) newErrors.amount = 'Valid amount is required';
     if (!formData.cheque_date) newErrors.cheque_date = 'Cheque date is required';
-    if (!formData.deposit_date) newErrors.deposit_date = 'Deposit date is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -168,19 +167,6 @@ const ChequeDepositScreen = ({ navigation }) => {
             {errors.cheque_date}
           </HelperText>
 
-          <TextInput
-            label="Deposit Date *"
-            value={formData.deposit_date}
-            onChangeText={(value) => updateFormData('deposit_date', value)}
-            mode="outlined"
-            style={styles.input}
-            error={!!errors.deposit_date}
-            placeholder="YYYY-MM-DD"
-            left={<TextInput.Icon icon="calendar-check" />}
-          />
-          <HelperText type="error" visible={!!errors.deposit_date}>
-            {errors.deposit_date}
-          </HelperText>
 
           <TextInput
             label="Remarks"

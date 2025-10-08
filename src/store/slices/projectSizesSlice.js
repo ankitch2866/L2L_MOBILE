@@ -5,7 +5,7 @@ export const fetchProjectSizes = createAsyncThunk(
   'projectSizes/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/master/project-sizes');
+      const response = await api.get('/api/master/project-sizes');
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch project sizes');
@@ -17,7 +17,7 @@ export const fetchProjectSizesByProject = createAsyncThunk(
   'projectSizes/fetchByProject',
   async (projectId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/master/project-sizes/project/${projectId}`);
+      const response = await api.get(`/api/master/project-sizes/project/${projectId}`);
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch project sizes');
@@ -29,7 +29,7 @@ export const fetchProjectSizeById = createAsyncThunk(
   'projectSizes/fetchById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/master/project-sizes/${id}`);
+      const response = await api.get(`/api/master/project-sizes/${id}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch project size');
@@ -41,7 +41,7 @@ export const createProjectSize = createAsyncThunk(
   'projectSizes/create',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await api.post('/master/project-sizes', data);
+      const response = await api.post('/api/master/project-sizes', data);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to create project size');
@@ -53,7 +53,7 @@ export const updateProjectSize = createAsyncThunk(
   'projectSizes/update',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/master/project-sizes/${id}`, data);
+      const response = await api.put(`/api/master/project-sizes/${id}`, data);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to update project size');
@@ -65,7 +65,7 @@ export const deleteProjectSize = createAsyncThunk(
   'projectSizes/delete',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/master/project-sizes/${id}`);
+      await api.delete(`/api/master/project-sizes/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to delete project size');

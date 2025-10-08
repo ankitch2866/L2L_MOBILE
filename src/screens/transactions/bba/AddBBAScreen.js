@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { TextInput, Button, HelperText, Text } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
@@ -32,7 +33,7 @@ const AddBBAScreen = ({ navigation }) => {
 
   const fetchProjects = async () => {
     try {
-      const response = await api.get('/master/projects');
+      const response = await api.get('/api/master/projects');
       if (response.data?.success) {
         setProjects(response.data.data || []);
       }
@@ -48,7 +49,7 @@ const AddBBAScreen = ({ navigation }) => {
         return;
       }
       try {
-        const response = await api.get(`/master/customers/project/${formData.projectId}`);
+        const response = await api.get(`/api/master/customers/project/${formData.projectId}`);
         if (response.data?.success) {
           setCustomers(response.data.data || []);
         }
@@ -67,7 +68,7 @@ const AddBBAScreen = ({ navigation }) => {
         return;
       }
       try {
-        const response = await api.get(`/master/project/${formData.projectId}/units`);
+        const response = await api.get(`/api/master/project/${formData.projectId}/units`);
         if (response.data?.success) {
           setUnits(response.data.data || []);
         }

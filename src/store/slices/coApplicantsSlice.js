@@ -5,7 +5,7 @@ export const fetchCoApplicants = createAsyncThunk(
   'coApplicants/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/master/co-applicants');
+      const response = await api.get('/api/master/co-applicants');
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch co-applicants');
@@ -17,7 +17,7 @@ export const fetchCoApplicantsByCustomer = createAsyncThunk(
   'coApplicants/fetchByCustomer',
   async (customerId, { rejectWithValue }) => {
     try {
-      const response = await api.get('/master/co-applicants/search', {
+      const response = await api.get('/api/master/co-applicants/search', {
         params: { customer_id: customerId, page: 1, limit: 20 }
       });
       return response.data?.data || response.data || [];
@@ -31,7 +31,7 @@ export const fetchCoApplicantById = createAsyncThunk(
   'coApplicants/fetchById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/master/co-applicants/${id}`);
+      const response = await api.get(`/api/master/co-applicants/${id}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch co-applicant');
@@ -43,7 +43,7 @@ export const createCoApplicant = createAsyncThunk(
   'coApplicants/create',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await api.post('/master/co-applicants', data);
+      const response = await api.post('/api/master/co-applicants', data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to create co-applicant');
@@ -55,7 +55,7 @@ export const updateCoApplicant = createAsyncThunk(
   'coApplicants/update',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/master/co-applicants/${id}`, data);
+      const response = await api.put(`/api/master/co-applicants/${id}`, data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to update co-applicant');
@@ -67,7 +67,7 @@ export const deleteCoApplicant = createAsyncThunk(
   'coApplicants/delete',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/master/co-applicants/${id}`);
+      await api.delete(`/api/master/co-applicants/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to delete co-applicant');

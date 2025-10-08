@@ -8,7 +8,9 @@ export const login = createAsyncThunk(
   'auth/login',
   async ({ userId, password }, { rejectWithValue }) => {
     try {
-      const response = await api.post('/auth/login', { userId, password });
+      console.log('Attempting login with:', { userId, password: '***' });
+      const response = await api.post('/api/auth/login', { userId, password });
+      console.log('Login response:', response.data);
       
       // Save token and user to AsyncStorage
       await AsyncStorage.setItem('token', response.data.token);
@@ -16,8 +18,9 @@ export const login = createAsyncThunk(
       
       return response.data;
     } catch (error) {
+      console.error('Login error:', error.response?.data || error.message);
       return rejectWithValue(
-        error.response?.data?.error || 'Login failed. Please try again.'
+        error.response?.data?.error || error.response?.data?.message || 'Login failed. Please try again.'
       );
     }
   }

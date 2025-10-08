@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -24,6 +25,9 @@ const EditInstallmentScreen = ({ route, navigation }) => {
   const dispatch = useDispatch();
   const { current, loading, error } = useSelector((state) => state.installments);
   
+  console.log('EditInstallmentScreen - Route params:', route.params);
+  console.log('EditInstallmentScreen - InstallmentId:', installmentId);
+  
   const [installmentName, setInstallmentName] = useState('');
   const [value, setValue] = useState('');
   const [isPercentage, setIsPercentage] = useState(true);
@@ -41,7 +45,9 @@ const EditInstallmentScreen = ({ route, navigation }) => {
   }, [installmentId]);
 
   useEffect(() => {
+    console.log('Current installment data changed:', current);
     if (current && !isLoaded) {
+      console.log('Setting form data from current installment:', current);
       setInstallmentName(current.installment_name || '');
       setValue(current.value?.toString() || '');
       setIsPercentage(current.is_percentage || false);
@@ -59,7 +65,16 @@ const EditInstallmentScreen = ({ route, navigation }) => {
   }, [error]);
 
   const loadInstallmentDetails = async () => {
-    await dispatch(fetchInstallmentById(installmentId));
+    console.log('Loading installment details for ID:', installmentId);
+    
+    if (!installmentId) {
+      console.error('InstallmentId is undefined! Cannot load installment details.');
+      Alert.alert('Error', 'Installment ID is missing. Please go back and try again.');
+      return;
+    }
+    
+    const result = await dispatch(fetchInstallmentById(installmentId));
+    console.log('Fetch installment result:', result);
   };
 
   const validateForm = () => {
@@ -104,7 +119,9 @@ const EditInstallmentScreen = ({ route, navigation }) => {
       description: description.trim() || null,
     };
 
+    console.log('Updating installment with ID:', installmentId, 'Data:', installmentData);
     const result = await dispatch(updateInstallment({ id: installmentId, data: installmentData }));
+    console.log('Update installment result:', result);
     
     if (result.type === 'installments/update/fulfilled') {
       Alert.alert('Success', 'Installment updated successfully', [
@@ -113,6 +130,8 @@ const EditInstallmentScreen = ({ route, navigation }) => {
           onPress: () => navigation.goBack(),
         },
       ]);
+    } else if (result.type === 'installments/update/rejected') {
+      console.error('Update installment failed:', result.payload);
     }
   };
 

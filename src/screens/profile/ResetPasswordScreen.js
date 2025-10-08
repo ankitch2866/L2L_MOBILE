@@ -1,5 +1,6 @@
 // Reset Password Screen - Matches Web Frontend API
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Text, Card, TextInput, Button, HelperText } from 'react-native-paper';
 import { useSelector } from 'react-redux';
@@ -62,7 +63,7 @@ const ResetPasswordScreen = ({ navigation }) => {
         }),
       };
 
-      await api.post(`/users/reset-password/${user.id}`, requestData);
+      await api.post(`/api/users/reset-password/${user.id}`, requestData);
 
       showSuccess('Password reset successfully!');
       

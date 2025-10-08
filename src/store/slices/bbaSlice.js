@@ -11,7 +11,7 @@ export const fetchBBAs = createAsyncThunk(
       if (filters.customer_id) params.append('customer_id', filters.customer_id);
       if (filters.project_id) params.append('project_id', filters.project_id);
       
-      const response = await api.get(`/transaction/bba?${params.toString()}`);
+      const response = await api.get(`/api/bba/records?${params.toString()}`);
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch BBAs');
@@ -24,7 +24,7 @@ export const createBBA = createAsyncThunk(
   'bba/createBBA',
   async (bbaData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/transaction/bba', bbaData);
+      const response = await api.post('/api/bba/records', bbaData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to create BBA');
@@ -37,7 +37,7 @@ export const fetchBBAById = createAsyncThunk(
   'bba/fetchBBAById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/bba/${id}`);
+      const response = await api.get(`/api/bba/records/${id}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch BBA');
@@ -50,7 +50,7 @@ export const updateBBA = createAsyncThunk(
   'bba/updateBBA',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/transaction/bba/${id}`, data);
+      const response = await api.put(`/api/bba/records/${id}`, data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to update BBA');
@@ -63,7 +63,7 @@ export const updateStatus = createAsyncThunk(
   'bba/updateStatus',
   async ({ id, status }, { rejectWithValue }) => {
     try {
-      const response = await api.patch(`/transaction/bba/${id}/status`, { status });
+      const response = await api.patch(`/api/bba/records/${id}/status`, { status });
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to update BBA status');
@@ -76,7 +76,7 @@ export const verifyBBA = createAsyncThunk(
   'bba/verifyBBA',
   async ({ id, verificationData }, { rejectWithValue }) => {
     try {
-      const response = await api.patch(`/transaction/bba/${id}/verify`, verificationData);
+      const response = await api.patch(`/api/bba/records/${id}/verify`, verificationData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to verify BBA');
@@ -89,7 +89,7 @@ export const autoVerify = createAsyncThunk(
   'bba/autoVerify',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.post('/transaction/bba/auto-verify');
+      const response = await api.post('/api/bba/records/auto-verify');
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to auto-verify BBAs');
@@ -102,7 +102,7 @@ export const autoStatusUpdate = createAsyncThunk(
   'bba/autoStatusUpdate',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.post('/transaction/bba/auto-status-update');
+      const response = await api.post('/api/bba/records/auto-status-update');
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to auto-update BBA statuses');
@@ -115,7 +115,7 @@ export const fetchStatistics = createAsyncThunk(
   'bba/fetchStatistics',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/transaction/bba/statistics');
+      const response = await api.get('/api/bba/records/statistics');
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch BBA statistics');

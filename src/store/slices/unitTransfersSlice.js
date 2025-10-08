@@ -6,7 +6,7 @@ export const fetchTransfers = createAsyncThunk(
   'unitTransfers/fetchTransfers',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/transaction/unit-transfer/all');
+      const response = await api.get('/api/transaction/transfer-charges');
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch unit transfers');
@@ -19,7 +19,7 @@ export const createTransfer = createAsyncThunk(
   'unitTransfers/createTransfer',
   async (transferData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/transaction/unit-transfer/record', transferData);
+      const response = await api.post('/api/transaction/unit-transfer/record', transferData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to create unit transfer');
@@ -32,7 +32,7 @@ export const fetchTransferById = createAsyncThunk(
   'unitTransfers/fetchTransferById',
   async (transactionId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/unit-transfer/transaction/${transactionId}`);
+      const response = await api.get(`/api/transaction/transfer-charges/transaction/${transactionId}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch transfer details');
@@ -45,7 +45,7 @@ export const checkCustomerUnit = createAsyncThunk(
   'unitTransfers/checkCustomerUnit',
   async (customerId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/unit-transfer/check-customer/${customerId}`);
+      const response = await api.get(`/api/transaction/unit-transfer/customer/${customerId}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to check customer unit');
@@ -58,7 +58,7 @@ export const checkTransferCharge = createAsyncThunk(
   'unitTransfers/checkTransferCharge',
   async (customerId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/unit-transfer/check-transfer-charge/${customerId}`);
+      const response = await api.get(`/api/transaction/is-pay-transfer-charge/${customerId}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to check transfer charge');
@@ -71,7 +71,7 @@ export const markTransferChargeUsed = createAsyncThunk(
   'unitTransfers/markTransferChargeUsed',
   async (customerId, { rejectWithValue }) => {
     try {
-      const response = await api.patch(`/transaction/unit-transfer/mark-used/${customerId}`);
+      const response = await api.patch(`/api/transaction/unit-transfer/mark-used/${customerId}`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to mark transfer charge as used');
@@ -84,7 +84,7 @@ export const fetchUnitOwners = createAsyncThunk(
   'unitTransfers/fetchUnitOwners',
   async (unitId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/unit-transfer/owners/${unitId}`);
+      const response = await api.get(`/api/owners/unit/${unitId}`);
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch unit owners');
@@ -97,7 +97,7 @@ export const updateTransfer = createAsyncThunk(
   'unitTransfers/updateTransfer',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/transaction/unit-transfer/${id}`, data);
+      const response = await api.put(`/api/transaction/unit-transfer/${id}`, data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to update transfer');

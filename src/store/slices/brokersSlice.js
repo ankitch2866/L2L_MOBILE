@@ -5,7 +5,7 @@ export const fetchBrokers = createAsyncThunk(
   'brokers/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/master/brokers');
+      const response = await api.get('/api/master/brokers');
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch brokers');
@@ -17,7 +17,7 @@ export const fetchBrokerById = createAsyncThunk(
   'brokers/fetchById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/master/brokers/${id}`);
+      const response = await api.get(`/api/master/brokers/${id}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch broker');
@@ -29,7 +29,7 @@ export const createBroker = createAsyncThunk(
   'brokers/create',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await api.post('/master/brokers', data);
+      const response = await api.post('/api/master/brokers', data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to create broker');
@@ -41,7 +41,7 @@ export const updateBroker = createAsyncThunk(
   'brokers/update',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/master/brokers/${id}`, data);
+      const response = await api.put(`/api/master/brokers/${id}`, data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to update broker');
@@ -53,7 +53,7 @@ export const deleteBroker = createAsyncThunk(
   'brokers/delete',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/master/brokers/${id}`);
+      await api.delete(`/api/master/brokers/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to delete broker');
@@ -65,7 +65,7 @@ export const checkBrokerUsage = createAsyncThunk(
   'brokers/checkUsage',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/master/brokers/${id}/usage`);
+      const response = await api.get(`/api/master/brokers/${id}/usage`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to check broker usage');

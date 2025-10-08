@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import {
   View,
   Text,
@@ -21,6 +22,9 @@ const InstallmentDetailsScreen = ({ route, navigation }) => {
   const { installmentId } = route.params;
   const dispatch = useDispatch();
   const { current, loading, error } = useSelector((state) => state.installments);
+  
+  console.log('InstallmentDetailsScreen - Route params:', route.params);
+  console.log('InstallmentDetailsScreen - InstallmentId:', installmentId);
 
   useEffect(() => {
     loadInstallmentDetails();

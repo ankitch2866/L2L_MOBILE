@@ -4,7 +4,7 @@ import { Card, Title, Text, Button, Chip } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../../context';
 import { LoadingIndicator } from '../../../components';
-import { fetchPayments, fetchStatistics } from '../../../store/slices/paymentsSlice';
+import { fetchPayments, fetchStatistics, fetchAllPaymentsForStats } from '../../../store/slices/paymentsSlice';
 
 const PaymentsDashboardScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -13,22 +13,47 @@ const PaymentsDashboardScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
+    console.log('PaymentsDashboardScreen: Loading payments and statistics...');
     dispatch(fetchPayments());
-    dispatch(fetchStatistics());
+    // Use fetchAllPaymentsForStats to get accurate total statistics
+    dispatch(fetchAllPaymentsForStats());
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log('PaymentsDashboardScreen: Statistics loaded:', statistics);
+    console.log('PaymentsDashboardScreen: List loaded:', list);
+  }, [statistics, list]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
+    console.log('Manual refresh triggered - fetching all payments for statistics...');
     await Promise.all([
       dispatch(fetchPayments()),
-      dispatch(fetchStatistics())
+      dispatch(fetchAllPaymentsForStats())
     ]);
     setRefreshing(false);
+  };
+
+  const handleForceRefreshStats = async () => {
+    console.log('Force refresh statistics triggered...');
+    await dispatch(fetchAllPaymentsForStats());
   };
 
   const formatCurrency = (amount) => {
     return `₹${parseFloat(amount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   };
+
+  // Use statistics from Redux store (calculated from all payments)
+  const displayStats = statistics || {
+    total_amount: 0,
+    transaction_count: 0,
+    online_amount: 0,
+    cheque_amount: 0
+  };
+
+  console.log('Display stats:', displayStats);
+  console.log('API statistics:', statistics);
+  console.log('Payments list:', list);
 
   if (loading && list.length === 0) return <LoadingIndicator />;
 
@@ -45,38 +70,21 @@ const PaymentsDashboardScreen = ({ navigation }) => {
             <Title>Payment Statistics</Title>
             <View style={styles.statsGrid}>
               <View style={styles.statItem}>
-                <Text style={styles.statLabel}>Total Amount</Text>
+                <Text style={styles.statLabel}>Total Payment</Text>
                 <Text style={[styles.statValue, { color: theme.colors.primary }]}>
-                  {formatCurrency(statistics.total_amount)}
+                  {formatCurrency(displayStats.total_amount)}
                 </Text>
               </View>
               <View style={styles.statItem}>
-                <Text style={styles.statLabel}>Total Payments</Text>
+                <Text style={styles.statLabel}>Transaction Count</Text>
                 <Text style={[styles.statValue, { color: theme.colors.primary }]}>
-                  {statistics.total_count || 0}
+                  {displayStats.transaction_count}
                 </Text>
               </View>
             </View>
           </Card.Content>
         </Card>
 
-        {statistics.by_method && Object.keys(statistics.by_method).length > 0 && (
-          <Card style={styles.card}>
-            <Card.Content>
-              <Title>By Payment Method</Title>
-              <View style={styles.methodsContainer}>
-                {Object.entries(statistics.by_method).map(([method, amount]) => (
-                  <View key={method} style={styles.methodRow}>
-                    <Chip icon="cash" style={styles.methodChip}>
-                      {method.toUpperCase()}
-                    </Chip>
-                    <Text style={styles.methodAmount}>{formatCurrency(amount)}</Text>
-                  </View>
-                ))}
-              </View>
-            </Card.Content>
-          </Card>
-        )}
 
         <Card style={styles.card}>
           <Card.Content>
@@ -122,6 +130,23 @@ const PaymentsDashboardScreen = ({ navigation }) => {
               >
                 Customer Payments
               </Button>
+            </View>
+            
+            {/* Debug Section */}
+            <View style={styles.debugSection}>
+              <Text style={styles.debugTitle}>Debug Statistics</Text>
+              <Button
+                mode="text"
+                icon="refresh"
+                onPress={handleForceRefreshStats}
+                style={styles.debugButton}
+                textColor="#666"
+              >
+                Force Refresh Stats
+              </Button>
+              <Text style={styles.debugText}>
+                Current: {displayStats.transaction_count} payments, {formatCurrency(displayStats.total_amount)}
+              </Text>
             </View>
           </Card.Content>
         </Card>
@@ -172,6 +197,10 @@ const styles = StyleSheet.create({
   recentDate: { fontSize: 14, color: '#6B7280' },
   recentAmount: { fontSize: 16, fontWeight: 'bold' },
   emptyText: { textAlign: 'center', color: '#6B7280', marginTop: 16 },
+  debugSection: { marginTop: 16, padding: 12, backgroundColor: '#F9FAFB', borderRadius: 8, borderWidth: 1, borderColor: '#E5E7EB' },
+  debugTitle: { fontSize: 14, fontWeight: 'bold', color: '#374151', marginBottom: 8 },
+  debugButton: { marginBottom: 8 },
+  debugText: { fontSize: 12, color: '#6B7280' },
 });
 
 export default PaymentsDashboardScreen;

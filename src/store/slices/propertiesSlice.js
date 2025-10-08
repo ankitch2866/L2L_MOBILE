@@ -7,7 +7,7 @@ export const fetchAllPropertiesData = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       // First fetch all projects
-      const projectsResponse = await api.get('/master/projects');
+      const projectsResponse = await api.get('/api/master/projects');
       if (!projectsResponse.data?.success) {
         throw new Error(projectsResponse.data?.message || 'Failed to fetch projects');
       }
@@ -21,7 +21,7 @@ export const fetchAllPropertiesData = createAsyncThunk(
       // Fetch units for all projects in parallel
       const unitPromises = projects.map(async (project) => {
         try {
-          const response = await api.get(`/master/project/${project.project_id}/units`);
+          const response = await api.get(`/api/master/project/${project.project_id}/units`);
           if (response.data?.success) {
             return { projectId: project.project_id, units: response.data.data || [] };
           }
@@ -49,7 +49,7 @@ export const fetchPropertiesByProject = createAsyncThunk(
   'properties/fetchByProject',
   async (projectId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/master/project/${projectId}/units`);
+      const response = await api.get(`/api/master/project/${projectId}/units`);
       if (!response.data?.success) {
         throw new Error(response.data?.message || 'Failed to fetch properties');
       }
@@ -64,7 +64,7 @@ export const createProperty = createAsyncThunk(
   'properties/createProperty',
   async (propertyData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/master/unit', propertyData);
+      const response = await api.post('/api/master/unit', propertyData);
       if (!response.data?.success) {
         throw new Error(response.data?.message || 'Failed to create property');
       }
@@ -79,7 +79,7 @@ export const updateProperty = createAsyncThunk(
   'properties/updateProperty',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/master/unit/${id}`, data);
+      const response = await api.put(`/api/master/unit/${id}`, data);
       if (!response.data?.success) {
         throw new Error(response.data?.message || 'Failed to update property');
       }
@@ -94,7 +94,7 @@ export const deleteProperty = createAsyncThunk(
   'properties/deleteProperty',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.delete(`/master/unit/${id}`);
+      const response = await api.delete(`/api/master/unit/${id}`);
       if (!response.data?.success) {
         throw new Error(response.data?.message || 'Failed to delete property');
       }
@@ -109,7 +109,7 @@ export const fetchPropertyById = createAsyncThunk(
   'properties/fetchPropertyById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/master/unit/${id}`);
+      const response = await api.get(`/api/master/unit/${id}`);
       if (!response.data?.success) {
         throw new Error(response.data?.message || 'Failed to fetch property');
       }

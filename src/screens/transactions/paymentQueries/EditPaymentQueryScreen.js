@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { TextInput, Button, HelperText, Text, Card } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -59,12 +60,12 @@ const EditPaymentQueryScreen = ({ route, navigation }) => {
 
   const fetchProjects = async () => {
     try {
-      const response = await api.get('/transaction/payment-query/projects');
+      const response = await api.get('/api/master/projects');
       if (response.data?.success) {
-        const projectsData = response.data.data?.projects || [];
+        const projectsData = response.data.data || [];
         setProjects(projectsData.map(p => ({
-          id: p.project_id,
-          name: p.project_name,
+          value: p.project_id,
+          label: p.project_name,
         })));
       }
     } catch (error) {
@@ -74,7 +75,7 @@ const EditPaymentQueryScreen = ({ route, navigation }) => {
 
   const fetchInstallments = async (projectId) => {
     try {
-      const response = await api.get(`/transaction/payment-query/installments/project/${projectId}`);
+      const response = await api.get(`/api/transaction/payment-query/installments/project/${projectId}`);
       if (response.data?.success) {
         const installmentsData = response.data.data?.installments || [];
         setInstallments(installmentsData.map(i => ({

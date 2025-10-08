@@ -5,7 +5,7 @@ export const fetchProjects = createAsyncThunk(
   'projects/fetchProjects',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/master/projects');
+      const response = await api.get('/api/master/projects');
       // Handle both direct array and nested data structure
       return response.data?.data || response.data || [];
     } catch (error) {
@@ -18,7 +18,7 @@ export const createProject = createAsyncThunk(
   'projects/createProject',
   async (projectData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/master/projects', projectData);
+      const response = await api.post('/api/master/projects', projectData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to create project');
@@ -30,7 +30,7 @@ export const updateProject = createAsyncThunk(
   'projects/updateProject',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/master/projects/${id}`, data);
+      const response = await api.put(`/api/master/projects/${id}`, data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to update project');
@@ -42,7 +42,7 @@ export const deleteProject = createAsyncThunk(
   'projects/deleteProject',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/master/projects/${id}`);
+      await api.delete(`/api/master/projects/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to delete project');
@@ -54,7 +54,7 @@ export const fetchProjectById = createAsyncThunk(
   'projects/fetchProjectById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/master/projects/${id}`);
+      const response = await api.get(`/api/master/projects/${id}`);
       // Handle both direct object and nested data structure
       return response.data?.data || response.data || {};
     } catch (error) {

@@ -14,7 +14,7 @@ export const fetchPaymentRaises = createAsyncThunk(
       if (filters.page) params.append('page', filters.page);
       if (filters.limit) params.append('limit', filters.limit);
       
-      const response = await api.get(`/transaction/raise-payment?${params.toString()}`);
+      const response = await api.get(`/api/transaction/raise-payment?${params.toString()}`);
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch payment raises');
@@ -27,7 +27,7 @@ export const createRaise = createAsyncThunk(
   'paymentRaises/createRaise',
   async (raiseData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/transaction/raise-payment', raiseData);
+      const response = await api.post('/api/transaction/raise-payment', raiseData);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to create payment raise');
@@ -40,7 +40,7 @@ export const fetchRaiseById = createAsyncThunk(
   'paymentRaises/fetchRaiseById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/raise-payment/${id}`);
+      const response = await api.get(`/api/transaction/raise-payment/${id}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch payment raise');
@@ -53,7 +53,7 @@ export const updateRaise = createAsyncThunk(
   'paymentRaises/updateRaise',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/transaction/raise-payment/${id}`, data);
+      const response = await api.put(`/api/transaction/raise-payment/${id}`, data);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to update payment raise');
@@ -66,7 +66,7 @@ export const updateRaiseStatus = createAsyncThunk(
   'paymentRaises/updateRaiseStatus',
   async ({ id, status }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/transaction/raise-payment/${id}/status`, { status });
+      const response = await api.put(`/api/transaction/raise-payment/${id}/status`, { status });
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to update payment raise status');
@@ -79,7 +79,7 @@ export const deleteRaise = createAsyncThunk(
   'paymentRaises/deleteRaise',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/transaction/raise-payment/${id}`);
+      await api.delete(`/api/transaction/raise-payment/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to delete payment raise');
@@ -92,7 +92,7 @@ export const fetchRaisesByProject = createAsyncThunk(
   'paymentRaises/fetchRaisesByProject',
   async (projectId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/raise-payment?project_id=${projectId}`);
+      const response = await api.get(`/api/transaction/raise-payment?project_id=${projectId}`);
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch payment raises by project');
@@ -105,7 +105,7 @@ export const fetchRaisesByCustomer = createAsyncThunk(
   'paymentRaises/fetchRaisesByCustomer',
   async (customerId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/raise-payment?customer_id=${customerId}`);
+      const response = await api.get(`/api/transaction/raise-payment?customer_id=${customerId}`);
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch payment raises by customer');

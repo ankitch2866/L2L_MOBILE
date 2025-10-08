@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Card, Text, Chip, Button, Divider } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';

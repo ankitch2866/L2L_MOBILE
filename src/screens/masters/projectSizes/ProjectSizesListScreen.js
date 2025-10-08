@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, FlatList, RefreshControl } from 'react-native';
 import { Searchbar, FAB, SegmentedButtons } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ const ProjectSizesListScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const { theme } = useTheme();
   const { list, loading, projectId } = useSelector(state => state.projectSizes);
-  const { list: projects } = useSelector(state => state.projects || { list: [] });
+  const { projects } = useSelector(state => state.projects || { projects: [] });
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -25,14 +25,23 @@ const ProjectSizesListScreen = ({ navigation, route }) => {
   });
 
   useEffect(() => {
+    console.log('Loading projects and project sizes...');
     dispatch(fetchProjects());
     if (route.params?.projectId) {
+      console.log('Loading project sizes for specific project:', route.params.projectId);
       dispatch(setProjectId(route.params.projectId));
       dispatch(fetchProjectSizesByProject(route.params.projectId));
     } else {
+      console.log('Loading all project sizes');
       dispatch(fetchProjectSizes());
     }
   }, [dispatch, route.params?.projectId]);
+
+  useEffect(() => {
+    console.log('Projects loaded:', projects);
+    console.log('Project sizes loaded:', list);
+    console.log('Current project ID:', projectId);
+  }, [projects, list, projectId]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
@@ -45,11 +54,15 @@ const ProjectSizesListScreen = ({ navigation, route }) => {
   };
 
   const handleProjectFilter = (value) => {
+    console.log('Project filter changed to:', value);
     const selectedProjectId = value === 'all' ? null : parseInt(value);
+    console.log('Selected project ID:', selectedProjectId);
     dispatch(setProjectId(selectedProjectId));
     if (selectedProjectId) {
+      console.log('Fetching project sizes for project:', selectedProjectId);
       dispatch(fetchProjectSizesByProject(selectedProjectId));
     } else {
+      console.log('Fetching all project sizes');
       dispatch(fetchProjectSizes());
     }
   };
@@ -89,7 +102,7 @@ const ProjectSizesListScreen = ({ navigation, route }) => {
         renderItem={({ item }) => (
           <ProjectSizeCard
             projectSize={item}
-            onPress={(size) => navigation.navigate('EditProjectSize', { id: size.id })}
+            onPress={() => {}} // Card click does nothing - only edit icon should navigate
             onEdit={(size) => navigation.navigate('EditProjectSize', { id: size.id })}
             theme={theme}
           />

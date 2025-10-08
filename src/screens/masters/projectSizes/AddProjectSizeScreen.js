@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 import { TextInput, Button, Text, Card } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +10,7 @@ import { fetchProjects } from '../../../store/slices/projectsSlice';
 const AddProjectSizeScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { theme } = useTheme();
-  const { list: projects } = useSelector(state => state.projects || { list: [] });
+  const { projects } = useSelector(state => state.projects || { projects: [] });
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     project_id: '',
@@ -18,8 +18,14 @@ const AddProjectSizeScreen = ({ navigation }) => {
   });
 
   useEffect(() => {
+    console.log('AddProjectSizeScreen: Loading projects...');
     dispatch(fetchProjects());
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log('AddProjectSizeScreen: Projects loaded:', projects);
+    console.log('AddProjectSizeScreen: Project options:', projectOptions);
+  }, [projects]);
 
   const handleSubmit = async () => {
     if (!formData.project_id) {

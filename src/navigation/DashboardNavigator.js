@@ -46,6 +46,7 @@ import {
 import {
   PaymentPlansListScreen,
   AddPaymentPlanScreen,
+  EditPaymentPlanScreen,
   PaymentPlanDetailsScreen,
 } from '../screens/masters/paymentPlans';
 import {
@@ -106,7 +107,31 @@ import {
   CustomerPaymentsScreen,
   TransactionDetailsScreen,
   CreditPaymentScreen,
+  CreditPaymentDashboardScreen,
+  CreditPaymentDetailsScreen,
 } from '../screens/transactions/payments';
+import {
+  CallingFeedbackDashboardScreen,
+  AddCallingFeedbackScreen,
+  CallingFeedbackDetailsScreen,
+  EditCallingFeedbackScreen,
+} from '../screens/transactions/callingFeedback';
+import {
+  EmployeesDashboardScreen,
+  AddEmployeeScreen,
+  EditEmployeeScreen,
+  EmployeeDetailsScreen,
+} from '../screens/utilities/employees';
+import {
+  AllotmentLetterScreen as UtilitiesAllotmentLetterScreen,
+} from '../screens/utilities/allotmentLetter';
+import {
+  LogReportsScreen,
+} from '../screens/utilities/logReports';
+import {
+  BirthdaysScreen,
+  SendWishesScreen,
+} from '../screens/utilities/birthdays';
 import {
   ChequesDashboardScreen,
   ChequeDepositScreen,
@@ -311,6 +336,7 @@ const PaymentPlansStack = () => {
         })} 
       />
       <Stack.Screen name="AddPaymentPlan" component={AddPaymentPlanScreen} options={{ title: 'Add Payment Plan' }} />
+      <Stack.Screen name="EditPaymentPlan" component={EditPaymentPlanScreen} options={{ title: 'Edit Payment Plan' }} />
       <Stack.Screen name="PaymentPlanDetails" component={PaymentPlanDetailsScreen} options={{ title: 'Payment Plan Details' }} />
       <Stack.Screen name="InstallmentsList" component={InstallmentsListScreen} options={{ title: 'Installments' }} />
       <Stack.Screen name="AddInstallment" component={AddInstallmentScreen} options={{ title: 'Add Installment' }} />
@@ -503,6 +529,8 @@ const PaymentsStack = () => {
       <Stack.Screen name="CustomerPayments" component={CustomerPaymentsScreen} options={{ title: 'Customer Payments' }} />
       <Stack.Screen name="TransactionDetails" component={TransactionDetailsScreen} options={{ title: 'Transaction Details' }} />
       <Stack.Screen name="CreditPayment" component={CreditPaymentScreen} options={{ title: 'Credit Payment' }} />
+      <Stack.Screen name="CreditPaymentDashboard" component={CreditPaymentDashboardScreen} options={{ title: 'Credit Payments' }} />
+      <Stack.Screen name="CreditPaymentDetails" component={CreditPaymentDetailsScreen} options={{ title: 'Credit Payment Details' }} />
     </Stack.Navigator>
   );
 };
@@ -531,6 +559,32 @@ const ChequesStack = () => {
       <Stack.Screen name="ChequeDetails" component={ChequeDetailsScreen} options={{ title: 'Cheque Details' }} />
       <Stack.Screen name="ChequeStatus" component={ChequeStatusScreen} options={{ title: 'Cheque Status' }} />
       <Stack.Screen name="ChequeFeedback" component={ChequeFeedbackScreen} options={{ title: 'Bank Feedback' }} />
+    </Stack.Navigator>
+  );
+};
+
+// Calling Feedback Stack Navigator
+const CallingFeedbackStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerBackTitleVisible: false,
+      }}
+    >
+      <Stack.Screen 
+        name="CallingFeedbackDashboard" 
+        component={CallingFeedbackDashboardScreen} 
+        options={({ navigation }) => ({ 
+          title: 'Calling Feedback',
+          headerLeft: () => <BackButton navigation={navigation} />
+        })} 
+      />
+      <Stack.Screen name="AddCallingFeedback" component={AddCallingFeedbackScreen} options={{ title: 'Add Feedback' }} />
+      <Stack.Screen name="CallingFeedbackDetails" component={CallingFeedbackDetailsScreen} options={{ title: 'Feedback Details' }} />
+      <Stack.Screen name="EditCallingFeedback" component={EditCallingFeedbackScreen} options={{ title: 'Edit Feedback' }} />
     </Stack.Navigator>
   );
 };
@@ -683,6 +737,118 @@ const ProfileStack = () => {
       <Stack.Screen name="ResetPassword" component={ResetPasswordScreen} options={{ title: 'Reset Password' }} />
       <Stack.Screen name="Settings" component={SettingsScreen} options={{ title: 'Settings' }} />
       <Stack.Screen name="About" component={AboutScreen} options={{ title: 'About' }} />
+    </Stack.Navigator>
+  );
+};
+
+// Employees Stack Navigator
+const EmployeesStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerBackTitleVisible: false,
+      }}
+    >
+      <Stack.Screen 
+        name="EmployeesDashboard" 
+        component={EmployeesDashboardScreen}
+        options={({ navigation }) => ({ 
+          title: 'Manage Employees',
+          headerLeft: () => <BackButton navigation={navigation} />
+        })} 
+      />
+      <Stack.Screen 
+        name="AddEmployee" 
+        component={AddEmployeeScreen}
+        options={{ title: 'Add Employee' }} 
+      />
+      <Stack.Screen 
+        name="EditEmployee" 
+        component={EditEmployeeScreen}
+        options={{ title: 'Edit Employee' }} 
+      />
+      <Stack.Screen 
+        name="EmployeeDetails" 
+        component={EmployeeDetailsScreen}
+        options={{ title: 'Employee Details' }} 
+      />
+    </Stack.Navigator>
+  );
+};
+
+// Allotment Letter Stack Navigator
+const AllotmentLetterStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerBackTitleVisible: false,
+      }}
+    >
+      <Stack.Screen 
+        name="AllotmentLetter" 
+        component={UtilitiesAllotmentLetterScreen}
+        options={({ navigation }) => ({ 
+          title: 'Allotment Letter',
+          headerLeft: () => <BackButton navigation={navigation} />
+        })} 
+      />
+    </Stack.Navigator>
+  );
+};
+
+// Log Reports Stack Navigator
+const LogReportsStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerBackTitleVisible: false,
+      }}
+    >
+      <Stack.Screen 
+        name="LogReports" 
+        component={LogReportsScreen}
+        options={({ navigation }) => ({ 
+          title: 'Log Reports',
+          headerLeft: () => <BackButton navigation={navigation} />
+        })} 
+      />
+    </Stack.Navigator>
+  );
+};
+
+// Birthdays Stack Navigator
+const BirthdaysStack = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: '#EF4444' },
+        headerTintColor: '#FFFFFF',
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerBackTitleVisible: false,
+      }}
+    >
+      <Stack.Screen 
+        name="Birthdays" 
+        component={BirthdaysScreen}
+        options={({ navigation }) => ({ 
+          title: 'Upcoming Birthdays',
+          headerLeft: () => <BackButton navigation={navigation} />
+        })} 
+      />
+      <Stack.Screen 
+        name="SendWishes" 
+        component={SendWishesScreen}
+        options={{ title: 'Send Wishes' }} 
+      />
     </Stack.Navigator>
   );
 };
@@ -909,6 +1075,14 @@ const DashboardNavigator = () => {
         }}
       />
       <Stack.Screen 
+        name="CallingFeedback" 
+        component={CallingFeedbackStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
         name="PaymentRaises" 
         component={PaymentRaisesStack}
         options={{ 
@@ -943,6 +1117,38 @@ const DashboardNavigator = () => {
       <Stack.Screen 
         name="PaymentQueries" 
         component={PaymentQueriesStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="Employees" 
+        component={EmployeesStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="AllotmentLetter" 
+        component={AllotmentLetterStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="LogReports" 
+        component={LogReportsStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="Birthdays" 
+        component={BirthdaysStack}
         options={{ 
           presentation: 'card',
           headerShown: false

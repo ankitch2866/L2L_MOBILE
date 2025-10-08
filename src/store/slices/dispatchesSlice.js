@@ -14,7 +14,7 @@ export const fetchDispatches = createAsyncThunk(
       if (filters.page) params.append('page', filters.page);
       if (filters.limit) params.append('limit', filters.limit);
       
-      const response = await api.get(`/transaction/dispatches?${params.toString()}`);
+      const response = await api.get(`/api/transaction/dispatches?${params.toString()}`);
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch dispatches');
@@ -27,7 +27,7 @@ export const createDispatch = createAsyncThunk(
   'dispatches/createDispatch',
   async (dispatchData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/transaction/dispatches', dispatchData);
+      const response = await api.post('/api/transaction/dispatches', dispatchData);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to create dispatch');
@@ -40,7 +40,7 @@ export const fetchDispatchById = createAsyncThunk(
   'dispatches/fetchDispatchById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/dispatches/${id}`);
+      const response = await api.get(`/api/transaction/dispatches/${id}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch dispatch');
@@ -53,7 +53,7 @@ export const updateDispatch = createAsyncThunk(
   'dispatches/updateDispatch',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/transaction/dispatches/${id}`, data);
+      const response = await api.put(`/api/transaction/dispatches/${id}`, data);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to update dispatch');
@@ -66,7 +66,7 @@ export const deleteDispatch = createAsyncThunk(
   'dispatches/deleteDispatch',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/transaction/dispatches/${id}`);
+      await api.delete(`/api/transaction/dispatches/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to delete dispatch');
@@ -79,7 +79,7 @@ export const addDispatchItems = createAsyncThunk(
   'dispatches/addDispatchItems',
   async ({ id, items }, { rejectWithValue }) => {
     try {
-      const response = await api.post(`/transaction/dispatches/${id}/items`, { items });
+      const response = await api.post(`/api/transaction/dispatches/${id}/items`, { items });
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to add dispatch items');
@@ -92,7 +92,7 @@ export const fetchDispatchesByProject = createAsyncThunk(
   'dispatches/fetchDispatchesByProject',
   async (projectId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/projects/${projectId}/dispatches`);
+      const response = await api.get(`/api/transaction/projects/${projectId}/dispatches`);
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch project dispatches');
@@ -105,7 +105,7 @@ export const fetchDispatchesByCustomer = createAsyncThunk(
   'dispatches/fetchDispatchesByCustomer',
   async (customerId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/customer-dispatches?customer_id=${customerId}`);
+      const response = await api.get(`/api/transaction/customer-dispatches?customer_id=${customerId}`);
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch customer dispatches');

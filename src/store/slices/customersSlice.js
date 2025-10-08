@@ -5,7 +5,7 @@ export const fetchCustomers = createAsyncThunk(
   'customers/fetchCustomers',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/master/customers?limit=1000');
+      const response = await api.get('/api/master/customers?limit=1000');
       // Handle both direct array and nested data structure
       return response.data?.data || response.data || [];
     } catch (error) {
@@ -18,7 +18,7 @@ export const createCustomer = createAsyncThunk(
   'customers/createCustomer',
   async (customerData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/master/customers', customerData);
+      const response = await api.post('/api/master/customers', customerData);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to create customer');
@@ -30,7 +30,7 @@ export const updateCustomer = createAsyncThunk(
   'customers/updateCustomer',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/master/customers/${id}`, data);
+      const response = await api.put(`/api/master/customers/${id}`, data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to update customer');
@@ -42,7 +42,7 @@ export const deleteCustomer = createAsyncThunk(
   'customers/deleteCustomer',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/master/customers/${id}`);
+      await api.delete(`/api/master/customers/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to delete customer');
@@ -54,7 +54,7 @@ export const fetchCustomerById = createAsyncThunk(
   'customers/fetchCustomerById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/master/customers/${id}`);
+      const response = await api.get(`/api/master/customers/${id}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch customer');

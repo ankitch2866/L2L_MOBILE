@@ -4,7 +4,7 @@ import { Card, Title, Text, Button, Chip } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../../context';
 import { LoadingIndicator } from '../../../components';
-import { fetchCheques, fetchStatistics } from '../../../store/slices/chequesSlice';
+import { fetchCheques } from '../../../store/slices/chequesSlice';
 
 const ChequesDashboardScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -12,17 +12,18 @@ const ChequesDashboardScreen = ({ navigation }) => {
   const { list, loading, statistics } = useSelector(state => state.cheques);
   const [refreshing, setRefreshing] = useState(false);
 
+  // Debug logging
+  console.log('ChequesDashboardScreen - Statistics:', statistics);
+  console.log('ChequesDashboardScreen - List length:', list.length);
+
   useEffect(() => {
-    dispatch(fetchCheques());
-    dispatch(fetchStatistics());
+    // Fetch cheques with dashboard data (includes statistics)
+    dispatch(fetchCheques({ page: 1, limit: 5 })); // Only get 5 recent cheques for dashboard
   }, [dispatch]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    await Promise.all([
-      dispatch(fetchCheques()),
-      dispatch(fetchStatistics())
-    ]);
+    await dispatch(fetchCheques({ page: 1, limit: 5 }));
     setRefreshing(false);
   };
 
@@ -59,13 +60,13 @@ const ChequesDashboardScreen = ({ navigation }) => {
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Total Amount</Text>
                 <Text style={[styles.statValue, { color: theme.colors.primary }]}>
-                  {formatCurrency(statistics.total_amount)}
+                  {formatCurrency(statistics?.total_amount || 0)}
                 </Text>
               </View>
               <View style={styles.statItem}>
                 <Text style={styles.statLabel}>Total Cheques</Text>
                 <Text style={[styles.statValue, { color: theme.colors.primary }]}>
-                  {statistics.total_count || 0}
+                  {statistics?.total_cheques || 0}
                 </Text>
               </View>
             </View>
@@ -80,27 +81,25 @@ const ChequesDashboardScreen = ({ navigation }) => {
                 <Chip icon="clock" style={[styles.statusChip, { backgroundColor: '#DBEAFE' }]}>
                   Pending
                 </Chip>
-                <Text style={styles.statusCount}>{statistics.pending_count || 0}</Text>
-                <Text style={styles.statusAmount}>{formatCurrency(statistics.pending_amount)}</Text>
+                <Text style={styles.statusCount}>{statistics?.pending_count || 0}</Text>
               </View>
               <View style={styles.statusItem}>
                 <Chip icon="bank" style={[styles.statusChip, { backgroundColor: '#FEF3C7' }]}>
                   Submitted
                 </Chip>
-                <Text style={styles.statusCount}>{statistics.submitted_count || 0}</Text>
+                <Text style={styles.statusCount}>{statistics?.submitted_count || 0}</Text>
               </View>
               <View style={styles.statusItem}>
                 <Chip icon="check-circle" style={[styles.statusChip, { backgroundColor: '#D1FAE5' }]}>
                   Cleared
                 </Chip>
-                <Text style={styles.statusCount}>{statistics.cleared_count || 0}</Text>
-                <Text style={styles.statusAmount}>{formatCurrency(statistics.cleared_amount)}</Text>
+                <Text style={styles.statusCount}>{statistics?.cleared_count || 0}</Text>
               </View>
               <View style={styles.statusItem}>
                 <Chip icon="close-circle" style={[styles.statusChip, { backgroundColor: '#FEE2E2' }]}>
                   Bounced
                 </Chip>
-                <Text style={styles.statusCount}>{statistics.bounced_count || 0}</Text>
+                <Text style={styles.statusCount}>{statistics?.bounce_count || 0}</Text>
               </View>
             </View>
           </Card.Content>
@@ -160,7 +159,7 @@ const ChequesDashboardScreen = ({ navigation }) => {
             {list.slice(0, 5).map((cheque) => (
               <View key={cheque.cheque_id} style={styles.recentItem}>
                 <View style={styles.recentInfo}>
-                  <Text style={styles.recentNumber}>#{cheque.cheque_number || 'N/A'}</Text>
+                  <Text style={styles.recentNumber}>#{cheque.cheque_no || 'N/A'}</Text>
                   <Text style={styles.recentBank}>{cheque.bank_name || 'N/A'}</Text>
                   <Text style={styles.recentDate}>
                     {cheque.cheque_date ? new Date(cheque.cheque_date).toLocaleDateString() : 'N/A'}
@@ -171,10 +170,10 @@ const ChequesDashboardScreen = ({ navigation }) => {
                     {formatCurrency(cheque.amount)}
                   </Text>
                   <Chip
-                    style={[styles.statusBadge, { backgroundColor: getStatusColor(cheque.status) }]}
+                    style={[styles.statusBadge, { backgroundColor: getStatusColor(cheque.cheque_status) }]}
                     textStyle={styles.statusBadgeText}
                   >
-                    {cheque.status || 'Pending'}
+                    {cheque.cheque_status || 'Pending'}
                   </Chip>
                 </View>
               </View>
@@ -211,8 +210,8 @@ const styles = StyleSheet.create({
   recentDate: { fontSize: 12, color: '#9CA3AF' },
   recentRight: { alignItems: 'flex-end' },
   recentAmount: { fontSize: 16, fontWeight: 'bold', marginBottom: 4 },
-  statusBadge: { paddingHorizontal: 8, height: 24 },
-  statusBadgeText: { fontSize: 11, color: '#FFF', fontWeight: '600' },
+  statusBadge: { paddingHorizontal: 8, paddingVertical: 4, minHeight: 24 },
+  statusBadgeText: { fontSize: 11, color: '#FFF', fontWeight: '600', textAlign: 'center' },
   emptyText: { textAlign: 'center', color: '#6B7280', marginTop: 16 },
 });
 

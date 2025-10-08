@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { TextInput, Button, HelperText, Text } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native';
 import { useTheme } from '../../../context';
 import { createAllotment } from '../../../store/slices/allotmentsSlice';
 import { Dropdown } from '../../../components/common';
@@ -11,6 +12,7 @@ const CreateAllotmentScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const { theme } = useTheme();
   const bookingId = route?.params?.bookingId;
+
   
   const [formData, setFormData] = useState({
     projectId: '',
@@ -23,6 +25,9 @@ const CreateAllotmentScreen = ({ navigation, route }) => {
   const [projects, setProjects] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [units, setUnits] = useState([]);
+  const [isCustomersLoading, setIsCustomersLoading] = useState(false);
+  const [isUnitsLoading, setIsUnitsLoading] = useState(false);
+
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -36,9 +41,27 @@ const CreateAllotmentScreen = ({ navigation, route }) => {
     }
   }, [bookingId]);
 
+  // Set navigation options with back button
+  useFocusEffect(
+    React.useCallback(() => {
+      navigation.setOptions({
+        headerLeft: () => (
+          <Button
+            mode="text"
+            onPress={() => navigation.goBack()}
+            style={{ marginLeft: -8 }}
+            textColor="#007AFF"
+          >
+            Back
+          </Button>
+        ),
+      });
+    }, [navigation])
+  );
+
   const fetchBookingDetails = async () => {
     try {
-      const response = await api.get(`/transaction/bookings/${bookingId}`);
+      const response = await api.get(`/api/transaction/bookings/${bookingId}`);
       if (response.data?.success || response.data) {
         const booking = response.data?.data || response.data;
         setFormData({
@@ -57,12 +80,15 @@ const CreateAllotmentScreen = ({ navigation, route }) => {
 
   const fetchProjects = async () => {
     try {
-      const response = await api.get('/master/projects');
-      if (response.data?.success) {
-        setProjects(response.data.data || []);
+      const response = await api.get('/api/master/projects');
+      if (response.data?.success && Array.isArray(response.data.data)) {
+        setProjects(response.data.data);
+      } else {
+        setProjects([]);
       }
     } catch (error) {
       console.error('Error fetching projects:', error);
+      setProjects([]);
     }
   };
 
@@ -70,16 +96,26 @@ const CreateAllotmentScreen = ({ navigation, route }) => {
     const fetchCustomers = async () => {
       if (!formData.projectId) {
         setCustomers([]);
+        setIsCustomersLoading(false);
         return;
       }
+
+      setIsCustomersLoading(true);
       try {
-        const response = await api.get(`/transaction/allotments/projects/${formData.projectId}/non-allotted-customers`);
-        if (response.data?.success) {
-          setCustomers(response.data.data || []);
+        const response = await api.get(`/api/transaction/allotments/projects/${formData.projectId}/non-allotted-customers`);
+        console.log('Customer API response:', response.data);
+        if (response.data?.success && Array.isArray(response.data.data?.customers)) {
+          setCustomers(response.data.data.customers || []);
+          console.log('Set customers:', response.data.data.customers?.length || 0);
+        } else {
+          setCustomers([]);
+          console.log('No customers found or invalid response');
         }
       } catch (error) {
         console.error('Error fetching customers:', error);
         setCustomers([]);
+      } finally {
+        setIsCustomersLoading(false);
       }
     };
     fetchCustomers();
@@ -89,16 +125,26 @@ const CreateAllotmentScreen = ({ navigation, route }) => {
     const fetchUnits = async () => {
       if (!formData.projectId) {
         setUnits([]);
+        setIsUnitsLoading(false);
         return;
       }
+
+      setIsUnitsLoading(true);
       try {
-        const response = await api.get(`/master/project/${formData.projectId}/units?status=booked`);
-        if (response.data?.success) {
+        const response = await api.get(`/api/master/project/${formData.projectId}/units?status=booked`);
+        console.log('Units API response:', response.data);
+        if (response.data?.success && Array.isArray(response.data.data)) {
           setUnits(response.data.data || []);
+          console.log('Set units:', response.data.data?.length || 0);
+        } else {
+          setUnits([]);
+          console.log('No units found or invalid response');
         }
       } catch (error) {
         console.error('Error fetching units:', error);
         setUnits([]);
+      } finally {
+        setIsUnitsLoading(false);
       }
     };
     fetchUnits();
@@ -181,7 +227,7 @@ const CreateAllotmentScreen = ({ navigation, route }) => {
               setErrors({ ...errors, customerId: '' });
             }}
             items={customers.map(c => ({
-              label: c.name || c.customer_name,
+              label: c.name || c.customer_name || `Customer ${c.customer_id}`,
               value: c.customer_id?.toString()
             }))}
             error={!!errors.customerId}

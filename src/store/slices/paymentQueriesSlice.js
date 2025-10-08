@@ -14,7 +14,7 @@ export const fetchPaymentQueries = createAsyncThunk(
       if (filters.page) params.append('page', filters.page);
       if (filters.limit) params.append('limit', filters.limit);
       
-      const response = await api.get(`/transaction/payment-query?${params.toString()}`);
+      const response = await api.get(`/api/transaction/payment-query?${params.toString()}`);
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch payment queries');
@@ -27,7 +27,7 @@ export const generateQuery = createAsyncThunk(
   'paymentQueries/generateQuery',
   async (queryData, { rejectWithValue }) => {
     try {
-      const response = await api.post('/transaction/payment-query', queryData);
+      const response = await api.post('/api/transaction/payment-query', queryData);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to generate payment query');
@@ -40,7 +40,7 @@ export const fetchQueryById = createAsyncThunk(
   'paymentQueries/fetchQueryById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/payment-query/${id}`);
+      const response = await api.get(`/api/transaction/payment-query/${id}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch payment query');
@@ -53,7 +53,7 @@ export const updateQuery = createAsyncThunk(
   'paymentQueries/updateQuery',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/transaction/payment-query/${id}`, data);
+      const response = await api.put(`/api/transaction/payment-query/${id}`, data);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to update payment query');
@@ -66,7 +66,7 @@ export const deleteQuery = createAsyncThunk(
   'paymentQueries/deleteQuery',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/transaction/payment-query/${id}`);
+      await api.delete(`/api/transaction/payment-query/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to delete payment query');
@@ -79,7 +79,7 @@ export const fetchQueriesByProject = createAsyncThunk(
   'paymentQueries/fetchQueriesByProject',
   async (projectId, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/transaction/payment-query/project/${projectId}`);
+      const response = await api.get(`/api/transaction/payment-query/project/${projectId}`);
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to fetch payment queries by project');

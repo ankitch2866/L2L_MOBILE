@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +7,7 @@ import { useTheme } from '../../../context';
 import { Dropdown, LoadingIndicator } from '../../../components/common';
 import { fetchDispatchById, updateDispatch, clearCurrentDispatch } from '../../../store/slices/dispatchesSlice';
 import { fetchCustomers } from '../../../store/slices/customersSlice';
-import { fetchProperties } from '../../../store/slices/propertiesSlice';
+import { fetchAllPropertiesData } from '../../../store/slices/propertiesSlice';
 
 const EditDispatchScreen = ({ route, navigation }) => {
   const { dispatchId } = route.params;
@@ -35,7 +36,7 @@ const EditDispatchScreen = ({ route, navigation }) => {
   useEffect(() => {
     dispatch(fetchDispatchById(dispatchId));
     dispatch(fetchCustomers());
-    dispatch(fetchProperties());
+    dispatch(fetchAllPropertiesData());
     
     return () => {
       dispatch(clearCurrentDispatch());

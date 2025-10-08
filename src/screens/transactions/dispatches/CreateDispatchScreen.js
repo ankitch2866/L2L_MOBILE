@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 import { TextInput, Button, Text } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,15 +8,15 @@ import { Dropdown } from '../../../components/common';
 import { createDispatch } from '../../../store/slices/dispatchesSlice';
 import { fetchCustomers } from '../../../store/slices/customersSlice';
 import { fetchProjects } from '../../../store/slices/projectsSlice';
-import { fetchProperties } from '../../../store/slices/propertiesSlice';
+import { fetchAllPropertiesData } from '../../../store/slices/propertiesSlice';
 
 const CreateDispatchScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { theme } = useTheme();
   const { loading } = useSelector(state => state.dispatches);
-  const { list: customers } = useSelector(state => state.customers);
-  const { list: projects } = useSelector(state => state.projects);
-  const { list: properties } = useSelector(state => state.properties);
+  const { customers } = useSelector(state => state.customers);
+  const { projects } = useSelector(state => state.projects);
+  const { projects: properties } = useSelector(state => state.properties);
 
   const [formData, setFormData] = useState({
     letterType: '',
@@ -35,7 +36,7 @@ const CreateDispatchScreen = ({ navigation }) => {
   useEffect(() => {
     dispatch(fetchCustomers());
     dispatch(fetchProjects());
-    dispatch(fetchProperties());
+    dispatch(fetchAllPropertiesData());
   }, [dispatch]);
 
   const customerTypeOptions = [
@@ -51,12 +52,12 @@ const CreateDispatchScreen = ({ navigation }) => {
     { label: 'By Post', value: 'BY_POST' },
   ];
 
-  const customerOptions = customers.map(c => ({
+  const customerOptions = (customers || []).map(c => ({
     label: `${c.name} (${c.customer_id})`,
     value: c.customer_id.toString(),
   }));
 
-  const unitOptions = properties.map(p => ({
+  const unitOptions = (properties || []).map(p => ({
     label: p.unit_name || p.name,
     value: p.unit_name || p.name,
   }));

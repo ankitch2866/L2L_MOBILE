@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { TextInput, Button, HelperText, Text } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
@@ -44,7 +45,7 @@ const CreateBookingScreen = ({ navigation }) => {
 
   const fetchProjects = async () => {
     try {
-      const response = await api.get('/master/projects');
+      const response = await api.get('/api/master/projects');
       if (response.data?.success) {
         setProjects(response.data.data || []);
       }
@@ -55,7 +56,7 @@ const CreateBookingScreen = ({ navigation }) => {
 
   const fetchBrokers = async () => {
     try {
-      const response = await api.get('/master/brokers');
+      const response = await api.get('/api/master/brokers');
       if (response.data?.success) {
         setBrokers(response.data.data || []);
       }
@@ -66,7 +67,7 @@ const CreateBookingScreen = ({ navigation }) => {
 
   const fetchPaymentPlans = async () => {
     try {
-      const response = await api.get('/transaction/payment-query/payment-plans');
+      const response = await api.get('/api/transaction/payment-query/payment-plans');
       if (response.data?.success) {
         setPaymentPlans(response.data.data?.payment_plans || []);
       }
@@ -101,16 +102,56 @@ const CreateBookingScreen = ({ navigation }) => {
   useEffect(() => {
     const fetchCustomers = async () => {
       if (!formData.projectId) {
+        console.log('No project selected, clearing customers');
         setCustomers([]);
         return;
       }
+      
       try {
-        const response = await api.get(`/transaction/customers/project/${formData.projectId}/with-status`);
+        console.log('Fetching customers for project:', formData.projectId);
+        
+        // Try the primary endpoint first
+        let response;
+        try {
+          response = await api.get(`/api/transaction/customers/project/${formData.projectId}/with-status`);
+          console.log('Primary API response:', response.data);
+        } catch (primaryError) {
+          console.log('Primary API failed, trying fallback...', primaryError.message);
+          // Fallback to basic customers endpoint
+          response = await api.get(`/api/master/customers/project/${formData.projectId}`);
+          console.log('Fallback API response:', response.data);
+        }
+        
+        console.log('Response status:', response.status);
+        
         if (response.data?.success) {
-          setCustomers(response.data.data || []);
+          const customersData = response.data.data || [];
+          console.log('Customers data received:', customersData);
+          console.log('Number of customers:', customersData.length);
+          
+          // If using fallback API, add default booking_status
+          const processedCustomers = customersData.map(customer => ({
+            ...customer,
+            booking_status: customer.booking_status || 'available'
+          }));
+          
+          // Log each customer's booking status
+          processedCustomers.forEach((customer, index) => {
+            console.log(`Customer ${index + 1}:`, {
+              id: customer.customer_id,
+              name: customer.name,
+              booking_status: customer.booking_status
+            });
+          });
+          
+          setCustomers(processedCustomers);
+        } else {
+          console.log('API response not successful:', response.data);
+          setCustomers([]);
         }
       } catch (error) {
         console.error('Error fetching customers:', error);
+        console.error('Error details:', error.response?.data);
         setCustomers([]);
       }
     };
@@ -125,7 +166,7 @@ const CreateBookingScreen = ({ navigation }) => {
         return;
       }
       try {
-        let url = `/master/project/${formData.projectId}/units`;
+        let url = `/api/master/project/${formData.projectId}/units`;
         if (formData.unitDescription) {
           url += `?unit_desc=${encodeURIComponent(formData.unitDescription)}`;
         }
@@ -147,7 +188,7 @@ const CreateBookingScreen = ({ navigation }) => {
       if (!formData.customerId || brokers.length === 0) return;
       
       try {
-        const response = await api.get(`/master/customers/edit/${formData.customerId}`);
+        const response = await api.get(`/api/master/customers/edit/${formData.customerId}`);
         if (response.data?.success && response.data.data?.broker_id) {
           const brokerExists = brokers.find(b => b.broker_id === response.data.data.broker_id);
           if (brokerExists) {
@@ -278,12 +319,42 @@ const CreateBookingScreen = ({ navigation }) => {
     value: p.project_id,
   }));
 
+  // First, let's show ALL customers for debugging, regardless of status
+  const allCustomerOptions = customers.map(c => ({
+    label: `${c.name || 'N/A'} - ${c.phone_no || c.mobile_number || ''} (${c.booking_status || 'unknown'})`,
+    value: c.customer_id,
+  }));
+
+  // Then filter for available customers only
   const customerOptions = customers
-    .filter(c => c.booking_status === 'available')
+    .filter(c => {
+      console.log('Filtering customer:', {
+        id: c.customer_id,
+        name: c.name,
+        booking_status: c.booking_status,
+        isAvailable: c.booking_status === 'available'
+      });
+      return c.booking_status === 'available';
+    })
     .map(c => ({
-      label: `${c.name || 'N/A'} - ${c.mobile_number || ''}`,
+      label: `${c.name || 'N/A'} - ${c.phone_no || c.mobile_number || ''}`,
       value: c.customer_id,
     }));
+  
+  console.log('Total customers:', customers.length);
+  console.log('Available customers:', customerOptions.length);
+  console.log('Customer options:', customerOptions);
+  console.log('All customer options (with status):', allCustomerOptions);
+  
+  // Debug: Show all customers and their statuses
+  console.log('All customers with statuses:', customers.map(c => ({
+    id: c.customer_id,
+    name: c.name,
+    status: c.booking_status
+  })));
+
+  // Use all customers if no available customers found (for debugging)
+  const finalCustomerOptions = customerOptions.length > 0 ? customerOptions : allCustomerOptions;
 
   const brokerOptions = brokers.map(b => ({
     label: b.broker_name || 'N/A',
@@ -331,7 +402,7 @@ const CreateBookingScreen = ({ navigation }) => {
             label="Customer *"
             value={formData.customerId}
             onValueChange={handleCustomerChange}
-            items={customerOptions}
+            items={finalCustomerOptions}
             error={!!errors.customerId}
             disabled={!formData.projectId}
           />

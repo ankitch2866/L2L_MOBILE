@@ -4,12 +4,12 @@ import { Searchbar, FAB, Button, Text, Chip, Menu } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../../context';
 import { LoadingIndicator, EmptyState } from '../../../components';
-import { fetchPayments, setFilters, clearFilters, deletePayment, updateLocalStatistics } from '../../../store/slices/paymentsSlice';
+import { fetchPayments, setFilters, clearFilters, deletePayment, updateLocalStatistics, fetchAllPaymentsForStats } from '../../../store/slices/paymentsSlice';
 
 const PaymentsListScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { theme } = useTheme();
-  const { list, loading, filters, statistics } = useSelector(state => state.payments);
+  const { list, loading, filters, statistics, totalCount } = useSelector(state => state.payments);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,27 +18,50 @@ const PaymentsListScreen = ({ navigation }) => {
 
   const paymentMethods = ['cash', 'cheque', 'online', 'card', 'upi'];
 
-  const filteredPayments = (list || []).filter(payment => {
-    const matchesSearch = 
-      (payment.payment_id?.toString() || '').includes(searchQuery) ||
-      (payment.customer_name || '').toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (payment.transaction_id || '').toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const matchesMethod = !filters.payment_method || payment.payment_method === filters.payment_method;
-    const matchesProject = !filters.project_id || payment.project_id === filters.project_id;
-    const matchesCustomer = !filters.customer_id || payment.customer_id === filters.customer_id;
-    
-    return matchesSearch && matchesMethod && matchesProject && matchesCustomer;
-  });
-
-  const totalPages = Math.ceil(filteredPayments.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const paginatedPayments = filteredPayments.slice(startIndex, endIndex);
+  // Server-side pagination with client-side fallback
+  const totalPages = Math.max(1, Math.ceil(totalCount / itemsPerPage));
+  
+  // If totalCount equals list length, backend might not support pagination
+  // In that case, do client-side pagination
+  const isClientSidePagination = totalCount === list.length && list.length > itemsPerPage;
+  
+  let paginatedPayments = list || [];
+  if (isClientSidePagination) {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    paginatedPayments = list.slice(startIndex, endIndex);
+    console.log('Using client-side pagination:', { startIndex, endIndex, totalCount, listLength: list.length });
+  }
+  
+  // Ensure currentPage is within bounds
+  const safeCurrentPage = Math.max(1, Math.min(currentPage, totalPages));
 
   useEffect(() => {
-    dispatch(fetchPayments(filters));
-  }, [dispatch, filters]);
+    // Only send pagination params if not doing client-side pagination
+    const paginationParams = {
+      ...filters,
+      search: searchQuery
+    };
+    
+    // Add pagination params only if backend supports it
+    if (!isClientSidePagination) {
+      paginationParams.page = safeCurrentPage;
+      paginationParams.limit = itemsPerPage;
+    }
+    
+    console.log('Fetching payments with pagination:', paginationParams);
+    console.log('Total count:', totalCount, 'Total pages:', totalPages, 'Current page:', currentPage, 'Safe page:', safeCurrentPage);
+    console.log('Client-side pagination:', isClientSidePagination);
+    dispatch(fetchPayments(paginationParams));
+  }, [dispatch, filters, safeCurrentPage, searchQuery, isClientSidePagination]);
+
+  // Reset page if it's out of bounds
+  useEffect(() => {
+    if (totalPages > 0 && currentPage > totalPages) {
+      console.log('Page out of bounds, resetting to page 1');
+      setCurrentPage(1);
+    }
+  }, [totalPages, currentPage]);
 
   useEffect(() => {
     if (list.length > 0) {
@@ -46,13 +69,34 @@ const PaymentsListScreen = ({ navigation }) => {
     }
   }, [list, dispatch]);
 
+  // Reset to page 1 when filters change
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchQuery, filters]);
+  }, [filters, searchQuery]);
+
+  // Fetch all payments for statistics on component mount
+  useEffect(() => {
+    dispatch(fetchAllPaymentsForStats());
+  }, [dispatch]);
 
   const handleRefresh = async () => {
     setRefreshing(true);
-    await dispatch(fetchPayments(filters));
+    const paginationParams = {
+      ...filters,
+      search: searchQuery
+    };
+    
+    // Add pagination params only if backend supports it
+    if (!isClientSidePagination) {
+      paginationParams.page = safeCurrentPage;
+      paginationParams.limit = itemsPerPage;
+    }
+    
+    console.log('Refreshing with pagination:', paginationParams);
+    await Promise.all([
+      dispatch(fetchPayments(paginationParams)),
+      dispatch(fetchAllPaymentsForStats())
+    ]);
     setRefreshing(false);
   };
 
@@ -66,6 +110,12 @@ const PaymentsListScreen = ({ navigation }) => {
     setSearchQuery('');
   };
 
+  const handlePageChange = (newPage) => {
+    const safeNewPage = Math.max(1, Math.min(newPage, totalPages));
+    console.log('Changing page from', currentPage, 'to', safeNewPage, 'of', totalPages);
+    setCurrentPage(safeNewPage);
+  };
+
   const formatCurrency = (amount) => {
     return `₹${parseFloat(amount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   };
@@ -76,15 +126,17 @@ const PaymentsListScreen = ({ navigation }) => {
     >
       <View style={styles.cardHeader}>
         <Text style={styles.paymentId}>Payment #{item.payment_id || item.id}</Text>
-        <Chip icon="cash" mode="outlined" compact>
-          {(item.payment_method || 'N/A').toUpperCase()}
-        </Chip>
+        {item.payment_method && (
+          <Chip icon="cash" mode="outlined" compact>
+            {item.payment_method.toUpperCase()}
+          </Chip>
+        )}
       </View>
       
       <View style={styles.cardBody}>
         <View style={styles.infoRow}>
           <Text style={styles.label}>Customer:</Text>
-          <Text style={styles.value}>{item.customer_name || 'N/A'}</Text>
+          <Text style={styles.value}>{item.customer_name || 'Unknown'}</Text>
         </View>
         <View style={styles.infoRow}>
           <Text style={styles.label}>Amount:</Text>
@@ -95,7 +147,7 @@ const PaymentsListScreen = ({ navigation }) => {
         <View style={styles.infoRow}>
           <Text style={styles.label}>Date:</Text>
           <Text style={styles.value}>
-            {item.payment_date ? new Date(item.payment_date).toLocaleDateString() : 'N/A'}
+            {item.payment_date ? new Date(item.payment_date).toLocaleDateString() : 'Not specified'}
           </Text>
         </View>
         {item.project_name && (
@@ -139,10 +191,10 @@ const PaymentsListScreen = ({ navigation }) => {
         
         <View style={styles.statsRow}>
           <Chip icon="cash-multiple" style={styles.statChip}>
-            Total: {formatCurrency(statistics.total_amount)}
+            Total: {formatCurrency(statistics.total_amount || 0)}
           </Chip>
           <Chip icon="file-document" style={styles.statChip}>
-            Count: {statistics.total_count}
+            Count: {statistics.transaction_count || 0}
           </Chip>
         </View>
 
@@ -191,28 +243,28 @@ const PaymentsListScreen = ({ navigation }) => {
           />
         }
         ListFooterComponent={
-          filteredPayments.length > 0 ? (
+          paginatedPayments.length > 0 ? (
             <View style={styles.paginationContainer}>
               <Button
                 mode="outlined"
-                onPress={() => setCurrentPage(prev => Math.max(1, prev - 1))}
-                disabled={currentPage === 1 || totalPages === 1}
+                onPress={() => handlePageChange(safeCurrentPage - 1)}
+                disabled={safeCurrentPage === 1 || totalPages === 1}
                 style={styles.paginationButton}
               >
                 Previous
               </Button>
               <View style={styles.pageInfo}>
                 <Text variant="bodyMedium" style={styles.pageText}>
-                  Page {currentPage} of {totalPages}
+                  Page {safeCurrentPage} of {totalPages}
                 </Text>
                 <Text variant="bodySmall" style={styles.totalText}>
-                  Showing {paginatedPayments.length} of {filteredPayments.length}
+                  Showing {paginatedPayments.length} of {totalCount} total payments
                 </Text>
               </View>
               <Button
                 mode="outlined"
-                onPress={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
-                disabled={currentPage === totalPages || totalPages === 1}
+                onPress={() => handlePageChange(safeCurrentPage + 1)}
+                disabled={safeCurrentPage === totalPages || totalPages === 1}
                 style={styles.paginationButton}
               >
                 Next

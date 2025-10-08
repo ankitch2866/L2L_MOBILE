@@ -5,7 +5,8 @@ import { Icon as PaperIcon } from 'react-native-paper';
 
 const BookingCard = ({ booking, onPress, onEdit, theme }) => {
   // Debug: Log booking data to see what fields are available
-  console.log('Booking data:', JSON.stringify(booking, null, 2));
+  // console.log('Booking data:', JSON.stringify(booking, null, 2));
+  // console.log('Available fields:', Object.keys(booking || {}));
   
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
@@ -96,18 +97,22 @@ const BookingCard = ({ booking, onPress, onEdit, theme }) => {
               {booking.project_name || 'No project'}
             </Text>
           </View>
-          <View style={styles.detailRow}>
-            <PaperIcon source="ruler" size={16} color={theme.colors.textSecondary} />
-            <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>
-              Size: {booking.unit_size || booking.unitSize || 'N/A'} sq ft
-            </Text>
-          </View>
-          <View style={styles.detailRow}>
-            <PaperIcon source="currency-inr" size={16} color={theme.colors.textSecondary} />
-            <Text variant="bodySmall" style={{ color: theme.colors.text, fontWeight: '600' }}>
-              Price: {formatPrice(booking.unit_price || booking.unitPrice)}
-            </Text>
-          </View>
+          {booking.unit_size && (
+            <View style={styles.detailRow}>
+              <PaperIcon source="ruler" size={16} color={theme.colors.textSecondary} />
+              <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>
+                Size: {booking.unit_size} sq ft
+              </Text>
+            </View>
+          )}
+          {booking.bsp && (
+            <View style={styles.detailRow}>
+              <PaperIcon source="currency-inr" size={16} color={theme.colors.textSecondary} />
+              <Text variant="bodySmall" style={{ color: theme.colors.text, fontWeight: '600' }}>
+                Price: {formatPrice(booking.bsp)}
+              </Text>
+            </View>
+          )}
           <View style={styles.detailRow}>
             <PaperIcon source="calendar" size={16} color={theme.colors.textSecondary} />
             <Text variant="bodySmall" style={{ color: theme.colors.textSecondary }}>

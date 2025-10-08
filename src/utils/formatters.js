@@ -57,3 +57,37 @@ export const formatPercentage = (value, decimals = 1) => {
   
   return `${value.toFixed(decimals)}%`;
 };
+
+/**
+ * Format date
+ * @param {string|Date} date - Date to format
+ * @param {string} format - Format type ('short', 'long', 'time')
+ * @returns {string} Formatted date string
+ */
+export const formatDate = (date, format = 'short') => {
+  if (!date) return 'N/A';
+  
+  const dateObj = new Date(date);
+  if (isNaN(dateObj.getTime())) return 'Invalid Date';
+  
+  const options = {
+    short: { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric' 
+    },
+    long: { 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric',
+      weekday: 'long'
+    },
+    time: { 
+      hour: '2-digit', 
+      minute: '2-digit',
+      hour12: true
+    }
+  };
+  
+  return dateObj.toLocaleDateString('en-IN', options[format] || options.short);
+};

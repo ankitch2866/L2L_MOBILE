@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 import { TextInput, Button, Text, Card, RadioButton, SegmentedButtons } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,8 +18,8 @@ const CreateUnitTransferScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { theme } = useTheme();
   const { loading, error, customerUnit } = useSelector(state => state.unitTransfers);
-  const { list: customers } = useSelector(state => state.customers);
-  const { list: projects } = useSelector(state => state.projects);
+  const { customers } = useSelector(state => state.customers);
+  const { projects } = useSelector(state => state.projects);
 
   const [formData, setFormData] = useState({
     customerId: '',
@@ -136,12 +137,12 @@ const CreateUnitTransferScreen = ({ navigation }) => {
     }
   };
 
-  const customerOptions = customers.map(c => ({
+  const customerOptions = (customers || []).map(c => ({
     label: `${c.name} (${c.manual_application_id || c.customer_id})`,
     value: c.customer_id.toString(),
   }));
 
-  const projectOptions = projects.map(p => ({
+  const projectOptions = (projects || []).map(p => ({
     label: p.project_name,
     value: p.project_id.toString(),
   }));

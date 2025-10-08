@@ -21,6 +21,8 @@ import paymentRaisesReducer from './slices/paymentRaisesSlice';
 import unitTransfersReducer from './slices/unitTransfersSlice';
 import bbaReducer from './slices/bbaSlice';
 import dispatchesReducer from './slices/dispatchesSlice';
+import callingFeedbackReducer from './slices/callingFeedbackSlice';
+import employeesReducer from './slices/employeesSlice';
 
 export const store = configureStore({
   reducer: {
@@ -45,6 +47,8 @@ export const store = configureStore({
     unitTransfers: unitTransfersReducer,
     bba: bbaReducer,
     dispatches: dispatchesReducer,
+    callingFeedback: callingFeedbackReducer,
+    employees: employeesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

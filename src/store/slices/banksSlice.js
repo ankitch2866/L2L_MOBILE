@@ -5,7 +5,7 @@ export const fetchBanks = createAsyncThunk(
   'banks/fetchAll',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await api.get('/master/banks');
+      const response = await api.get('/api/master/banks');
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch banks');
@@ -17,7 +17,7 @@ export const fetchBankById = createAsyncThunk(
   'banks/fetchById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/master/banks/${id}`);
+      const response = await api.get(`/api/master/banks/${id}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch bank');
@@ -29,7 +29,7 @@ export const createBank = createAsyncThunk(
   'banks/create',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await api.post('/master/banks', data);
+      const response = await api.post('/api/master/banks', data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to create bank');
@@ -41,7 +41,7 @@ export const updateBank = createAsyncThunk(
   'banks/update',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/master/banks/${id}`, data);
+      const response = await api.put(`/api/master/banks/${id}`, data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to update bank');
@@ -53,7 +53,7 @@ export const deleteBank = createAsyncThunk(
   'banks/delete',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/master/banks/${id}`);
+      await api.delete(`/api/master/banks/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to delete bank');
@@ -65,7 +65,7 @@ export const searchBanks = createAsyncThunk(
   'banks/search',
   async (query, { rejectWithValue }) => {
     try {
-      const response = await api.get('/master/banks/search', { params: { q: query } });
+      const response = await api.get('/api/master/banks/search', { params: { q: query } });
       return response.data?.data || response.data || [];
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to search banks');

@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 import { TextInput, Button, Text, Card } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../../context';
-import { Dropdown, LoadingIndicator } from '../../../components/common';
+import { Dropdown } from '../../../components/common';
+import { LoadingIndicator } from '../../../components';
 import { fetchProjectSizeById, updateProjectSize, deleteProjectSize, fetchProjectSizes } from '../../../store/slices/projectSizesSlice';
 import { fetchProjects } from '../../../store/slices/projectsSlice';
 
@@ -12,7 +13,7 @@ const EditProjectSizeScreen = ({ navigation, route }) => {
   const dispatch = useDispatch();
   const { theme } = useTheme();
   const { current } = useSelector(state => state.projectSizes);
-  const { list: projects } = useSelector(state => state.projects || { list: [] });
+  const { projects } = useSelector(state => state.projects || { projects: [] });
   const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
   const [formData, setFormData] = useState({
@@ -21,9 +22,15 @@ const EditProjectSizeScreen = ({ navigation, route }) => {
   });
 
   useEffect(() => {
+    console.log('EditProjectSizeScreen: Loading projects and project size...');
     dispatch(fetchProjects());
     dispatch(fetchProjectSizeById(id));
   }, [dispatch, id]);
+
+  useEffect(() => {
+    console.log('EditProjectSizeScreen: Projects loaded:', projects);
+    console.log('EditProjectSizeScreen: Project options:', projectOptions);
+  }, [projects]);
 
   useEffect(() => {
     if (current) {

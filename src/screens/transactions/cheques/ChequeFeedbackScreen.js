@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { TextInput, Button, HelperText, Text, RadioButton } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,7 +32,7 @@ const ChequeFeedbackScreen = ({ navigation, route }) => {
 
   const fetchPendingCheques = async () => {
     try {
-      const response = await api.get('/transaction/cheque?status=submitted');
+      const response = await api.get('/api/transaction/cheque?status=submitted');
       if (response.data?.data) {
         setCheques(response.data.data);
       }
@@ -108,7 +109,7 @@ const ChequeFeedbackScreen = ({ navigation, route }) => {
                 value={formData.cheque_id}
                 onValueChange={(value) => updateFormData('cheque_id', value)}
                 items={cheques.map(c => ({ 
-                  label: `${c.cheque_number} - ${c.customer_name} - ₹${c.amount}`, 
+                  label: `${c.cheque_no} - ${c.customer_name} - ₹${c.amount}`, 
                   value: c.cheque_id 
                 }))}
                 error={!!errors.cheque_id}

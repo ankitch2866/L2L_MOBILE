@@ -6,7 +6,7 @@ export const fetchInstallmentsByPlan = createAsyncThunk(
   async (planId, { rejectWithValue }) => {
     try {
       // Fetch the plan which includes installments
-      const response = await api.get(`/master/plans/${planId}`);
+      const response = await api.get(`/api/master/plans/${planId}`);
       const planData = response.data?.data || response.data;
       // Return the installments array from the plan
       return planData?.installments || [];
@@ -20,7 +20,7 @@ export const fetchInstallmentById = createAsyncThunk(
   'installments/fetchById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/master/installments/${id}`);
+      const response = await api.get(`/api/master/installments/${id}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch installment');
@@ -32,7 +32,7 @@ export const createInstallment = createAsyncThunk(
   'installments/create',
   async ({ planId, data }, { rejectWithValue }) => {
     try {
-      const response = await api.post(`/master/plans/${planId}/installments`, data);
+      const response = await api.post(`/api/master/plans/${planId}/installments`, data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to create installment');
@@ -44,7 +44,7 @@ export const updateInstallment = createAsyncThunk(
   'installments/update',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/master/installments/${id}`, data);
+      const response = await api.put(`/api/master/installments/${id}`, data);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to update installment');
@@ -56,7 +56,7 @@ export const deleteInstallment = createAsyncThunk(
   'installments/delete',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/master/installments/${id}`);
+      await api.delete(`/api/master/installments/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to delete installment');

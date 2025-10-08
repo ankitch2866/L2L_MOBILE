@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { TextInput, Button, HelperText, Text } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -42,6 +43,24 @@ const EditBookingScreen = ({ route, navigation }) => {
     fetchPaymentPlans();
   }, [dispatch, bookingId]);
 
+  // Set navigation options with back button
+  useFocusEffect(
+    React.useCallback(() => {
+      navigation.setOptions({
+        headerLeft: () => (
+          <Button
+            mode="text"
+            onPress={() => navigation.goBack()}
+            style={{ marginLeft: -8 }}
+            textColor="#007AFF"
+          >
+            Back
+          </Button>
+        ),
+      });
+    }, [navigation])
+  );
+
   useEffect(() => {
     if (current) {
       setFormData({
@@ -59,7 +78,7 @@ const EditBookingScreen = ({ route, navigation }) => {
 
   const fetchBrokers = async () => {
     try {
-      const response = await api.get('/master/brokers');
+      const response = await api.get('/api/master/brokers');
       if (response.data?.success) {
         setBrokers(response.data.data || []);
       }
@@ -70,7 +89,7 @@ const EditBookingScreen = ({ route, navigation }) => {
 
   const fetchPaymentPlans = async () => {
     try {
-      const response = await api.get('/master/plans');
+      const response = await api.get('/api/master/plans');
       if (response.data?.success) {
         setPaymentPlans(response.data.data || []);
       }
@@ -86,7 +105,7 @@ const EditBookingScreen = ({ route, navigation }) => {
         return;
       }
       try {
-        const response = await api.get(`/transaction/customers/project/${formData.project_id}/with-status`);
+        const response = await api.get(`/api/transaction/customers/project/${formData.project_id}/with-status`);
         if (response.data?.success) {
           setAvailableCustomers(response.data.data || []);
         }

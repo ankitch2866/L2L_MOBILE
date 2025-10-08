@@ -6,3 +6,5 @@ export { default as EditPaymentScreen } from './EditPaymentScreen';
 export { default as CustomerPaymentsScreen } from './CustomerPaymentsScreen';
 export { default as TransactionDetailsScreen } from './TransactionDetailsScreen';
 export { default as CreditPaymentScreen } from './CreditPaymentScreen';
+export { default as CreditPaymentDashboardScreen } from './CreditPaymentDashboardScreen';
+export { default as CreditPaymentDetailsScreen } from './CreditPaymentDetailsScreen';

@@ -4,12 +4,16 @@ import { Searchbar, FAB, Button, Text, Chip, Menu, Card } from 'react-native-pap
 import { useDispatch, useSelector } from 'react-redux';
 import { useTheme } from '../../../context';
 import { LoadingIndicator, EmptyState } from '../../../components';
-import { fetchBBAs, setFilters, clearFilters, fetchStatistics, autoVerify, autoStatusUpdate } from '../../../store/slices/bbaSlice';
+import { fetchBBAs, setFilters, clearFilters, autoVerify, autoStatusUpdate } from '../../../store/slices/bbaSlice';
+// DISABLED: fetchStatistics endpoint doesn't exist in backend
+// import { fetchStatistics } from '../../../store/slices/bbaSlice';
 
 const BBADashboardScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const { theme } = useTheme();
-  const { list, loading, filters, statistics } = useSelector(state => state.bba);
+  const { list, loading, filters } = useSelector(state => state.bba);
+  // DISABLED: statistics not available - endpoint doesn't exist in backend
+  // const { statistics } = useSelector(state => state.bba);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,7 +42,8 @@ const BBADashboardScreen = ({ navigation }) => {
 
   useEffect(() => {
     dispatch(fetchBBAs(filters));
-    dispatch(fetchStatistics());
+    // DISABLED: fetchStatistics endpoint doesn't exist in backend
+    // dispatch(fetchStatistics());
   }, [dispatch, filters]);
 
   useEffect(() => {
@@ -48,7 +53,8 @@ const BBADashboardScreen = ({ navigation }) => {
   const handleRefresh = async () => {
     setRefreshing(true);
     await dispatch(fetchBBAs(filters));
-    await dispatch(fetchStatistics());
+    // DISABLED: fetchStatistics endpoint doesn't exist in backend
+    // await dispatch(fetchStatistics());
     setRefreshing(false);
   };
 
@@ -167,7 +173,8 @@ const BBADashboardScreen = ({ navigation }) => {
           style={styles.searchbar}
         />
         
-        <View style={styles.statsRow}>
+        {/* DISABLED: Statistics not available - endpoint doesn't exist in backend */}
+        {/* <View style={styles.statsRow}>
           <Chip icon="file-document" style={styles.statChip}>
             Total: {statistics.total}
           </Chip>
@@ -180,7 +187,7 @@ const BBADashboardScreen = ({ navigation }) => {
           <Chip icon="check-circle" style={[styles.statChip, { backgroundColor: '#E0E7FF' }]}>
             Completed: {statistics.completed}
           </Chip>
-        </View>
+        </View> */}
 
         <View style={styles.filterRow}>
           <Menu

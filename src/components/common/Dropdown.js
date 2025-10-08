@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { Menu, TextInput, Text } from 'react-native-paper';
 import { Icon as PaperIcon } from 'react-native-paper';
 
-const Dropdown = ({ label, value, onValueChange, items, error, disabled, style }) => {
+const Dropdown = ({ label, value, onValueChange, items = [], error, disabled, style }) => {
   const [visible, setVisible] = useState(false);
 
   const selectedItem = items.find(item => item.value === value);
   const displayValue = selectedItem ? selectedItem.label : '';
+
+  // Dynamic height calculation
+  const getMenuContentStyle = () => ({
+    maxHeight: Math.min(400, items.length * 50 + 20),
+    backgroundColor: '#fff',
+  });
 
   return (
     <View style={[styles.container, style]}>
@@ -37,21 +43,41 @@ const Dropdown = ({ label, value, onValueChange, items, error, disabled, style }
             />
           </TouchableOpacity>
         }
-        contentStyle={styles.menuContent}
+        contentStyle={[
+          getMenuContentStyle(),
+          items.length > 8 && { paddingVertical: 0 } // Remove padding when scrolling
+        ]}
       >
         {items.length > 0 ? (
-          items.map((item, index) => (
-            <Menu.Item
-              key={`menu-item-${item.value}-${index}`}
-              onPress={() => {
-                onValueChange(item.value);
-                setVisible(false);
-              }}
-              title={item.label}
-              titleStyle={value === item.value ? styles.selectedText : null}
-              style={value === item.value ? styles.selectedItem : null}
-            />
-          ))
+          items.length > 8 ? (
+            <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={true}>
+              {items.map((item, index) => (
+                <Menu.Item
+                  key={`menu-item-${item.value}-${index}`}
+                  onPress={() => {
+                    onValueChange(item.value);
+                    setVisible(false);
+                  }}
+                  title={item.label}
+                  titleStyle={value === item.value ? styles.selectedText : null}
+                  style={value === item.value ? styles.selectedItem : null}
+                />
+              ))}
+            </ScrollView>
+          ) : (
+            items.map((item, index) => (
+              <Menu.Item
+                key={`menu-item-${item.value}-${index}`}
+                onPress={() => {
+                  onValueChange(item.value);
+                  setVisible(false);
+                }}
+                title={item.label}
+                titleStyle={value === item.value ? styles.selectedText : null}
+                style={value === item.value ? styles.selectedItem : null}
+              />
+            ))
+          )
         ) : (
           <Menu.Item key="no-options" title="No options available" disabled />
         )}
@@ -72,8 +98,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
   },
   menuContent: {
-    maxHeight: 300,
     backgroundColor: '#fff',
+  },
+  scrollView: {
+    maxHeight: 350, // Max height for scrollable content
   },
   selectedItem: {
     backgroundColor: '#E3F2FD',

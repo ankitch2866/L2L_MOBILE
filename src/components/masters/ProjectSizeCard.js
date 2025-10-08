@@ -8,7 +8,7 @@ const ProjectSizeCard = ({ projectSize, onPress, onEdit, theme }) => {
   const projectId = projectSize?.project_id || 'N/A';
 
   return (
-    <Card style={styles.card} onPress={() => onPress(projectSize)}>
+    <Card style={styles.card}>
       <Card.Content>
         <View style={styles.header}>
           <View style={styles.headerLeft}>

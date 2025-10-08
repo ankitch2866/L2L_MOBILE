@@ -16,8 +16,8 @@ const TransactionsScreen = ({ navigation }) => {
     { name: 'Unit Transfer', icon: 'swap-horizontal', route: 'UnitTransfers', screen: 'UnitTransfersList', implemented: true },
     { name: 'BBA', icon: 'file-document', route: 'BBA', screen: 'BBADashboard', implemented: true },
     { name: 'Dispatch', icon: 'truck-delivery', route: 'Dispatches', screen: 'DispatchesList', implemented: true },
-    { name: 'Calling Feedback', icon: 'phone-in-talk', route: null, screen: null, implemented: false },
-    { name: 'Credit Payment', icon: 'cash-plus', route: null, screen: null, implemented: false },
+    { name: 'Calling Feedback', icon: 'phone-in-talk', route: 'CallingFeedback', screen: 'CallingFeedbackDashboard', implemented: true },
+    { name: 'Credit Payment', icon: 'cash-plus', route: 'Payments', screen: 'CreditPaymentDashboard', implemented: true },
   ];
 
   const handleModulePress = (module) => {

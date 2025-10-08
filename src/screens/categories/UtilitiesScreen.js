@@ -7,10 +7,10 @@ const UtilitiesScreen = ({ navigation }) => {
   const { theme } = useTheme();
 
   const utilityModules = [
-    { name: 'Manage Employees', icon: 'account-tie', route: null, screen: null, implemented: false },
-    { name: 'Allotment Letter', icon: 'file-certificate', route: null, screen: null, implemented: false },
-    { name: 'Log Reports', icon: 'text-box-check', route: null, screen: null, implemented: false },
-    { name: 'Upcoming Birthdays', icon: 'cake-variant', route: null, screen: null, implemented: false },
+    { name: 'Manage Employees', icon: 'account-tie', route: 'Employees', screen: 'EmployeesDashboard', implemented: true },
+    { name: 'Allotment Letter', icon: 'file-certificate', route: 'AllotmentLetter', screen: 'AllotmentLetter', implemented: true },
+    { name: 'Log Reports', icon: 'text-box-check', route: 'LogReports', screen: 'LogReports', implemented: true },
+    { name: 'Upcoming Birthdays', icon: 'cake-variant', route: 'Birthdays', screen: 'Birthdays', implemented: true },
   ];
 
   const handleModulePress = (module) => {

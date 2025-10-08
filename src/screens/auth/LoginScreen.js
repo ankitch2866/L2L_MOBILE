@@ -16,6 +16,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import { login, clearError } from '../../store/slices/authSlice';
 import { lightTheme } from '../../config/theme';
+import api from '../../config/api';
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -53,17 +54,29 @@ const LoginScreen = ({ navigation }) => {
     };
   }, [dispatch]);
 
+  const testConnection = async () => {
+    try {
+      console.log('Testing API connection...');
+      const response = await api.get('/api/auth/me');
+      console.log('API connection test successful:', response.data);
+    } catch (error) {
+      console.error('API connection test failed:', error.message);
+    }
+  };
+
   const handleLogin = async () => {
     if (!formData.userId || !formData.password) {
       return;
     }
 
     try {
-      await dispatch(login(formData)).unwrap();
+      console.log('Starting login process...');
+      const result = await dispatch(login(formData)).unwrap();
+      console.log('Login successful:', result);
       // Navigation will be handled by the navigation container
     } catch (err) {
-      // Error is handled by Redux
-      console.error('Login error:', err);
+      console.error('Login error in component:', err);
+      // Error is handled by Redux and will be displayed
     }
   };
 
@@ -139,14 +152,32 @@ const LoginScreen = ({ navigation }) => {
             }
           />
 
+          {/* Test Connection Button (Temporary) */}
+          <Button
+            mode="outlined"
+            onPress={testConnection}
+            style={styles.testButton}
+            textColor="#EF4444"
+          >
+            Test API Connection
+          </Button>
+
           {/* Login Button */}
           <Button
             mode="contained"
             onPress={handleLogin}
-            style={styles.loginButton}
+            style={[
+              styles.loginButton,
+              {
+                opacity: (!formData.userId || !formData.password) ? 0.6 : 1,
+              }
+            ]}
             contentStyle={styles.loginButtonContent}
             disabled={loading || !formData.userId || !formData.password}
             loading={loading}
+            buttonColor="#EF4444"
+            textColor="#FFFFFF"
+            labelStyle={styles.loginButtonText}
           >
             {loading ? 'Signing in...' : 'SUBMIT'}
           </Button>
@@ -223,11 +254,31 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   loginButton: {
-    marginTop: 8,
-    backgroundColor: '#1F2937',
+    marginTop: 16,
+    backgroundColor: '#EF4444',
+    borderRadius: 8,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
   },
   loginButtonContent: {
-    paddingVertical: 8,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  loginButtonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
+  testButton: {
+    marginTop: 8,
+    marginBottom: 16,
+    borderColor: '#EF4444',
   },
 });
 

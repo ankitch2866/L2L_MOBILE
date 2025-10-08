@@ -9,7 +9,7 @@ export const fetchStocks = createAsyncThunk(
       if (search) params.search = search;
       if (project_id) params.project = project_id;
       
-      const response = await api.get('/master/stock/stocklist', { params });
+      const response = await api.get('/api/master/stock/stocklist', { params });
       return response.data?.data || response.data || { stocks: [], projects: [], units: [], brokers: [] };
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch stocks');
@@ -21,7 +21,7 @@ export const fetchStockById = createAsyncThunk(
   'stocks/fetchById',
   async (id, { rejectWithValue }) => {
     try {
-      const response = await api.get(`/master/stocks/${id}`);
+      const response = await api.get(`/api/master/stocks/${id}`);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.error || 'Failed to fetch stock');
@@ -33,7 +33,7 @@ export const createStock = createAsyncThunk(
   'stocks/create',
   async (data, { rejectWithValue }) => {
     try {
-      const response = await api.post('/master/stocks', data);
+      const response = await api.post('/api/master/stocks', data);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to create stock');
@@ -45,7 +45,7 @@ export const updateStock = createAsyncThunk(
   'stocks/update',
   async ({ id, data }, { rejectWithValue }) => {
     try {
-      const response = await api.put(`/master/stocks/${id}`, data);
+      const response = await api.put(`/api/master/stocks/${id}`, data);
       return response.data?.data || response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to update stock');
@@ -57,7 +57,7 @@ export const deleteStock = createAsyncThunk(
   'stocks/delete',
   async (id, { rejectWithValue }) => {
     try {
-      await api.delete(`/master/stocks/${id}`);
+      await api.delete(`/api/master/stocks/${id}`);
       return id;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.response?.data?.error || 'Failed to delete stock');

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, StyleSheet, ScrollView, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import { TextInput, Button, HelperText, Text } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
@@ -43,6 +44,7 @@ const EditPaymentScreen = ({ route, navigation }) => {
   ];
 
   useEffect(() => {
+    console.log('EditPaymentScreen: Loading payment with ID:', paymentId);
     dispatch(fetchPaymentById(paymentId));
     fetchCustomers();
     fetchProjects();
@@ -71,7 +73,7 @@ const EditPaymentScreen = ({ route, navigation }) => {
 
   const fetchCustomers = async () => {
     try {
-      const response = await api.get('/master/customers');
+      const response = await api.get('/api/master/customers');
       if (response.data?.success) {
         setCustomers(response.data.data || []);
       }
@@ -82,7 +84,7 @@ const EditPaymentScreen = ({ route, navigation }) => {
 
   const fetchProjects = async () => {
     try {
-      const response = await api.get('/master/projects');
+      const response = await api.get('/api/master/projects');
       if (response.data?.success) {
         setProjects(response.data.data || []);
       }
@@ -93,19 +95,25 @@ const EditPaymentScreen = ({ route, navigation }) => {
 
   const fetchUnits = async (projectId) => {
     try {
-      const response = await api.get(`/master/units/project/${projectId}`);
+      console.log('Fetching units for project:', projectId);
+      const response = await api.get(`/api/master/home/units/${projectId}`);
+      console.log('Units API response:', response.data);
       if (response.data?.success) {
         setUnits(response.data.data || []);
+      } else {
+        console.log('Units API response not successful:', response.data);
+        setUnits([]);
       }
     } catch (error) {
       console.error('Error fetching units:', error);
+      console.error('Error details:', error.response?.data);
       setUnits([]);
     }
   };
 
   const fetchBanks = async () => {
     try {
-      const response = await api.get('/master/banks');
+      const response = await api.get('/api/master/banks');
       if (response.data?.success) {
         setBanks(response.data.data || []);
       }
