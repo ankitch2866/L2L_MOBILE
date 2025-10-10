@@ -68,12 +68,23 @@ api.interceptors.response.use(
     return response;
   },
   async (error) => {
-    // Don't log 404 errors for missing allotments as they are expected behavior
-    const isAllotmentNotFound = error.config?.url?.includes('/generate-allotment') && 
-                               error.response?.status === 404 && 
-                               error.response?.data?.message?.includes('No allotment found');
+    // List of optional endpoints that may not exist - don't log 404 errors for these
+    const optionalEndpoints = [
+      '/generate-allotment',
+      '/api/master/documents/customer/',
+      '/api/transaction/unit-transfer/co-applicants/',
+      '/api/transaction/customers/',
+      '/feedbacks',
+    ];
     
-    if (!isAllotmentNotFound) {
+    // Check if this is a 404 error for an optional endpoint
+    const isOptionalEndpoint404 = error.response?.status === 404 && 
+                                   optionalEndpoints.some(endpoint => 
+                                     error.config?.url?.includes(endpoint)
+                                   );
+    
+    // Only log errors that are not expected 404s for optional endpoints
+    if (!isOptionalEndpoint404) {
       console.error('API Response Error:', {
         status: error.response?.status,
         url: error.config?.url,

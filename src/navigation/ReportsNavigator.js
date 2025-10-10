@@ -16,6 +16,7 @@ import TransactionDetailsReportScreen from '../screens/reports/collection/Transa
 import CustomerDetailsReportScreen from '../screens/reports/customer/CustomerDetailsReportScreen';
 import ProjectsByCustomerScreen from '../screens/reports/customer/ProjectsByCustomerScreen';
 import StatementOfAccountScreen from '../screens/reports/customer/StatementOfAccountScreen';
+import { EnhancedCustomerDetailsScreen } from '../screens/customers';
 import DemandLetterScreen from '../screens/reports/customer/DemandLetterScreen';
 import ReminderLetterScreen from '../screens/reports/customer/ReminderLetterScreen';
 import ProjectReportScreen from '../screens/reports/customer/ProjectReportScreen';
@@ -118,6 +119,14 @@ const CustomerReportsStack = () => {
         component={CustomerDetailsReportScreen} 
         options={({ navigation }) => ({ 
           title: 'Customer Details Report',
+          headerLeft: () => <BackButton navigation={navigation} />
+        })} 
+      />
+      <Stack.Screen 
+        name="CustomerDetails" 
+        component={EnhancedCustomerDetailsScreen} 
+        options={({ navigation }) => ({ 
+          title: 'Customer Details',
           headerLeft: () => <BackButton navigation={navigation} />
         })} 
       />

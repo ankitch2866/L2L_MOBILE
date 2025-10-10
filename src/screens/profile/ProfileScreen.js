@@ -1,7 +1,7 @@
 // Profile Screen - Mobile Appropriate
 import React from 'react';
 import { View, StyleSheet, ScrollView, Alert } from 'react-native';
-import { Text, Card, Avatar, List, Divider } from 'react-native-paper';
+import { Text, Card, Avatar, List, Divider, Switch } from 'react-native-paper';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout } from '../../store/slices/authSlice';
 import { useTheme } from '../../context';
@@ -9,7 +9,7 @@ import { useTheme } from '../../context';
 const ProfileScreen = ({ navigation }) => {
   const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const { theme } = useTheme();
+  const { theme, isDarkMode, toggleTheme } = useTheme();
 
   const handleLogout = () => {
     Alert.alert(
@@ -30,18 +30,16 @@ const ProfileScreen = ({ navigation }) => {
     );
   };
 
+  const handleDarkModeToggle = () => {
+    toggleTheme();
+  };
+
   const menuItems = [
     {
       title: 'Reset Password',
       description: 'Change your account password',
       icon: 'lock-reset',
       onPress: () => navigation.navigate('ResetPassword'),
-    },
-    {
-      title: 'Settings',
-      description: 'App preferences and display options',
-      icon: 'cog',
-      onPress: () => navigation.navigate('Settings'),
     },
     {
       title: 'About',
@@ -79,6 +77,27 @@ const ProfileScreen = ({ navigation }) => {
               ID: {user.id}
             </Text>
           )}
+        </Card.Content>
+      </Card>
+
+      {/* Dark Mode Toggle */}
+      <Card style={styles.menuCard}>
+        <Card.Content>
+          <List.Item
+            title="Dark Mode"
+            description={isDarkMode ? 'Dark theme enabled' : 'Light theme enabled'}
+            left={(props) => (
+              <List.Icon {...props} icon="theme-light-dark" color="#EF4444" />
+            )}
+            right={() => (
+              <Switch
+                value={isDarkMode}
+                onValueChange={handleDarkModeToggle}
+                color="#EF4444"
+              />
+            )}
+            style={styles.menuItem}
+          />
         </Card.Content>
       </Card>
 

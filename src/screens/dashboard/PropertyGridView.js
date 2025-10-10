@@ -1,11 +1,16 @@
 // Property Grid View Component - Matches Web Frontend with Real Images
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native';
 import { Text } from 'react-native-paper';
 import { useTheme } from '../../context';
+import PropertyDetailsModal from '../../components/dashboard/PropertyDetailsModal';
+import { getPropertyDetails } from '../../data/propertyDetails';
 
 const PropertyGridView = ({ navigation }) => {
   const { theme } = useTheme();
+  const [selectedProperty, setSelectedProperty] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
+
   // Static property data - matches web frontend exactly
   const propertyCategories = [
     {
@@ -35,46 +40,65 @@ const PropertyGridView = ({ navigation }) => {
   ];
 
   const handlePropertyPress = (property) => {
-    console.log('Property pressed:', property.title);
-    // navigation.navigate('PropertyDetails', { propertyId: property.id });
+    const details = getPropertyDetails(property.id);
+    if (details) {
+      setSelectedProperty({ ...property, ...details });
+      setModalVisible(true);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setTimeout(() => {
+      setSelectedProperty(null);
+    }, 300); // Wait for animation to complete
   };
 
   const styles = getStyles(theme);
 
   return (
-    <ScrollView style={styles.container}>
-      {propertyCategories.map((category, categoryIndex) => (
-        <View key={categoryIndex} style={styles.categorySection}>
-          <Text variant="titleLarge" style={styles.categoryTitle}>
-            {category.title}
-          </Text>
-          
-          <View style={styles.propertiesGrid}>
-            {category.properties.map((property) => (
-              <TouchableOpacity
-                key={property.id}
-                style={styles.propertyCard}
-                onPress={() => handlePropertyPress(property)}
-                activeOpacity={0.8}
-              >
-                <View style={styles.imageContainer}>
-                  <Image
-                    source={property.img}
-                    style={styles.propertyImage}
-                    resizeMode="cover"
-                  />
-                  <View style={styles.overlay}>
-                    <Text variant="titleMedium" style={styles.propertyTitle}>
-                      {property.title}
-                    </Text>
+    <>
+      <ScrollView style={styles.container}>
+        {propertyCategories.map((category, categoryIndex) => (
+          <View key={categoryIndex} style={styles.categorySection}>
+            <Text variant="titleLarge" style={styles.categoryTitle}>
+              {category.title}
+            </Text>
+            
+            <View style={styles.propertiesGrid}>
+              {category.properties.map((property) => (
+                <TouchableOpacity
+                  key={property.id}
+                  style={styles.propertyCard}
+                  onPress={() => handlePropertyPress(property)}
+                  activeOpacity={0.8}
+                >
+                  <View style={styles.imageContainer}>
+                    <Image
+                      source={property.img}
+                      style={styles.propertyImage}
+                      resizeMode="cover"
+                    />
+                    <View style={styles.overlay}>
+                      <Text variant="titleMedium" style={styles.propertyTitle}>
+                        {property.title}
+                      </Text>
+                    </View>
                   </View>
-                </View>
-              </TouchableOpacity>
-            ))}
+                </TouchableOpacity>
+              ))}
+            </View>
           </View>
-        </View>
-      ))}
-    </ScrollView>
+        ))}
+      </ScrollView>
+
+      {/* Property Details Modal */}
+      <PropertyDetailsModal
+        visible={modalVisible}
+        property={selectedProperty}
+        onClose={handleCloseModal}
+      />
+    </>
   );
 };
 

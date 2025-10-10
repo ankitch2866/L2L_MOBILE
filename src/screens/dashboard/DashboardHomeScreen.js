@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { getTimeBasedGreeting } from '../../utils/timeUtils';
 import { useTheme } from '../../context';
 import PropertyGridView from './PropertyGridView';
+import CustomerQueryCard from '../../components/dashboard/CustomerQueryCard';
 
 const DashboardHomeScreen = ({ navigation }) => {
   const { user } = useSelector((state) => state.auth);
@@ -57,6 +58,9 @@ const DashboardHomeScreen = ({ navigation }) => {
           Welcome to HL Group
         </Text>
       </View>
+
+      {/* Customer Query Card - Matches Web Frontend */}
+      <CustomerQueryCard />
 
       {/* Property Grid - Matches Web Frontend */}
       <PropertyGridView navigation={navigation} />

@@ -8,6 +8,7 @@ import { checkAuth } from '../store/slices/authSlice';
 // Screens
 import LoginScreen from '../screens/auth/LoginScreen';
 import DashboardNavigator from './DashboardNavigator';
+import Chatbot from '../components/chatbot/Chatbot';
 
 const Stack = createNativeStackNavigator();
 
@@ -44,6 +45,7 @@ const AppNavigator = () => {
           <Stack.Screen name="Dashboard" component={DashboardNavigator} />
         )}
       </Stack.Navigator>
+      <Chatbot />
     </NavigationContainer>
   );
 };

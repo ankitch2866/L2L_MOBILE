@@ -28,7 +28,7 @@ const ReportsScreen = ({ navigation }) => {
     { name: 'Outstanding Report', icon: 'currency-usd', route: 'OutstandingReports', screen: 'OutstandingReport', implemented: true, category: 'Outstanding' },
     { name: 'Buy Back/Cancel Cases', icon: 'close-circle', route: 'BuyBackReports', screen: 'BuyBackCancelCases', implemented: true, category: 'Buy Back' },
     { name: 'Dues FinYrs', icon: 'calendar-clock', route: 'DuesReports', screen: 'DueInstallmentsDashboard', implemented: true, category: 'Dues' },
-    { name: 'Customer Details', icon: 'account-details', route: 'CustomerReports', screen: 'CustomerDetailsReport', implemented: true, category: 'Customer' },
+    // Customer Details removed - now accessible directly from Dashboard Customer Query Card
   ];
 
   const handleModulePress = (module) => {

@@ -121,9 +121,26 @@ const CustomersListScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: { flex: 1 },
-  header: { padding: 16, borderBottomWidth: 1, borderBottomColor: '#E5E7EB' },
-  searchbar: { elevation: 0 },
-  fab: { position: 'absolute', margin: 16, right: 0, bottom: 0 },
+  header: { 
+    padding: 16, 
+    paddingBottom: 12,
+    elevation: 2,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+  },
+  searchbar: { 
+    elevation: 0,
+    borderRadius: 12,
+  },
+  fab: { 
+    position: 'absolute', 
+    margin: 16, 
+    right: 0, 
+    bottom: 0,
+    borderRadius: 16,
+  },
   paginationContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -133,19 +150,27 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#E5E7EB',
     marginBottom: 80,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
   paginationButton: {
     minWidth: 100,
+    borderRadius: 8,
   },
   pageInfo: {
     alignItems: 'center',
   },
   pageText: {
     fontWeight: 'bold',
+    fontSize: 14,
   },
   totalText: {
     color: '#6B7280',
     marginTop: 4,
+    fontSize: 12,
   },
 });
 

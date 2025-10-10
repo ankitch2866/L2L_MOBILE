@@ -30,6 +30,7 @@ import {
   AddCustomerScreen,
   EditCustomerScreen,
   CustomerDetailsScreen,
+  EnhancedCustomerDetailsScreen,
 } from '../screens/customers';
 import {
   CoApplicantsListScreen,
@@ -1054,6 +1055,19 @@ const DashboardNavigator = () => {
         options={{ 
           presentation: 'card',
           headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="EnhancedCustomerDetails" 
+        component={EnhancedCustomerDetailsScreen}
+        getId={({ params }) => params?.customerId?.toString()}
+        options={{ 
+          presentation: 'card',
+          headerShown: true,
+          headerStyle: { backgroundColor: '#EF4444' },
+          headerTintColor: '#FFFFFF',
+          headerTitleStyle: { fontWeight: 'bold' },
+          title: 'Customer Details'
         }}
       />
       <Stack.Screen 
