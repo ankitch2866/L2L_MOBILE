@@ -7,22 +7,28 @@ const ReportsScreen = ({ navigation }) => {
   const { theme } = useTheme();
 
   const reportModules = [
-    { name: 'Project Details', icon: 'chart-bar', route: null, screen: null, implemented: false },
-    { name: 'Daily Collection', icon: 'cash', route: null, screen: null, implemented: false },
-    { name: 'Unit Wise Collection', icon: 'home-analytics', route: null, screen: null, implemented: false },
-    { name: 'Customer Wise Collection', icon: 'account-cash', route: null, screen: null, implemented: false },
-    { name: 'Customer List', icon: 'format-list-bulleted', route: null, screen: null, implemented: false },
-    { name: 'Master Reports', icon: 'file-chart', route: null, screen: null, implemented: false },
-    { name: 'BBA Report', icon: 'file-document', route: null, screen: null, implemented: false },
-    { name: 'BBA Status', icon: 'check-circle', route: null, screen: null, implemented: false },
-    { name: 'Calling Details', icon: 'phone-log', route: null, screen: null, implemented: false },
-    { name: 'Correspondence', icon: 'email', route: null, screen: null, implemented: false },
-    { name: 'Unit Transfers', icon: 'transfer', route: null, screen: null, implemented: false },
-    { name: 'Stock Report', icon: 'package-variant-closed', route: null, screen: null, implemented: false },
-    { name: 'Outstanding', icon: 'currency-usd', route: null, screen: null, implemented: false },
-    { name: 'Buy Back/Cancel', icon: 'close-circle', route: null, screen: null, implemented: false },
-    { name: 'Dues FinYrs', icon: 'calendar-clock', route: null, screen: null, implemented: false },
-    { name: 'Customer Details', icon: 'account-details', route: null, screen: null, implemented: false },
+    // Main modules from web frontend menu (in order)
+    { name: 'Project Details', icon: 'chart-bar', route: 'ProjectReports', screen: 'ProjectDashboard', implemented: true, category: 'Project' },
+    
+    // Collection submenu items as separate modules (3 modules)
+    { name: 'Daily Collection', icon: 'cash', route: 'CollectionReports', screen: 'DailyCollection', implemented: true, category: 'Collection' },
+    { name: 'Unit Wise Collection', icon: 'home-analytics', route: 'CollectionReports', screen: 'UnitWiseCollection', implemented: true, category: 'Collection' },
+    { name: 'Customer Wise Collection', icon: 'account-cash', route: 'CollectionReports', screen: 'CustomerWiseCollection', implemented: true, category: 'Collection' },
+    
+    // Rest of main modules from web frontend
+    { name: 'List of Customer Project wise', icon: 'account-details', route: 'CustomerReports', screen: 'CustomerProject', implemented: true, category: 'Customer' },
+    { name: 'List of Customer Project wise (Fin. Year)', icon: 'calendar-clock', route: 'CustomerReports', screen: 'CustomerProjectYear', implemented: true, category: 'Customer' },
+    { name: 'Master Reports', icon: 'file-document-multiple', route: 'MasterReports', screen: 'MasterReport', implemented: true, category: 'Master' },
+    { name: 'Buyer Agreements', icon: 'file-document', route: 'BBAReports', screen: 'BBAAgreementReport', implemented: true, category: 'BBA' },
+    { name: 'BBA Status', icon: 'file-document-check', route: 'BBAReports', screen: 'BBAStatusReport', implemented: true, category: 'BBA' },
+    { name: 'Calling Details Between', icon: 'phone-log', route: 'CallingReports', screen: 'CallingFeedbackDashboard', implemented: true, category: 'Calling' },
+    { name: 'Cust. Correspondence', icon: 'email', route: 'CorrespondenceReports', screen: 'CorrespondenceDashboard', implemented: true, category: 'Correspondence' },
+    { name: 'Unit Transfers', icon: 'transfer', route: 'UnitTransferReports', screen: 'UnitTransferDashboard', implemented: true, category: 'Unit Transfer' },
+    { name: 'Stock', icon: 'package-variant-closed', route: 'StockReports', screen: 'StockDashboard', implemented: true, category: 'Stock' },
+    { name: 'Outstanding Report', icon: 'currency-usd', route: 'OutstandingReports', screen: 'OutstandingReport', implemented: true, category: 'Outstanding' },
+    { name: 'Buy Back/Cancel Cases', icon: 'close-circle', route: 'BuyBackReports', screen: 'BuyBackCancelCases', implemented: true, category: 'Buy Back' },
+    { name: 'Dues FinYrs', icon: 'calendar-clock', route: 'DuesReports', screen: 'DueInstallmentsDashboard', implemented: true, category: 'Dues' },
+    { name: 'Customer Details', icon: 'account-details', route: 'CustomerReports', screen: 'CustomerDetailsReport', implemented: true, category: 'Customer' },
   ];
 
   const handleModulePress = (module) => {

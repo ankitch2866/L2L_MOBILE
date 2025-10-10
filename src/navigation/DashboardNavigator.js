@@ -172,6 +172,20 @@ import {
   PaymentQueryDetailsScreen,
   EditPaymentQueryScreen,
 } from '../screens/transactions/paymentQueries';
+import {
+  CollectionReportsStack,
+  CustomerReportsStack,
+  ProjectReportsStack,
+  BBAReportsStack,
+  DuesReportsStack,
+  StockReportsStack,
+  UnitTransferReportsStack,
+  CorrespondenceReportsStack,
+  CallingReportsStack,
+  MasterReportsStack,
+  OutstandingReportsStack,
+  BuyBackReportsStack,
+} from './ReportsNavigator';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -1149,6 +1163,103 @@ const DashboardNavigator = () => {
       <Stack.Screen 
         name="Birthdays" 
         component={BirthdaysStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      {/* Reports Stack Navigators */}
+      <Stack.Screen 
+        name="CollectionReports" 
+        component={CollectionReportsStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="CustomerReports" 
+        component={CustomerReportsStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="ProjectReports" 
+        component={ProjectReportsStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="BBAReports" 
+        component={BBAReportsStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="DuesReports" 
+        component={DuesReportsStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="StockReports" 
+        component={StockReportsStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="UnitTransferReports" 
+        component={UnitTransferReportsStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="CorrespondenceReports" 
+        component={CorrespondenceReportsStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="CallingReports" 
+        component={CallingReportsStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="MasterReports" 
+        component={MasterReportsStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="OutstandingReports" 
+        component={OutstandingReportsStack}
+        options={{ 
+          presentation: 'card',
+          headerShown: false
+        }}
+      />
+      <Stack.Screen 
+        name="BuyBackReports" 
+        component={BuyBackReportsStack}
         options={{ 
           presentation: 'card',
           headerShown: false
